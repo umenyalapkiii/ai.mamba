@@ -27,43 +27,71 @@ OUT_FILE = ROOT.parent / "ai.mamba-magenta.html"
 OVERRIDE = """
 /* ============================================================
    4B · STUDIO MAGENTA
-   Малиновый #CE1B6F работает только заливкой, текст на нём светлый.
-   Жёлтый остаётся акцентом в тексте и рамках — как в гайде.
+   Малиновый входит не плашкой, а светом: полоса идёт вдоль
+   траектории удара (тот же вектор, по которому летят буквы),
+   плюс мягкое зарево за фигурой. Серые панели уведены в
+   приглушённый розовый, чтобы схема читалась целиком.
+   На самой малиновой плашке жёлтого нет — он с ней вибрирует;
+   там работают только малиновый, почти чёрный и сливочный.
    ============================================================ */
-:root{ --magenta:#CE1B6F; --magenta-dim:#7A1042; }
-
-/* герой: малиновая циклорама за мамбой */
-.hero .scene::before{
-  content:"";position:absolute;inset:-3% -7% 4% -7%;
-  background:
-    repeating-linear-gradient(135deg, rgba(0,0,0,.07) 0 9px, transparent 9px 18px),
-    var(--magenta);
+:root{
+  --magenta:#CE1B6F;
+  --cream:#F2EDEF;
+  --ink:#120A0E;
+  --panel:#150D12;
+  --line:#2A1A22;
+  --line-soft:#1F1219;
 }
+body{background:#0A0508}
 
-/* подпись должности — малиновой плашкой */
-.hero__eyebrow{
-  display:inline-block;padding:8px 14px;margin-bottom:clamp(14px,2vw,22px);
-  background:var(--magenta);color:#F2F1EE;
+/* --- первый экран: свет вместо коробки --- */
+.scene::before{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  left:-78%;top:46%;width:250%;height:15%;
+  transform:translateY(-50%) rotate(49.5deg);transform-origin:50% 50%;
+  background:linear-gradient(90deg,
+    transparent 0%, rgba(206,27,111,.05) 22%,
+    rgba(206,27,111,.5) 52%, rgba(206,27,111,.26) 72%, transparent 100%);
+  filter:blur(26px);
 }
-.hero__eyebrow s{color:rgba(242,241,238,.55)}
-.hero__eyebrow b{color:rgba(242,241,238,.8)}
+.scene::after{
+  content:"";position:absolute;z-index:0;pointer-events:none;
+  left:8%;top:38%;width:86%;aspect-ratio:1;transform:translateY(-50%);
+  background:radial-gradient(circle,
+    rgba(206,27,111,.42) 0%, rgba(206,27,111,.14) 44%, transparent 70%);
+  filter:blur(16px);
+}
+/* буквы подсвечены малиновым — как неоновая вывеска */
+.scene .ta{filter:drop-shadow(0 4px 18px rgba(0,0,0,.5)) drop-shadow(0 0 16px rgba(206,27,111,.6))}
+.scene .fig{filter:drop-shadow(-18px 14px 40px rgba(206,27,111,.2))}
 
-/* шкала дедлайна — малиновая заливка */
+.hero__eyebrow{color:var(--magenta)}
+.hero__eyebrow s{color:rgba(206,27,111,.5)}
 .hud__bar i{background:var(--magenta)}
 
-/* работы: рамка малиновая, цифры и название остаются жёлтыми */
+/* --- карточки: штриховка вместо ровной серой заливки --- */
+.card__media,.modal__media,.car__track > *{
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(206,27,111,.055) 0 11px, transparent 11px 22px),
+    #140C11;
+}
 .card:hover,.card:focus-visible{border-color:var(--magenta)}
 .card__media::after{background:linear-gradient(180deg,transparent,rgba(206,27,111,.3),transparent)}
-.card__series{background:var(--magenta);border-color:var(--magenta);color:#F2F1EE}
+.card__series{background:var(--magenta);border-color:var(--magenta);color:var(--cream)}
+.card__n{color:var(--magenta)}
 
-/* услуги: активная строка заливается малиновым */
+/* --- услуги: заливка активной строки --- */
+.srv__row{padding-inline:12px;margin-inline:-12px;transition:background .35s}
 .srv__row:hover,.srv__row.is-near{background:var(--magenta)}
-.srv__row:hover .srv__t,.srv__row.is-near .srv__t{color:#F2F1EE}
-.srv__row:hover .srv__d,.srv__row.is-near .srv__d{color:rgba(242,241,238,.88)}
-.srv__row:hover .srv__n,.srv__row.is-near .srv__n{color:rgba(242,241,238,.6)}
-.srv__row{padding-inline:10px;margin-inline:-10px;transition:background .3s}
+.srv__row:hover .srv__t,.srv__row.is-near .srv__t{color:var(--cream)}
+.srv__row:hover .srv__d,.srv__row.is-near .srv__d{color:rgba(242,237,239,.9)}
+.srv__row:hover .srv__n,.srv__row.is-near .srv__n{color:rgba(242,237,239,.65)}
+.tools span:hover{color:var(--magenta);border-color:var(--magenta);background:rgba(206,27,111,.08)}
+.q summary::after{color:var(--magenta)}
+.q summary:hover{color:var(--magenta)}
 
-/* пузырь лопается малиновым */
+/* --- пузырь --- */
 .pop.on .pop__bubble{animation-name:bubbleMagenta}
 @keyframes bubbleMagenta{
   0%  {transform:scale(1);opacity:1;box-shadow:0 0 0 rgba(206,27,111,0)}
@@ -74,31 +102,36 @@ OVERRIDE = """
   100%{transform:scale(1);opacity:1;box-shadow:0 0 0 rgba(206,27,111,0)}
 }
 .pop__burst i{background:var(--magenta)}
-
-/* карусель */
-.car__nav:hover{background:rgba(206,27,111,.3);border-color:var(--magenta);color:#F2F1EE}
+.car__nav:hover{background:rgba(206,27,111,.32);border-color:var(--magenta);color:var(--cream)}
 .car__dots i.on{background:var(--magenta)}
 
-/* контакты: плашка малиновая, текст светлый, кнопка жёлтым по чёрному */
-.contact{background:var(--magenta);color:#F2F1EE}
-.contact h2,.contact h2 .y{color:#F2F1EE}
-.steps{border-top-color:rgba(242,241,238,.28)}
-.steps li{border-bottom-color:rgba(242,241,238,.28);color:#F2F1EE}
-.steps li::before{color:#F2F1EE;border-color:rgba(242,241,238,.5)}
-.point{color:#F2F1EE}
-.soc{border-color:rgba(242,241,238,.4);color:rgba(242,241,238,.85)}
-.soc:hover{color:var(--yellow);background:#0B0B0C;border-color:#0B0B0C}
+/* --- контакты: малиновый, почти чёрный и сливочный, без жёлтого --- */
+.contact{background:var(--magenta);color:var(--cream)}
+.contact h2,.contact h2 .y{color:var(--cream)}
+.steps{border-top-color:rgba(242,237,239,.3)}
+.steps li{border-bottom-color:rgba(242,237,239,.3);color:var(--cream)}
+.steps li::before{color:var(--cream);border-color:rgba(242,237,239,.5)}
+.point{color:var(--cream)}
+.socials .writeme{
+  background:var(--ink);color:var(--cream);
+  transition:color .3s;
+}
+/* жёлтый вспыхивает только на наведении — мгновение, а не фон */
+.socials .writeme:hover{color:var(--yellow)}
+.soc{border-color:rgba(242,237,239,.42);color:rgba(242,237,239,.88)}
+.soc:hover{color:var(--cream);background:var(--ink);border-color:var(--ink)}
 
-/* фоновый луч под цвет схемы */
+/* --- фон --- */
 .bg__beam{
   background:radial-gradient(440px 440px at var(--mx,50%) var(--my,26%),
-    rgba(206,27,111,.2) 0%,rgba(206,27,111,.06) 38%,transparent 70%);
+    rgba(206,27,111,.17) 0%,rgba(206,27,111,.05) 38%,transparent 70%);
 }
 .bg__grid{
   background-image:
-    linear-gradient(rgba(206,27,111,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(206,27,111,.06) 1px,transparent 1px);
+    linear-gradient(rgba(206,27,111,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(206,27,111,.055) 1px,transparent 1px);
 }
+footer{color:rgba(242,237,239,.4)}
 """
 
 BANNER = """<!-- ============================================================
