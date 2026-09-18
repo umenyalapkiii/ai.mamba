@@ -478,36 +478,40 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
    На жёлтом весь текст тёмный: акцентом здесь работает сам фон. */
 .contact{
   background:var(--yellow);color:#151208;
-  padding:clamp(38px,6vw,86px) 0 clamp(34px,5vw,70px);
+  padding:clamp(28px,3.6vw,52px) 0 clamp(24px,3vw,42px);
   text-align:left;
 }
 .contact .lbl{color:rgba(21,18,8,.58)}
 .contact h2{
-  font-family:var(--display);font-weight:700;font-size:clamp(34px,7vw,104px);
-  text-transform:uppercase;line-height:.95;margin:0 0 clamp(18px,2.4vw,30px);
+  font-family:var(--display);font-weight:700;font-size:clamp(32px,6vw,86px);
+  text-transform:uppercase;line-height:.95;margin:0 0 clamp(14px,1.8vw,22px);
   margin-left:-.017em;
 }
 .contact h2 .y{color:#151208}
 .steps{
-  list-style:none;counter-reset:s;padding:0;margin:0 0 clamp(26px,3.4vw,42px);
-  display:grid;gap:0;border-top:1px solid rgba(21,18,8,.2);max-width:760px;
+  list-style:none;counter-reset:s;padding:0;margin:0 0 clamp(20px,2.4vw,30px);
+  display:grid;gap:0;border-top:1px solid rgba(21,18,8,.2);max-width:720px;
 }
 .steps li{
-  counter-increment:s;position:relative;padding:clamp(13px,1.7vw,18px) 0 clamp(13px,1.7vw,18px) 42px;
-  border-bottom:1px solid rgba(21,18,8,.2);color:rgba(21,18,8,.82);font-size:clamp(14px,1.2vw,16.5px);
+  counter-increment:s;position:relative;
+  padding:clamp(9px,1.1vw,13px) 0 clamp(9px,1.1vw,13px) 54px;
+  border-bottom:1px solid rgba(21,18,8,.2);color:#151208;font-size:clamp(14px,1.2vw,16.5px);
 }
+/* номер в техничном квадрате — иначе на жёлтом он просто пропадал */
 .steps li::before{
   content:"0" counter(s);position:absolute;left:0;top:50%;transform:translateY(-50%);
-  font-family:var(--mono);font-size:10.5px;color:rgba(21,18,8,.5);
+  font-family:var(--mono);font-size:11.5px;font-weight:700;color:#151208;
+  border:1.5px solid rgba(21,18,8,.5);padding:5px 6px;line-height:1;
 }
-.socials{display:flex;align-items:center;gap:clamp(10px,1.6vw,18px);flex-wrap:wrap}
+.socials{display:flex;align-items:center;gap:clamp(8px,1.4vw,16px);flex-wrap:wrap}
 .socials .writeme{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(21,18,8,.6)}
-.tg{
-  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
-  padding:15px 26px;background:#0B0B0C;color:var(--yellow);
-  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s;
+/* указующая рука из черновика — покачивается вправо, к иконкам */
+.point{
+  flex:none;font-size:34px;line-height:1;color:#151208;
+  animation:nudge 2.4s ease-in-out infinite;
 }
-.tg:hover{transform:translateY(-3px);box-shadow:0 10px 24px -12px rgba(21,18,8,.8)}
+@keyframes nudge{0%,100%{translate:0 0}50%{translate:7px 0}}
+@media (prefers-reduced-motion:reduce){.point{animation:none}}
 .soc{
   width:46px;height:46px;display:grid;place-items:center;
   border:1px solid rgba(21,18,8,.32);color:rgba(21,18,8,.72);
@@ -576,7 +580,8 @@ footer{
 .car__nav--prev{left:12px}
 .car__nav--next{right:12px}
 .car__count{
-  position:absolute;right:12px;top:12px;z-index:3;
+  /* слева, а не справа: справа его закрывает крестик закрытия */
+  position:absolute;left:12px;top:12px;z-index:3;
   font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
   color:var(--muted);background:rgba(8,8,10,.72);border:1px solid var(--line);
   padding:5px 10px;border-radius:999px;font-variant-numeric:tabular-nums;
@@ -606,6 +611,15 @@ footer{
   .hero{grid-template-columns:1fr;gap:6px;padding-top:clamp(22px,6vw,34px)}
   .fmt span{flex:1 1 40%}
   /* вторая подпись уходит на свою строку — в одну они не помещаются */
+  .about{justify-items:center}
+  .pop{margin-inline:auto}
+  .about__body p{text-align:center}
+  /* «просто напишите» и три иконки должны умещаться в одну строку */
+  .socials{gap:8px;flex-wrap:nowrap}
+  .socials .writeme{font-size:9.5px;letter-spacing:.12em}
+  .point{font-size:26px}
+  .soc{width:42px;height:42px}
+  .soc svg{width:19px;height:19px}
   .hero__eyebrow{font-size:10px;line-height:1.7}
   .hero__eyebrow s{display:none}
   .hero__eyebrow b{display:block}
@@ -856,9 +870,8 @@ footer{
       <li data-ru="фиксируем условия — и я приступаю" data-en="we agree the terms, and i get started">фиксируем условия — и я приступаю</li>
     </ol>
     <div class="socials">
-      <a class="tg" href="https://telegram.me/Anastasia_aa_aa" target="_blank" rel="noopener"
-         data-ru="написать в телеграм" data-en="message me on telegram">написать в телеграм</a>
-      <span class="writeme" data-ru="или" data-en="or">или</span>
+      <span class="writeme" data-ru="просто напишите" data-en="drop me a line">просто напишите</span>
+      <span class="point" aria-hidden="true">☞</span>
       <a class="soc" href="mailto:ai.mambaaa@gmail.com" aria-label="Email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2.6" y="4.8" width="18.8" height="14.4" rx="3"/>
