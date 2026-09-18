@@ -115,6 +115,12 @@ def main() -> int:
                         'href="https://aimamba.art/en/">\n<link rel="alternate" hreflang="ru"', 1)
     html = html.replace('<meta property="og:url" content="https://aimamba.art/">',
                         '<meta property="og:url" content="https://aimamba.art/en/">')
+    html = html.replace('content="https://aimamba.art/assets/og-2.jpg"',
+                        'content="https://aimamba.art/assets/og-en-2.jpg"')
+    html = html.replace('<meta property="og:locale" content="ru_RU">\n'
+                        '<meta property="og:locale:alternate" content="en_US">',
+                        '<meta property="og:locale" content="en_US">\n'
+                        '<meta property="og:locale:alternate" content="ru_RU">')
     html = html.replace('"assets/', '"../assets/')
     html = html.replace("fetch('projects.json'", "fetch('../projects.json'")
     html = html.replace('href="work/${w.slug}/"', 'href="../work/${w.slug}/"')
