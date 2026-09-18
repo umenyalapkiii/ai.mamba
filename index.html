@@ -237,7 +237,7 @@ main,footer{position:relative;z-index:1}
 /* ---------- ОБЩЕЕ ДЛЯ СЕКЦИЙ ---------- */
 section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .sec-head{
-  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 16px;
   padding:0 0 14px;border-bottom:1px solid var(--line-soft);margin-bottom:clamp(18px,2.4vw,28px);
 }
 .sec-head h2{
@@ -245,6 +245,11 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   text-transform:uppercase;letter-spacing:-.01em;margin:0;line-height:1;
 }
 .sec-body{padding:clamp(34px,5vw,74px) 0}
+.sec-sub{
+  flex:1 0 100%;margin:2px 0 0;max-width:86ch;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted-dim);line-height:1.9;
+}
 
 /* ---------- РАБОТЫ ---------- */
 .gal{column-width:300px;column-gap:10px}
@@ -396,7 +401,8 @@ footer{
 }
 .modal.open{display:grid;place-items:center}
 .modal__box{
-  width:min(1040px,100%);background:var(--panel);border:1px solid var(--line);position:relative;
+  width:min(1040px,100%);max-height:92vh;overflow:auto;
+  background:var(--panel);border:1px solid var(--line);position:relative;
 }
 .modal__close{
   position:absolute;right:8px;top:8px;z-index:4;width:34px;height:34px;
@@ -404,11 +410,16 @@ footer{
 }
 .modal__close:hover{color:var(--yellow);border-color:var(--yellow)}
 .modal__media{
-  position:relative;display:grid;place-items:center;min-height:200px;
+  /* кадр упирается в ту сторону, которая кончается первой: по высоте
+     в экран, по ширине в окно. --ar (ширина/высота) ставит скрипт,
+     поэтому пересчёт при повороте телефона идёт сам, без JS */
+  width:min(100%, calc(62vh * var(--ar,1)));
+  max-width:100%;margin-inline:auto;
+  position:relative;display:grid;place-items:center;min-height:180px;
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),#111116;
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#4E4E58;
 }
-.modal__media video,.modal__media img{width:100%;display:block}
+.modal__media video,.modal__media img{width:100%;height:100%;object-fit:contain;display:block}
 .modal__info{padding:clamp(16px,2.4vw,26px);border-top:1px solid var(--line-soft)}
 .modal__info h3{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,30px);text-transform:uppercase;margin:0 0 8px}
 .modal__desc{color:#A9A8A3;font-size:15px;line-height:1.65;margin:0 0 16px;max-width:64ch}
@@ -444,11 +455,11 @@ footer{
     <span class="nav__mark">ai<i>.</i>mamba</span>
   </a>
   <div class="nav__links">
-    <a href="#work"     data-ru="работы"   data-en="my work">работы</a>
+    <a href="#work"     data-ru="мои работы"   data-en="my work">мои работы</a>
     <a href="#services" data-ru="услуги"   data-en="formats">услуги</a>
     <a href="#about"    data-ru="обо мне"  data-en="about me">обо мне</a>
-    <a href="#process"  data-ru="процесс"  data-en="process">процесс</a>
-    <a href="#contact"  data-ru="контакт"  data-en="get in touch">контакт</a>
+    <a href="#process"  data-ru="о процессе"  data-en="process">о процессе</a>
+    <a href="#contact"  data-ru="написать мне"  data-en="get in touch">написать мне</a>
   </div>
   <div class="nav__right">
     <div class="lang" aria-label="Язык / Language">
@@ -465,11 +476,11 @@ footer{
 </nav>
 
 <div class="sheet" id="sheet" hidden>
-  <a href="#work"     data-ru="работы"  data-en="my work">работы</a>
+  <a href="#work"     data-ru="мои работы"  data-en="my work">мои работы</a>
   <a href="#services" data-ru="услуги"  data-en="formats">услуги</a>
   <a href="#about"    data-ru="обо мне" data-en="about me">обо мне</a>
-  <a href="#process"  data-ru="процесс" data-en="process">процесс</a>
-  <a href="#contact"  data-ru="контакт" data-en="get in touch">контакт</a>
+  <a href="#process"  data-ru="о процессе" data-en="process">о процессе</a>
+  <a href="#contact"  data-ru="написать мне" data-en="get in touch">написать мне</a>
 </div>
 
 <main id="top">
@@ -482,7 +493,6 @@ footer{
       <span data-ru="дедлайн" data-en="deadline">дедлайн</span>
       <span class="hud__bar"><i></i></span>
     </span>
-    <span data-ru="сезон <b>2026</b>" data-en="season <b>2026</b>">сезон <b>2026</b></span>
   </div>
 
   <header class="hero">
@@ -518,8 +528,10 @@ footer{
   <!-- ===================== РАБОТЫ ===================== -->
   <section id="work" class="sec-body">
     <div class="sec-head">
-      <h2 data-ru="работы" data-en="my work">работы</h2>
-      <span class="lbl" id="workCount">06 / 06</span>
+      <h2 data-ru="мои работы" data-en="my work">мои работы</h2>
+      <p class="sec-sub"
+         data-ru="рекламные фильмы · product/fashion-ролики · трейлеры · музыкальные клипы · экспериментальный арт"
+         data-en="commercials · product and fashion films · trailers · music videos · experimental art">рекламные фильмы · product/fashion-ролики · трейлеры · музыкальные клипы · экспериментальный арт</p>
     </div>
     <div class="gal" id="gal"></div>
   </section>
@@ -528,7 +540,6 @@ footer{
   <section id="services" class="sec-body">
     <div class="sec-head">
       <h2 data-ru="услуги" data-en="formats">услуги</h2>
-      <span class="lbl" data-ru="кому и что" data-en="who and what">кому и что</span>
     </div>
 
     <div class="srv">
@@ -587,7 +598,6 @@ footer{
   <section id="about" class="sec-body">
     <div class="sec-head">
       <h2 data-ru="обо мне" data-en="about me">обо мне</h2>
-      <span class="lbl">ai.mamba</span>
     </div>
     <div class="about">
       <div class="pop" id="pop" role="button" tabindex="0" aria-label="Лопнуть пузырь">
@@ -609,8 +619,7 @@ footer{
   <!-- ===================== ПРОЦЕСС ===================== -->
   <section id="process" class="sec-body">
     <div class="sec-head">
-      <h2 data-ru="процесс" data-en="process">процесс</h2>
-      <span class="lbl" data-ru="частые вопросы" data-en="frequent questions">частые вопросы</span>
+      <h2 data-ru="о процессе" data-en="process">о процессе</h2>
     </div>
     <div class="faq">
       <details class="q">
@@ -729,17 +738,29 @@ const t = v => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[LANG] ?? v
 
 const PLACEHOLDERS = [
   {slug:'reklamnyy-film', ratio:'9:16', year:'2026',
-   title:{ru:'Рекламный фильм',en:'Commercial film'}, meta:{ru:'реклама · продукт',en:'advertising · product'}},
+   title:{ru:'Рекламный фильм',en:'Commercial film'}, meta:{ru:'реклама · продукт',en:'advertising · product'},
+   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
+   role:{ru:'идея, режиссура, монтаж',en:'concept, direction, edit'}, stack:{ru:'Seedance · DaVinci',en:'Seedance · DaVinci'}},
   {slug:'feshn-kampaniya', ratio:'4:5', year:'2026',
-   title:{ru:'Фэшн-кампания',en:'Fashion campaign'}, meta:{ru:'лукбук · кампейн',en:'lookbook · campaign'}},
+   title:{ru:'Фэшн-кампания',en:'Fashion campaign'}, meta:{ru:'лукбук · кампейн',en:'lookbook · campaign'},
+   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
+   role:{ru:'идея, арт-дирекшн, цвет',en:'concept, art direction, colour'}, stack:{ru:'Nano Banana · Photoshop',en:'Nano Banana · Photoshop'}},
   {slug:'klip', ratio:'9:16', year:'2026',
-   title:{ru:'Клип',en:'Music video'}, meta:{ru:'вертикаль · по битам',en:'vertical · beat-driven'}},
+   title:{ru:'Клип',en:'Music video'}, meta:{ru:'вертикаль · по битам',en:'vertical · beat-driven'},
+   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
+   role:{ru:'идея, монтаж, цвет',en:'concept, edit, colour'}, stack:{ru:'Seedance · DaVinci',en:'Seedance · DaVinci'}},
   {slug:'treyler', ratio:'16:9', year:'2025',
-   title:{ru:'Трейлер',en:'Trailer'}, meta:{ru:'кино · тизер',en:'film · teaser'}},
+   title:{ru:'Трейлер',en:'Trailer'}, meta:{ru:'кино · тизер',en:'film · teaser'},
+   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
+   role:{ru:'режиссура, монтаж',en:'direction, edit'}, stack:{ru:'Veo · DaVinci',en:'Veo · DaVinci'}},
   {slug:'product-film', ratio:'1:1', year:'2025',
-   title:{ru:'Product-фильм',en:'Product film'}, meta:{ru:'предмет · макро',en:'object · macro'}},
+   title:{ru:'Product-фильм',en:'Product film'}, meta:{ru:'предмет · макро',en:'object · macro'},
+   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
+   role:{ru:'идея, режиссура',en:'concept, direction'}, stack:{ru:'Kling · DaVinci',en:'Kling · DaVinci'}},
   {slug:'art', ratio:'16:9', year:'2025',
-   title:{ru:'Экспериментальный арт',en:'Experimental art'}, meta:{ru:'видеоарт · авторское',en:'video art · personal'}},
+   title:{ru:'Экспериментальный арт',en:'Experimental art'}, meta:{ru:'видеоарт · авторское',en:'video art · personal'},
+   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
+   role:{ru:'идея, режиссура, звук',en:'concept, direction, sound'}, stack:{ru:'Veo · Suno · DaVinci',en:'Veo · Suno · DaVinci'}},
 ];
 let WORKS = PLACEHOLDERS;
 
@@ -772,7 +793,6 @@ function cardHTML(w, i) {
 function renderWorks() {
   const gal = document.getElementById('gal');
   gal.innerHTML = WORKS.map(cardHTML).join('');
-  document.getElementById('workCount').textContent = `${nn(WORKS.length - 1)} / ${nn(WORKS.length - 1)}`;
 
   gal.querySelectorAll('.card').forEach(card => {
     const w = WORKS[+card.dataset.i];
@@ -817,11 +837,13 @@ const modal = document.getElementById('modal'), mMedia = document.getElementById
 function openModal(w) {
   document.getElementById('mTitle').textContent = t(w.title);
   document.getElementById('mDesc').textContent = t(w.desc);
+  /* строки показываем всегда — это каркас карточки, а не необязательные поля */
   const rows = [[L.role, w.role], [L.stack, w.stack], [L.year, w.year]]
-    .filter(([, v]) => v)
-    .map(([k, v]) => `<div class="meta__row"><span class="meta__k">${k[LANG]}</span><span>${v}</span></div>`);
+    .map(([k, v]) => `<div class="meta__row"><span class="meta__k">${k[LANG]}</span><span>${t(v) || '—'}</span></div>`);
   document.getElementById('mMeta').innerHTML = rows.join('');
+  const [aw, ah] = String(w.ratio).split(':').map(Number);
   mMedia.style.aspectRatio = ar(w.ratio);
+  mMedia.style.setProperty('--ar', (aw / ah).toFixed(4));
   mMedia.innerHTML = w.video
     ? `<video src="${w.video}" controls autoplay playsinline></video>`
     : (w.poster ? `<img src="${w.poster}" alt="">` : L.slot[LANG]);
