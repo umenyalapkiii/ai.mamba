@@ -74,7 +74,9 @@ body{
   overflow-x:clip;
 }
 body.locked{overflow:hidden}
-img{display:block;max-width:100%}
+/* height:auto обязателен: без него атрибуты width/height у <img>
+   задают высоту буквально, и картинка растягивается */
+img{display:block;max-width:100%;height:auto}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
@@ -211,6 +213,10 @@ main,footer{position:relative;z-index:1}
   font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--yellow);margin-bottom:clamp(12px,1.8vw,18px);
 }
+/* вторая половина строки приглушена, разделитель ещё тише —
+   иначе две подписи читаются как одна сплошная */
+.hero__eyebrow s{text-decoration:none;color:var(--yellow-dim);margin:0 .35em}
+.hero__eyebrow b{font-weight:400;color:var(--muted)}
 .hero h1{
   font-family:var(--display);font-weight:700;
   font-size:clamp(48px,10vw,150px);line-height:.95;letter-spacing:-.015em;
@@ -247,11 +253,6 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   text-transform:uppercase;letter-spacing:-.01em;margin:0;line-height:1;
 }
 .sec-body{padding:clamp(34px,5vw,74px) 0}
-.sec-sub{
-  flex:1 0 100%;margin:2px 0 0;max-width:86ch;
-  font-family:var(--mono);font-size:10.5px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--muted-dim);line-height:1.9;
-}
 
 /* ---------- РАБОТЫ ---------- */
 .gal{column-width:300px;column-gap:10px}
@@ -282,7 +283,16 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   position:absolute;right:8px;top:7px;z-index:3;
   font-family:var(--mono);font-size:9.5px;color:var(--muted-dim);
 }
-.card__foot{padding:11px 12px 13px;border-top:1px solid var(--line-soft)}
+/* серия кадров: метка снизу и две подложки, намекающие на стопку */
+.card__series{
+  position:absolute;left:8px;bottom:8px;z-index:3;
+  font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--yellow);border:1px solid var(--yellow-dim);padding:3px 7px;
+  background:rgba(8,8,10,.7);
+}
+.card__strip{position:absolute;inset:0;display:flex;gap:2px;padding:2px;z-index:1}
+.card__strip i{flex:1;background:rgba(255,255,255,.028)}
+.card__foot{padding:11px 12px 13px}
 .card__name{
   display:block;font-family:var(--display);font-weight:600;font-size:17px;
   text-transform:uppercase;margin-bottom:5px;transition:color .25s;
@@ -352,19 +362,13 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   25% {opacity:1}
   100%{opacity:0;transform:rotate(var(--a)) translateX(140px) scale(.15)}
 }
-.pop__hint{
-  position:absolute;left:10px;bottom:10px;z-index:2;
-  font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--muted);background:rgba(8,8,10,.72);padding:5px 9px;border:1px solid var(--line);
-  transition:opacity .4s;
-}
-/* подсказка уходит только после настоящего клика, а не от прокрутки */
-.pop.popped .pop__hint{opacity:0}
+
 .about__body p{font-size:clamp(15px,1.25vw,17.5px);line-height:1.7;color:#C2C1BC;max-width:52ch}
 .about__todo{color:var(--muted-dim);font-style:italic}
 
 /* ---------- ПРОЦЕСС ---------- */
-.faq{border-top:1px solid var(--line-soft)}
+/* верхнюю линию даёт нижняя граница заголовка секции */
+.faq{}
 .q{border-bottom:1px solid var(--line-soft)}
 .q summary{
   list-style:none;cursor:pointer;padding:clamp(15px,1.9vw,22px) 40px clamp(15px,1.9vw,22px) 0;
@@ -449,6 +453,15 @@ footer{
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#4E4E58;
 }
 .modal__media video,.modal__media img{width:100%;height:100%;object-fit:contain;display:block}
+/* лента кадров внутри окна проекта */
+.modal__media.is-series{display:block;overflow-x:auto;overflow-y:hidden}
+.modal__media .series{display:flex;gap:6px;height:100%;padding:6px}
+.modal__media .series > *{
+  flex:0 0 auto;height:100%;aspect-ratio:var(--frame-ar,4/5);display:grid;place-items:center;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),#15151A;
+  border:1px solid var(--line-soft);
+}
+.modal__media .series img{width:100%;height:100%;object-fit:cover}
 .modal__info{padding:clamp(16px,2.4vw,26px);border-top:1px solid var(--line-soft)}
 .modal__info h3{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,30px);text-transform:uppercase;margin:0 0 8px}
 .modal__desc{color:#A9A8A3;font-size:15px;line-height:1.65;margin:0 0 16px;max-width:64ch}
@@ -526,7 +539,7 @@ footer{
 
   <header class="hero">
     <div>
-      <div class="hero__eyebrow">ai artist &amp; director · ai: commercial and experimental</div>
+      <div class="hero__eyebrow">ai artist &amp; director <s>·</s> <b>ai: commercial and experimental</b></div>
       <h1><span>Anastasia</span><span class="y">Arkhipenko</span></h1>
       <p class="hero__lede">I design and direct projects: from visual language to final cut — <strong>AI only, or mixed with real footage</strong></p>
       <div class="fmt">
@@ -555,7 +568,6 @@ footer{
   <section id="work" class="sec-body">
     <div class="sec-head">
       <h2>my work</h2>
-      <p class="sec-sub">commercials · product and fashion films · trailers · music videos · experimental art</p>
     </div>
     <div class="gal" id="gal"></div>
   </section>
@@ -625,7 +637,6 @@ footer{
           <i style="--a:0deg"></i><i style="--a:45deg"></i><i style="--a:90deg"></i><i style="--a:135deg"></i>
           <i style="--a:180deg"></i><i style="--a:225deg"></i><i style="--a:270deg"></i><i style="--a:315deg"></i>
         </span>
-        <span class="pop__hint">pop it</span>
       </div>
       <div class="about__body">
         <p class="about__todo">[this block is still to be written]</p>
@@ -744,11 +755,11 @@ const LANG = 'en';
 const t = v => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[LANG] ?? v.ru ?? '') : (v ?? '');
 
 const PLACEHOLDERS = [
-  {slug:'reklamnyy-film', ratio:'9:16', year:'2026',
+  {slug:'reklamnyy-film', ratio:'16:9', year:'2026',
    title:{ru:'Рекламный фильм',en:'Commercial film'}, meta:{ru:'реклама · продукт',en:'advertising · product'},
    desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
    role:{ru:'идея, режиссура, монтаж',en:'concept, direction, edit'}, stack:{ru:'Seedance · DaVinci',en:'Seedance · DaVinci'}},
-  {slug:'feshn-kampaniya', ratio:'4:5', year:'2026',
+  {slug:'feshn-kampaniya', ratio:'4:5', year:'2026', frames:5,
    title:{ru:'Фэшн-кампания',en:'Fashion campaign'}, meta:{ru:'лукбук · кампейн',en:'lookbook · campaign'},
    desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
    role:{ru:'идея, арт-дирекшн, цвет',en:'concept, art direction, colour'}, stack:{ru:'Nano Banana · Photoshop',en:'Nano Banana · Photoshop'}},
@@ -764,7 +775,7 @@ const PLACEHOLDERS = [
    title:{ru:'Product-фильм',en:'Product film'}, meta:{ru:'предмет · макро',en:'object · macro'},
    desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
    role:{ru:'идея, режиссура',en:'concept, direction'}, stack:{ru:'Kling · DaVinci',en:'Kling · DaVinci'}},
-  {slug:'art', ratio:'16:9', year:'2025',
+  {slug:'art', ratio:'3:2', year:'2025',
    title:{ru:'Экспериментальный арт',en:'Experimental art'}, meta:{ru:'видеоарт · авторское',en:'video art · personal'},
    desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
    role:{ru:'идея, режиссура, звук',en:'concept, direction, sound'}, stack:{ru:'Veo · Suno · DaVinci',en:'Veo · Suno · DaVinci'}},
@@ -779,6 +790,14 @@ const L = {
 };
 const nn = i => String(i + 1).padStart(2, '0');
 const ar = r => String(r).replace(':', '/');
+/* «5 кадров», но «2 кадра» и «1 кадр» — иначе режет глаз */
+const frames = n => {
+  if (LANG === 'en') return `${n} frame${n === 1 ? '' : 's'}`;
+  const t = n % 10, h = n % 100;
+  const word = (t === 1 && h !== 11) ? 'кадр'
+             : (t >= 2 && t <= 4 && (h < 12 || h > 14)) ? 'кадра' : 'кадров';
+  return `${n} ${word}`;
+};
 
 function cardHTML(w, i) {
   const poster = w.poster ? `<img src="${w.poster}" alt="" loading="lazy">` : '';
@@ -787,8 +806,10 @@ function cardHTML(w, i) {
   <a class="card" href="../work/${w.slug}/" data-i="${i}">
     <span class="card__media" style="aspect-ratio:${ar(w.ratio)}">
       ${poster}${prev}
+      ${w.frames && !poster ? `<span class="card__strip">${'<i></i>'.repeat(Math.min(w.frames, 5))}</span>` : ''}
       <span class="card__n">${nn(i)}</span><span class="card__r">${w.ratio}</span>
       ${poster || prev ? '' : L.slot[LANG]}
+      ${w.frames ? `<span class="card__series">${frames(w.frames)}</span>` : ''}
     </span>
     <span class="card__foot">
       <span class="card__name">${t(w.title)}</span>
@@ -845,15 +866,31 @@ function openModal(w) {
   document.getElementById('mTitle').textContent = t(w.title);
   document.getElementById('mDesc').textContent = t(w.desc);
   /* строки показываем всегда — это каркас карточки, а не необязательные поля */
-  const rows = [[L.role, w.role], [L.stack, w.stack], [L.year, w.year]]
+  const rows = [[L.stack, w.stack], [L.year, w.year]]
     .map(([k, v]) => `<div class="meta__row"><span class="meta__k">${k[LANG]}</span><span>${t(v) || '—'}</span></div>`);
   document.getElementById('mMeta').innerHTML = rows.join('');
   const [aw, ah] = String(w.ratio).split(':').map(Number);
-  mMedia.style.aspectRatio = ar(w.ratio);
-  mMedia.style.setProperty('--ar', (aw / ah).toFixed(4));
-  mMedia.innerHTML = w.video
-    ? `<video src="${w.video}" controls autoplay playsinline></video>`
-    : (w.poster ? `<img src="${w.poster}" alt="">` : L.slot[LANG]);
+  const isSeries = !!(w.frames || (w.photos && w.photos.length));
+  /* серию показываем в широком окне: иначе в него влезает ровно один
+     кадр и лента не читается как лента */
+  const boxAr = isSeries ? 2.1 : aw / ah;
+  mMedia.style.aspectRatio = String(boxAr);
+  mMedia.style.setProperty('--ar', boxAr.toFixed(4));
+  mMedia.style.setProperty('--frame-ar', `${aw}/${ah}`);
+  const photos = w.photos && w.photos.length ? w.photos : null;
+  if (photos || w.frames) {
+    /* серия показывается лентой: листается вбок, кадры не сжимаются */
+    const items = photos
+      ? photos.map(src => `<img src="${src}" alt="" loading="lazy">`)
+      : Array.from({length: w.frames}, () => `<span>${L.slot[LANG]}</span>`);
+    mMedia.classList.add('is-series');
+    mMedia.innerHTML = `<span class="series">${items.join('')}</span>`;
+  } else {
+    mMedia.classList.remove('is-series');
+    mMedia.innerHTML = w.video
+      ? `<video src="${w.video}" controls autoplay playsinline></video>`
+      : (w.poster ? `<img src="${w.poster}" alt="">` : L.slot[LANG]);
+  }
   modal.classList.add('open');
   document.body.classList.add('locked');
   document.getElementById('mClose').focus();
@@ -1010,6 +1047,10 @@ document.querySelectorAll('[data-scene]').forEach(root => {
   })();
 });
 
+/* звук наведения — там же, где он был в тесте */
+document.querySelectorAll('.srv__row, .q summary, .soc, .tools span')
+  .forEach(el => el.addEventListener('pointerenter', () => sound.tick()));
+
 /* ---------- луч фона тянется за курсором ---------- */
 (() => {
   const beam = document.getElementById('beam');
@@ -1043,7 +1084,7 @@ document.querySelectorAll('[data-scene]').forEach(root => {
       {threshold: .5}
     ).observe(pop);
   }
-  const byHand = () => { pop.classList.add('popped'); replay(); sound.pop(); };
+  const byHand = () => { replay(); sound.pop(); };
   pop.addEventListener('click', byHand);
   pop.addEventListener('keydown', e => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); byHand(); }
