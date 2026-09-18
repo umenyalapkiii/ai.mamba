@@ -215,7 +215,7 @@ main,footer{position:relative;z-index:1}
 }
 /* вторая половина строки приглушена, разделитель ещё тише —
    иначе две подписи читаются как одна сплошная */
-.hero__eyebrow s{text-decoration:none;color:var(--yellow-dim);margin:0 .35em}
+.hero__eyebrow s{text-decoration:none;color:var(--muted);margin:0 .4em;font-size:1.45em;line-height:0;vertical-align:-.06em}
 .hero__eyebrow b{font-weight:400;color:var(--muted)}
 .hero h1{
   font-family:var(--display);font-weight:700;
@@ -454,14 +454,34 @@ footer{
 }
 .modal__media video,.modal__media img{width:100%;height:100%;object-fit:contain;display:block}
 /* лента кадров внутри окна проекта */
-.modal__media.is-series{display:block;overflow-x:auto;overflow-y:hidden}
-.modal__media .series{display:flex;gap:6px;height:100%;padding:6px}
-.modal__media .series > *{
-  flex:0 0 auto;height:100%;aspect-ratio:var(--frame-ar,4/5);display:grid;place-items:center;
+.modal__media.is-series{overflow:hidden}
+.car{position:absolute;inset:0;overflow:hidden}
+.car__track{display:flex;height:100%;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.car__track > *{
+  flex:0 0 100%;height:100%;display:grid;place-items:center;
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),#15151A;
-  border:1px solid var(--line-soft);
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#4E4E58;
 }
-.modal__media .series img{width:100%;height:100%;object-fit:cover}
+.car__track img{width:100%;height:100%;object-fit:contain}
+.car__nav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(8,8,10,.72);border:1px solid var(--line);color:var(--text);
+  transition:background .25s,border-color .25s,color .25s;
+}
+.car__nav:hover{background:rgba(237,173,34,.18);border-color:var(--yellow);color:var(--yellow)}
+.car__nav[disabled]{opacity:.3;pointer-events:none}
+.car__nav--prev{left:12px}
+.car__nav--next{right:12px}
+.car__count{
+  position:absolute;right:12px;top:12px;z-index:3;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+  color:var(--muted);background:rgba(8,8,10,.72);border:1px solid var(--line);
+  padding:5px 10px;border-radius:999px;font-variant-numeric:tabular-nums;
+}
+.car__dots{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;display:flex;gap:6px}
+.car__dots i{width:7px;height:7px;border-radius:999px;background:#3A3A42;transition:width .35s,background .35s}
+.car__dots i.on{width:22px;background:var(--yellow)}
 .modal__info{padding:clamp(16px,2.4vw,26px);border-top:1px solid var(--line-soft)}
 .modal__info h3{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,30px);text-transform:uppercase;margin:0 0 8px}
 .modal__desc{color:#A9A8A3;font-size:15px;line-height:1.65;margin:0 0 16px;max-width:64ch}
@@ -630,8 +650,8 @@ footer{
            data-ru-label="Лопнуть пузырь" aria-label="Pop the bubble">
         <span class="pop__base" role="img"
               aria-label="Anastasia Arkhipenko blowing a bubble"></span>
-        <span class="pop__bubble" style="left:32.855%;top:49.641%;width:36.045%;height:36.045%">
-          <span class="pop__slice" style="width:277.43%;height:277.43%;left:-91.15%;top:-137.72%"></span>
+        <span class="pop__bubble" style="left:33.158%;top:50.395%;width:35.395%;height:33.421%">
+          <span class="pop__slice" style="width:282.53%;height:299.21%;left:-93.68%;top:-150.79%"></span>
         </span>
         <span class="pop__burst" aria-hidden="true">
           <i style="--a:0deg"></i><i style="--a:45deg"></i><i style="--a:90deg"></i><i style="--a:135deg"></i>
@@ -775,6 +795,11 @@ const PLACEHOLDERS = [
    title:{ru:'Product-фильм',en:'Product film'}, meta:{ru:'предмет · макро',en:'object · macro'},
    desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
    role:{ru:'идея, режиссура',en:'concept, direction'}, stack:{ru:'Kling · DaVinci',en:'Kling · DaVinci'}},
+  {slug:'dooh', ratio:'21:9', year:'2025',
+   title:{ru:'Наружный экран',en:'Outdoor screen'}, meta:{ru:'DOOH · медиафасад',en:'DOOH · media facade'},
+   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',
+         en:'Project description goes here: the idea, the brief, what makes this one different'},
+   role:{ru:'идея, режиссура',en:'concept, direction'}, stack:{ru:'Kling · DaVinci',en:'Kling · DaVinci'}},
   {slug:'art', ratio:'3:2', year:'2025',
    title:{ru:'Экспериментальный арт',en:'Experimental art'}, meta:{ru:'видеоарт · авторское',en:'video art · personal'},
    desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
@@ -787,6 +812,8 @@ const L = {
   stack: {ru:'стек',  en:'stack'},
   year:  {ru:'год',   en:'year'},
   slot:  {ru:'место под кадр', en:'frame goes here'},
+  prev:  {ru:'Предыдущий кадр', en:'Previous frame'},
+  next:  {ru:'Следующий кадр',  en:'Next frame'},
 };
 const nn = i => String(i + 1).padStart(2, '0');
 const ar = r => String(r).replace(':', '/');
@@ -860,6 +887,29 @@ fetch('../projects.json', { cache: 'no-store' })
   })
   .catch(() => {});   // нет файла — остаются заглушки, это нормально
 
+/* ---------- карусель кадров внутри окна проекта ---------- */
+function wireCarousel(root, total) {
+  const track = root.querySelector('.car__track');
+  const dots = [...root.querySelectorAll('.car__dots i')];
+  const prev = root.querySelector('.car__nav--prev');
+  const next = root.querySelector('.car__nav--next');
+  const count = root.querySelector('.car__count');
+  let i = 0;
+  const show = n => {
+    i = Math.max(0, Math.min(total - 1, n));
+    track.style.transform = `translateX(${-i * 100}%)`;
+    dots.forEach((d, k) => d.classList.toggle('on', k === i));
+    count.textContent = `${i + 1} / ${total}`;
+    prev.disabled = i === 0;
+    next.disabled = i === total - 1;
+  };
+  prev.addEventListener('click', () => { show(i - 1); sound.tick(); });
+  next.addEventListener('click', () => { show(i + 1); sound.tick(); });
+  dots.forEach((d, k) => d.addEventListener('click', () => { show(k); sound.tick(); }));
+  root.dataset.car = '1';
+  show(0);
+}
+
 /* ---------- модалка ---------- */
 const modal = document.getElementById('modal'), mMedia = document.getElementById('mMedia');
 function openModal(w) {
@@ -879,12 +929,23 @@ function openModal(w) {
   mMedia.style.setProperty('--frame-ar', `${aw}/${ah}`);
   const photos = w.photos && w.photos.length ? w.photos : null;
   if (photos || w.frames) {
-    /* серия показывается лентой: листается вбок, кадры не сжимаются */
     const items = photos
       ? photos.map(src => `<img src="${src}" alt="" loading="lazy">`)
       : Array.from({length: w.frames}, () => `<span>${L.slot[LANG]}</span>`);
     mMedia.classList.add('is-series');
-    mMedia.innerHTML = `<span class="series">${items.join('')}</span>`;
+    mMedia.innerHTML = `
+      <div class="car">
+        <div class="car__track">${items.join('')}</div>
+        <button class="car__nav car__nav--prev" aria-label="${L.prev[LANG]}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 5-7 7 7 7"/></svg>
+        </button>
+        <button class="car__nav car__nav--next" aria-label="${L.next[LANG]}">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 5 7 7-7 7"/></svg>
+        </button>
+        <span class="car__count"></span>
+        <span class="car__dots">${'<i></i>'.repeat(items.length)}</span>
+      </div>`;
+    wireCarousel(mMedia, items.length);
   } else {
     mMedia.classList.remove('is-series');
     mMedia.innerHTML = w.video
@@ -902,7 +963,12 @@ function closeModal() {
 }
 document.getElementById('mClose').addEventListener('click', closeModal);
 modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+addEventListener('keydown', e => {
+  if (!modal.classList.contains('open')) return;
+  if (e.key === 'Escape') return closeModal();
+  const nav = e.key === 'ArrowLeft' ? '.car__nav--prev' : e.key === 'ArrowRight' ? '.car__nav--next' : null;
+  if (nav) mMedia.querySelector(nav)?.click();
+});
 
 /* ============================================================
    ЗВУК — синтезируется на лету, файлов не грузим.
@@ -935,8 +1001,11 @@ const sound = (() => {
       const c = ready(); if (!c) return;
       const o = c.createOscillator(); o.type = 'square';
       o.frequency.setValueAtTime(1180, c.currentTime);
-      o.frequency.exponentialRampToValueAtTime(760, c.currentTime + .04);
-      env(c, o, .035, .06); o.start(); o.stop(c.currentTime + .07);
+      o.frequency.exponentialRampToValueAtTime(760, c.currentTime + .05);
+      env(c, o, .13, .09); o.start(); o.stop(c.currentTime + .1);
+      const n = noise(c, .05, 3);                       // короткий призвук для «тела»
+      const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 1400;
+      n.connect(hp); env(c, hp, .09, .05); n.start();
     },
     /* «тыщ» — квадрат с резким падением высоты, щелчок и низкий подхват */
     hit() {
@@ -960,7 +1029,7 @@ const sound = (() => {
       const bp = c.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.1;
       bp.frequency.setValueAtTime(1500, c.currentTime);
       bp.frequency.exponentialRampToValueAtTime(420, c.currentTime + .14);
-      s.connect(bp); env(c, bp, .22, .17); s.start();
+      s.connect(bp); env(c, bp, .32, .19); s.start();
     }
   };
 })();
