@@ -1,0 +1,966 @@
+<meta charset="utf-8">
+<title>Мамба: аркада и бургунди</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Manrope:wght@300;400;500;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ДВА ТЕСТА ГЛАВНОЙ
+   A · АРКАДА    чёрно-жёлтый файтинг, имя рвётся в WebGL
+   B · БУРГУНДИ  густое вино, дидон-антиква, стекающая кровь
+
+   Жёлтый #EDAD22 снят пипеткой с костюма на исходнике.
+   ============================================================ */
+
+:root{
+  --yellow:#EDAD22;
+
+  /* бургунди: от почти чёрного вина к артериальному */
+  --wine-900:#120508;
+  --wine-800:#24080F;
+  --wine-700:#4D1821;   /* Apple Burgundy */
+  --wine-600:#6E1122;
+  --blood:#8C0F1E;
+  --cream:#F0EBE6;
+
+  --shell:#0B0B0C;
+  --shell-line:#2A2A2F;
+  --shell-text:#F2F1EE;
+  --shell-mute:#8B8B93;
+
+  --scene-w:2168;
+  --scene-h:2896;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--shell);color:var(--shell-text);
+  font-family:'Manrope',system-ui,sans-serif;
+  /* clip, а не hidden: hidden делает body скролл-контейнером
+     и position:sticky у панели перестаёт липнуть к окну */
+  overflow-x:clip;
+}
+img{display:block;max-width:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--yellow);outline-offset:3px}
+
+/* ---------- панель переключения ---------- */
+.bar{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  padding:10px clamp(12px,3vw,24px);
+  background:rgba(11,11,12,.85);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--shell-line);
+}
+.bar__label{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--shell-mute);margin-right:8px;
+}
+.bar__btn{
+  padding:7px 14px;border-radius:999px;border:1px solid var(--shell-line);
+  font-size:13px;font-weight:500;color:var(--shell-mute);white-space:nowrap;
+  transition:color .2s,border-color .2s,background .2s;
+}
+.bar__btn:hover{color:var(--shell-text);border-color:#43434a}
+.bar__btn[aria-selected="true"]{background:var(--yellow);border-color:var(--yellow);color:#151208;font-weight:600}
+.bar__sound{
+  margin-left:auto;display:flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--shell-mute);padding:7px 12px;
+  border:1px solid var(--shell-line);border-radius:999px;
+}
+.bar__sound:hover{color:var(--shell-text)}
+.bar__sound[aria-pressed="true"]{color:var(--yellow);border-color:#4a3c14}
+.bar__dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.4}
+.bar__sound[aria-pressed="true"] .bar__dot{opacity:1;animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+
+.hint{
+  padding:10px clamp(12px,3vw,24px);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--shell-mute);border-bottom:1px solid var(--shell-line);
+}
+.hint b{color:var(--yellow);font-weight:500}
+.dir[hidden]{display:none}
+
+/* ============================================================
+   СЦЕНА С МАМБОЙ — общая механика обоих тестов.
+   Слои стоят в процентах от исходного холста 2168×2896.
+   ============================================================ */
+.scene{
+  position:relative;width:100%;
+  aspect-ratio:var(--scene-w)/var(--scene-h);
+  max-width:max(240px,54vh);margin-inline:auto;
+  touch-action:manipulation;cursor:crosshair;
+}
+.scene img{position:absolute;will-change:transform;-webkit-user-drag:none;user-select:none}
+.scene .fig{left:5.81%;top:1.07%;width:94.19%}
+.scene .ta{filter:drop-shadow(0 4px 18px rgba(0,0,0,.45))}
+.scene .ta[data-i="0"]{left:2.12%; top:22.55%;width:14.81%}
+.scene .ta[data-i="1"]{left:5.86%; top:31.56%;width:15.54%}
+.scene .ta[data-i="2"]{left:13.28%;top:38.64%;width:15.59%}
+.scene .ta[data-i="3"]{left:20.39%;top:45.44%;width:15.31%}
+.scene .ta[data-i="4"]{left:27.26%;top:52.14%;width:15.04%}
+.scene .ta[data-i="5"]{left:33.49%;top:59.36%;width:15.31%}
+
+.scene__cue{
+  position:absolute;left:4%;bottom:2%;z-index:3;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  padding:6px 11px;border-radius:999px;border:1px solid currentColor;
+  opacity:.55;transition:opacity .5s;pointer-events:none;
+}
+.scene.armed .scene__cue{opacity:0}
+
+.spark{
+  position:absolute;width:5px;height:5px;border-radius:50%;
+  pointer-events:none;z-index:4;background:var(--yellow);
+}
+
+/* теги-форматы: flex-grow не даёт последнему элементу осиротеть */
+.fmt{display:flex;flex-wrap:wrap;gap:7px}
+.fmt span{
+  flex:1 1 auto;text-align:center;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 12px;border:1px solid #2A2A2F;color:#9B9AA2;
+}
+
+/* ============================================================
+   A · АРКАДА
+   ============================================================ */
+#arcade{background:#08080A;color:#F2F1EE;position:relative;overflow:hidden}
+#arcade .bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+#arcade .bg__grid{
+  position:absolute;inset:-2px;opacity:.5;
+  background-image:
+    linear-gradient(rgba(237,173,34,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(237,173,34,.055) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(120% 90% at 50% 12%,#000 0%,transparent 78%);
+}
+#arcade .bg__beam{
+  position:absolute;inset:0;
+  background:radial-gradient(420px 420px at var(--mx,50%) var(--my,30%),
+    rgba(237,173,34,.14) 0%,rgba(237,173,34,.045) 38%,transparent 70%);
+}
+#arcade .wrap{max-width:1500px;margin:0 auto;padding:0 clamp(16px,4vw,56px);position:relative;z-index:1}
+
+#arcade .hud{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 0 0;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#6E6E78;
+}
+#arcade .hud b{color:var(--yellow);font-weight:500}
+#arcade .hud__bar{flex:1 1 120px;height:4px;min-width:80px;background:#1A1A1E;position:relative;overflow:hidden}
+#arcade .hud__bar i{position:absolute;inset:0 30% 0 0;background:var(--yellow);animation:drain 5.5s ease-in-out infinite alternate}
+@keyframes drain{to{right:8%}}
+
+#arcade .hero{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);
+  align-items:center;gap:clamp(16px,3vw,44px);
+  padding:clamp(20px,3.5vw,44px) 0 clamp(36px,5vw,68px);
+}
+#arcade .eyebrow{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--yellow);margin-bottom:clamp(12px,1.8vw,18px);
+}
+/* имя: DOM-версия видна всегда, WebGL подменяет её только когда завёлся
+   И когда у заголовка есть реальный размер (см. paint() в скрипте) */
+#arcade .name{position:relative}
+#arcade .name h1{
+  font-family:'Oswald',system-ui,sans-serif;font-weight:700;
+  font-size:clamp(48px,10vw,150px);line-height:.95;letter-spacing:-.015em;
+  text-transform:uppercase;margin:0;
+}
+#arcade .name h1 span{display:block}
+#arcade .name h1 .y{color:var(--yellow)}
+#arcade .name canvas{position:absolute;inset:0;width:100%;height:100%;display:none}
+#arcade .name.gl h1{visibility:hidden}
+#arcade .name.gl canvas{display:block}
+
+#arcade .lede{
+  font-size:clamp(15px,1.3vw,18px);line-height:1.5;max-width:44ch;
+  color:#C2C1BC;margin:clamp(18px,2.4vw,26px) 0 clamp(16px,2.2vw,24px);
+}
+#arcade .lede strong{color:#F2F1EE;font-weight:600}
+#arcade .fmt span{border-color:#26262B;background:rgba(237,173,34,.03)}
+
+#arcade .select{padding-bottom:clamp(40px,7vw,90px)}
+#arcade .select__head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:#6E6E78;padding:0 0 14px;border-bottom:1px solid #1E1E22;margin-bottom:18px;
+}
+#arcade .gal{column-width:300px;column-gap:10px}
+#arcade .cardA{
+  display:block;width:100%;break-inside:avoid;margin-bottom:10px;
+  position:relative;text-align:left;padding:0;
+  border:1px solid #232328;background:#0D0D10;
+  transition:border-color .25s,transform .25s cubic-bezier(.16,1,.3,1);
+}
+#arcade .cardA:hover,#arcade .cardA:focus-visible{border-color:var(--yellow);transform:translateY(-4px)}
+#arcade .cardA__media{
+  position:relative;display:grid;place-items:center;overflow:hidden;
+  background:repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),#111116;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.12em;color:#4E4E58;
+}
+#arcade .cardA__media::after{
+  content:"";position:absolute;left:0;right:0;height:38%;
+  background:linear-gradient(180deg,transparent,rgba(237,173,34,.16),transparent);
+  transform:translateY(-120%);transition:transform .6s cubic-bezier(.16,1,.3,1);
+}
+#arcade .cardA:hover .cardA__media::after{transform:translateY(300%)}
+#arcade .cardA__n{
+  position:absolute;left:8px;top:7px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:10px;
+  color:var(--yellow);font-variant-numeric:tabular-nums;
+}
+#arcade .cardA__r{
+  position:absolute;right:8px;top:7px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:9.5px;color:#5A5A64;
+}
+#arcade .cardA__foot{padding:11px 12px 13px;border-top:1px solid #1B1B20}
+#arcade .cardA__name{
+  display:block;font-family:'Oswald',system-ui,sans-serif;font-weight:600;
+  font-size:17px;text-transform:uppercase;margin-bottom:5px;transition:color .25s;
+}
+#arcade .cardA:hover .cardA__name{color:var(--yellow)}
+#arcade .cardA__meta{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:#6E6E78;
+}
+
+/* ============================================================
+   B · БУРГУНДИ
+   Густое вино, антиква с высоким контрастом, стекающая кровь.
+   Кровь — canvas: капли копят массу, срываются, оставляют
+   подтёк и обтекают курсор. Слой лежит под текстом.
+   ============================================================ */
+#wine{
+  position:relative;overflow:hidden;color:var(--cream);
+  background:
+    radial-gradient(130% 80% at 76% 6%, #57121F 0%, rgba(87,18,31,0) 58%),
+    radial-gradient(90% 70% at 8% 88%, #3A0C16 0%, rgba(58,12,22,0) 62%),
+    linear-gradient(176deg, var(--wine-800) 0%, var(--wine-900) 62%, #0A0305 100%);
+}
+#wine .blood{
+  position:absolute;inset:0;z-index:0;pointer-events:none;
+  opacity:.85;
+  /* слипание капель: размытие плюс контраст режут полупрозрачные края */
+  filter:blur(2px) contrast(3.4) saturate(1.08);
+}
+#wine .vignette{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(120% 95% at 50% 38%, transparent 42%, rgba(6,2,3,.72) 100%);
+}
+#wine .wrap{max-width:1360px;margin:0 auto;padding:0 clamp(16px,4vw,56px);position:relative;z-index:2}
+
+#wine .hero{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.76fr);
+  align-items:center;gap:clamp(16px,3vw,48px);
+  padding:clamp(28px,4.5vw,64px) 0 clamp(32px,4.5vw,58px);
+}
+#wine .eyebrow{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:rgba(240,235,230,.5);
+  padding-bottom:clamp(14px,2vw,20px);margin-bottom:clamp(14px,2vw,20px);
+  border-bottom:1px solid rgba(240,235,230,.16);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+}
+#wine h1{
+  font-family:'Playfair Display',Georgia,serif;font-weight:900;
+  font-size:clamp(46px,9vw,132px);line-height:.92;letter-spacing:-.025em;
+  margin:0 0 clamp(18px,2.4vw,28px);
+}
+#wine h1 span{display:block}
+#wine h1 .ital{
+  font-style:italic;font-weight:500;
+  /* золото по краям, артериальный в середине — как подсвеченное вино */
+  background:linear-gradient(96deg,#F3D9A0 0%,#C8455A 34%,#8C0F1E 58%,#E8C089 100%);
+  background-size:220% 100%;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:pour 13s ease-in-out infinite;
+}
+@keyframes pour{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+#wine .lede{
+  font-size:clamp(15px,1.3vw,18.5px);line-height:1.6;max-width:44ch;font-weight:300;
+  color:rgba(240,235,230,.72);margin:0 0 clamp(20px,2.6vw,30px);
+}
+#wine .lede strong{color:var(--cream);font-weight:600}
+#wine .fmt span{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;letter-spacing:.16em;
+  padding:9px 14px;border-radius:0;
+  border:1px solid rgba(240,235,230,.2);
+  background:rgba(18,5,8,.4);
+  color:rgba(240,235,230,.72);
+  backdrop-filter:blur(6px);
+  transition:background .35s,border-color .35s,color .35s;
+}
+#wine .fmt span:hover{background:var(--wine-700);border-color:var(--blood);color:var(--cream)}
+
+#wine .gallery{padding-bottom:clamp(44px,7vw,96px)}
+#wine .gallery__head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;
+  padding-bottom:18px;margin-bottom:22px;
+  border-bottom:1px solid rgba(240,235,230,.16);
+}
+#wine .gallery__head h2{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:clamp(24px,2.8vw,40px);font-weight:700;letter-spacing:-.02em;margin:0;
+}
+#wine .gallery__head span{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:rgba(240,235,230,.45);
+}
+#wine .gal{column-width:252px;column-gap:clamp(10px,1.3vw,18px)}
+#wine .cardG{
+  display:block;width:100%;break-inside:avoid;margin-bottom:clamp(10px,1.3vw,18px);
+  position:relative;text-align:left;padding:9px;
+  border-radius:4px;overflow:hidden;
+  background:rgba(240,235,230,.045);
+  border:1px solid rgba(240,235,230,.11);
+  backdrop-filter:blur(16px) saturate(1.2);
+  box-shadow:0 1px 0 rgba(255,255,255,.07) inset, 0 20px 46px -26px rgba(0,0,0,.95);
+  transition:transform .55s cubic-bezier(.16,1,.3,1),background .4s,border-color .4s;
+}
+#wine .cardG:hover,#wine .cardG:focus-visible{
+  transform:translateY(-7px);
+  background:rgba(140,15,30,.14);
+  border-color:rgba(200,69,90,.4);
+}
+#wine .cardG__media{
+  position:relative;display:grid;place-items:center;overflow:hidden;border-radius:2px;
+  background:linear-gradient(152deg,rgba(110,17,34,.55) 0%,rgba(36,8,15,.75) 100%);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,235,230,.38);
+}
+#wine .cardG__media::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(112deg,transparent 34%,rgba(243,217,160,.22) 50%,transparent 66%);
+  transform:translateX(-130%);transition:transform .9s cubic-bezier(.16,1,.3,1);
+}
+#wine .cardG:hover .cardG__media::after{transform:translateX(130%)}
+#wine .cardG__foot{padding:13px 6px 5px;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+#wine .cardG__name{
+  display:block;font-family:'Playfair Display',Georgia,serif;
+  font-size:18px;font-weight:700;letter-spacing:-.01em;margin-bottom:5px;
+}
+#wine .cardG__meta{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,235,230,.45);
+}
+#wine .cardG__year{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:10px;color:rgba(240,235,230,.38);font-variant-numeric:tabular-nums;flex:0 0 auto;
+}
+
+/* ---------- адаптив ---------- */
+@media (max-width:880px){
+  #arcade .hero,#wine .hero{grid-template-columns:1fr;gap:8px}
+  .fmt span{flex:1 1 40%}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+}
+</style>
+
+<nav class="bar" role="tablist" aria-label="Тесты главной">
+  <span class="bar__label">тест</span>
+  <button class="bar__btn" role="tab" aria-selected="true"  aria-controls="arcade" id="tA">A · Аркада</button>
+  <button class="bar__btn" role="tab" aria-selected="false" aria-controls="wine"   id="tB">B · Бургунди</button>
+  <button class="bar__sound" id="snd" aria-pressed="false" aria-label="Включить звук">
+    <span class="bar__dot"></span><span id="sndTxt">звук выкл</span>
+  </button>
+</nav>
+
+<p class="hint">веди курсор по мамбе — она следит · <b>кликни, чтобы ударить</b> · в аркаде имя рвется от курсора, в бургунди кровь обтекает его</p>
+
+<!-- ======================= A · АРКАДА ======================= -->
+<section class="dir" id="arcade" role="tabpanel" aria-labelledby="tA">
+  <div class="bg"><div class="bg__grid"></div><div class="bg__beam" id="beam"></div></div>
+  <div class="wrap">
+    <div class="hud">
+      <span>player <b>01</b></span>
+      <span class="hud__bar"><i></i></span>
+      <span>режим <b>директор</b></span>
+      <span>раунд <b>2026</b></span>
+    </div>
+
+    <header class="hero">
+      <div>
+        <div class="eyebrow">ai artist &amp; director</div>
+        <div class="name" id="nameHost">
+          <h1><span>Анастасия</span><span class="y">Архипенко</span></h1>
+          <canvas id="glName" aria-hidden="true"></canvas>
+        </div>
+        <p class="lede">Проектирую и режиссирую проекты: от визуального языка до готового видео — <strong>полностью на ИИ или в связке с реальной съемкой</strong></p>
+        <div class="fmt">
+          <span>реклама</span><span>fashion</span><span>музыкальные сниппеты</span>
+          <span>трейлеры</span><span>экспериментальный арт</span>
+        </div>
+      </div>
+      <div class="scene" data-scene data-voice="arcade">
+        <img class="fig" src="assets/kick-1600.webp" alt="Анастасия Архипенко в желтом костюме в прыжке с ударом ноги">
+        <img class="ta" data-i="0" src="assets/ta-hi-0.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="1" src="assets/ta-hi-1.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="2" src="assets/ta-hi-2.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="3" src="assets/ta-hi-3.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="4" src="assets/ta-hi-4.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="5" src="assets/ta-hi-5.webp" alt="" aria-hidden="true">
+        <span class="scene__cue">клик — удар</span>
+      </div>
+    </header>
+
+    <section class="select">
+      <div class="select__head"><span>выбери работу</span><span>06 / 06</span></div>
+      <div class="gal" id="galA"></div>
+    </section>
+  </div>
+</section>
+
+<!-- ======================= B · БУРГУНДИ ======================= -->
+<section class="dir" id="wine" role="tabpanel" aria-labelledby="tB" hidden>
+  <canvas class="blood" id="bloodCanvas" aria-hidden="true"></canvas>
+  <div class="vignette"></div>
+  <div class="wrap">
+    <header class="hero">
+      <div>
+        <div class="eyebrow"><span>ai artist &amp; director</span><span>2026</span></div>
+        <h1><span>Анастасия</span><span class="ital">Архипенко</span></h1>
+        <p class="lede">Проектирую и режиссирую проекты: от визуального языка до готового видео — <strong>полностью на ИИ или в связке с реальной съемкой</strong></p>
+        <div class="fmt">
+          <span>реклама</span><span>fashion</span><span>музыкальные сниппеты</span>
+          <span>трейлеры</span><span>экспериментальный арт</span>
+        </div>
+      </div>
+      <div class="scene" data-scene data-voice="wine">
+        <img class="fig" src="assets/kick-1600.webp" alt="Анастасия Архипенко в желтом костюме в прыжке с ударом ноги">
+        <img class="ta" data-i="0" src="assets/ta-hi-0.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="1" src="assets/ta-hi-1.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="2" src="assets/ta-hi-2.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="3" src="assets/ta-hi-3.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="4" src="assets/ta-hi-4.webp" alt="" aria-hidden="true">
+        <img class="ta" data-i="5" src="assets/ta-hi-5.webp" alt="" aria-hidden="true">
+        <span class="scene__cue">клик — удар</span>
+      </div>
+    </header>
+
+    <section class="gallery">
+      <div class="gallery__head"><h2>Мои работы</h2><span>06 проектов</span></div>
+      <div class="gal" id="galB"></div>
+    </section>
+  </div>
+</section>
+
+<script>
+/* ============================================================
+   ДАННЫЕ — заглушки. Позже их отдаёт projects.json из works/
+   ============================================================ */
+const WORKS = [
+  {name:'Рекламный фильм',       meta:'реклама · продукт',     ratio:'9:16', year:'2026'},
+  {name:'Фэшн-кампания',         meta:'лукбук · кампейн',      ratio:'4:5',  year:'2026'},
+  {name:'Музыкальный сниппет',   meta:'вертикаль · по битам',  ratio:'9:16', year:'2026'},
+  {name:'Трейлер',               meta:'кино · тизер',          ratio:'16:9', year:'2025'},
+  {name:'Product-фильм',         meta:'предмет · макро',       ratio:'1:1',  year:'2025'},
+  {name:'Экспериментальный арт', meta:'видеоарт · авторское',  ratio:'16:9', year:'2025'},
+];
+const nn = i => String(i + 1).padStart(2, '0');
+const ar = r => r.split(':').join('/');
+
+document.getElementById('galA').innerHTML = WORKS.map((w, i) => `
+  <button class="cardA" type="button">
+    <span class="cardA__media" style="aspect-ratio:${ar(w.ratio)}">
+      <span class="cardA__n">${nn(i)}</span><span class="cardA__r">${w.ratio}</span>
+      место под кадр
+    </span>
+    <span class="cardA__foot">
+      <span class="cardA__name">${w.name}</span>
+      <span class="cardA__meta">${w.meta} · ${w.year}</span>
+    </span>
+  </button>`).join('');
+
+document.getElementById('galB').innerHTML = WORKS.map(w => `
+  <button class="cardG" type="button">
+    <span class="cardG__media" style="aspect-ratio:${ar(w.ratio)}">место под кадр</span>
+    <span class="cardG__foot">
+      <span>
+        <span class="cardG__name">${w.name}</span>
+        <span class="cardG__meta">${w.meta}</span>
+      </span>
+      <span class="cardG__year">${w.year}</span>
+    </span>
+  </button>`).join('');
+
+/* ============================================================
+   ЗВУК — синтезируется на лету, файлов не грузим.
+   ============================================================ */
+const sound = (() => {
+  let ctx = null, on = false;
+  const ready = () => {
+    if (!on) return null;
+    if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  };
+  const env = (c, node, peak, dur) => {
+    const g = c.createGain();
+    g.gain.setValueAtTime(peak, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001, c.currentTime + dur);
+    node.connect(g).connect(c.destination);
+    return g;
+  };
+  const noise = (c, dur, curve) => {
+    const buf = c.createBuffer(1, Math.ceil(c.sampleRate * dur), c.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / d.length, curve);
+    const s = c.createBufferSource(); s.buffer = buf; return s;
+  };
+
+  const voices = {
+    /* аркада: «тыщ» — квадрат с резким падением высоты плюс щелчок */
+    arcade: {
+      tick(c) {
+        const o = c.createOscillator(); o.type = 'square';
+        o.frequency.setValueAtTime(1180, c.currentTime);
+        o.frequency.exponentialRampToValueAtTime(760, c.currentTime + .04);
+        env(c, o, .035, .06); o.start(); o.stop(c.currentTime + .07);
+      },
+      hit(c) {
+        const o = c.createOscillator(); o.type = 'square';
+        o.frequency.setValueAtTime(1500, c.currentTime);
+        o.frequency.exponentialRampToValueAtTime(90, c.currentTime + .17);
+        env(c, o, .12, .2); o.start(); o.stop(c.currentTime + .21);
+        const s = noise(c, .3, 3.4);
+        const hp = c.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 900;
+        s.connect(hp); env(c, hp, .2, .3); s.start();
+        const sub = c.createOscillator(); sub.type = 'sine';
+        sub.frequency.setValueAtTime(190, c.currentTime);
+        sub.frequency.exponentialRampToValueAtTime(42, c.currentTime + .26);
+        env(c, sub, .26, .3); sub.start(); sub.stop(c.currentTime + .31);
+      }
+    },
+    /* бургунди: густо и влажно — глухой низ и короткий всплеск */
+    wine: {
+      tick(c) {
+        const s = noise(c, .1, 4);
+        const bp = c.createBiquadFilter(); bp.type = 'bandpass';
+        bp.frequency.value = 2200; bp.Q.value = 3;
+        s.connect(bp); env(c, bp, .06, .1); s.start();
+      },
+      hit(c) {
+        const s = noise(c, .55, 1.8);
+        const lp = c.createBiquadFilter(); lp.type = 'lowpass';
+        lp.frequency.setValueAtTime(1900, c.currentTime);
+        lp.frequency.exponentialRampToValueAtTime(260, c.currentTime + .5);
+        s.connect(lp); env(c, lp, .17, .55); s.start();
+        const o = c.createOscillator(); o.type = 'sine';
+        o.frequency.setValueAtTime(110, c.currentTime);
+        o.frequency.exponentialRampToValueAtTime(34, c.currentTime + .42);
+        env(c, o, .3, .46); o.start(); o.stop(c.currentTime + .47);
+      }
+    }
+  };
+
+  const play = (voice, kind) => { const c = ready(); if (c) (voices[voice] || voices.arcade)[kind](c); };
+  return {
+    toggle() { on = !on; if (on) ready(); return on; },
+    tick(v) { play(v, 'tick'); },
+    hit(v)  { play(v, 'hit'); }
+  };
+})();
+
+const sndBtn = document.getElementById('snd'), sndTxt = document.getElementById('sndTxt');
+sndBtn.addEventListener('click', () => {
+  const on = sound.toggle();
+  sndBtn.setAttribute('aria-pressed', String(on));
+  sndBtn.setAttribute('aria-label', on ? 'Выключить звук' : 'Включить звук');
+  sndTxt.textContent = on ? 'звук вкл' : 'звук выкл';
+  if (on) sound.tick('arcade');
+});
+
+/* ============================================================
+   СЦЕНА С МАМБОЙ
+   ============================================================ */
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DIR_X = -0.649, DIR_Y = -0.761;
+const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+const impacts = [];
+
+function sparks(root, n) {
+  if (REDUCED) return;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('span');
+    s.className = 'spark';
+    s.style.left = '24%'; s.style.top = '26%';
+    root.appendChild(s);
+    const a = -2.4 + (Math.random() - .5) * 1.5, dist = 60 + Math.random() * 130;
+    s.animate([
+      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: `translate(${Math.cos(a) * dist}px,${Math.sin(a) * dist}px) scale(0)`, opacity: 0 }
+    ], { duration: 420 + Math.random() * 320, easing: 'cubic-bezier(.2,.7,.3,1)' })
+     .onfinish = () => s.remove();
+  }
+}
+
+function initScene(root) {
+  const fig = root.querySelector('.fig');
+  const tas = [...root.querySelectorAll('.ta')];
+  const voice = root.dataset.voice;
+  let tx = 0, ty = 0, cx = 0, cy = 0, fire = 0, hovering = false;
+
+  root.addEventListener('pointermove', e => {
+    const r = root.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - .5) * 2;
+    ty = ((e.clientY - r.top) / r.height - .5) * 2;
+    if (!hovering) { hovering = true; sound.tick(voice); }
+  });
+  root.addEventListener('pointerleave', () => { tx = ty = 0; hovering = false; });
+
+  root.addEventListener('click', () => {
+    root.classList.add('armed');
+    if (fire > 0) return;
+    fire = 1;
+    sound.hit(voice);
+    if (voice === 'arcade') sparks(root, 14);
+    impacts.forEach(fn => fn(voice));
+  });
+
+  if (REDUCED) return;
+
+  (function frame() {
+    cx += (tx - cx) * .07;
+    cy += (ty - cy) * .07;
+
+    const p = 1 - fire;
+    const punch = Math.sin(clamp01(p * 1.7) * Math.PI);
+    fig.style.transform =
+      `translate3d(${cx * 9 - punch * 8}px, ${cy * 7 + punch * 3}px, 0) rotate(${-punch * .8}deg)`;
+
+    tas.forEach((el, i) => {
+      const depth = 1 + i * .32;
+      const e = Math.sin(clamp01((p - i * .05) / .72) * Math.PI);
+      const amp = 90 + i * 26;
+      el.style.transform =
+        `translate3d(${cx * 9 * depth + DIR_X * e * amp}px, ${cy * 7 * depth + DIR_Y * e * amp}px, 0)` +
+        ` rotate(${-e * 9 * depth}deg) scale(${1 + e * .22})`;
+      el.style.opacity = String(1 - e * .12);
+    });
+
+    if (fire > 0) fire = Math.max(0, fire - .018);
+    requestAnimationFrame(frame);
+  })();
+}
+document.querySelectorAll('[data-scene]').forEach(initScene);
+
+document.querySelectorAll('#arcade .cardA').forEach(el => el.addEventListener('pointerenter', () => sound.tick('arcade')));
+document.querySelectorAll('#wine .cardG').forEach(el => el.addEventListener('pointerenter', () => sound.tick('wine')));
+
+/* ============================================================
+   ФОН АРКАДЫ — луч следует за курсором с запаздыванием
+   ============================================================ */
+(() => {
+  const host = document.getElementById('arcade'), beam = document.getElementById('beam');
+  if (!beam || REDUCED) return;
+  let mx = 50, my = 30, bx = 50, by = 30;
+  host.addEventListener('pointermove', e => {
+    const r = host.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width) * 100;
+    my = ((e.clientY - r.top) / r.height) * 100;
+  });
+  (function loop() {
+    bx += (mx - bx) * .06; by += (my - by) * .06;
+    beam.style.setProperty('--mx', bx.toFixed(2) + '%');
+    beam.style.setProperty('--my', by.toFixed(2) + '%');
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ============================================================
+   КРОВЬ (бургунди).
+   Капля копит массу у верхнего края, срывается, разгоняется,
+   тянет за собой сужающийся подтёк и иногда замирает — так ведёт
+   себя вязкая жидкость на вертикали. Курсор её отталкивает,
+   резкое движение срывает брызги, удар мамбы даёт залп.
+   Слипание капель делает CSS-фильтр blur+contrast на канвасе.
+   ============================================================ */
+(() => {
+  const host = document.getElementById('wine');
+  const canvas = document.getElementById('bloodCanvas');
+  if (!host || !canvas || REDUCED) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  let W = 0, H = 0, dpr = 1;
+  const drops = [];
+  const MAX = 72;
+
+  function resize() {
+    W = host.clientWidth; H = host.clientHeight;
+    if (!W || !H) return false;
+    dpr = Math.min(devicePixelRatio || 1, 1.5);
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    return true;
+  }
+
+  const rnd = (a, b) => a + Math.random() * (b - a);
+
+  function spawn(x, y, r, v) {
+    if (drops.length > MAX) return;
+    drops.push({
+      x: x ?? rnd(0, W),
+      y: y ?? rnd(-40, -4),
+      r: r ?? rnd(5, 17),
+      v: v ?? rnd(.1, .7),
+      px: null, py: null,
+      hold: Math.random() < .35 ? rnd(15, 70) : 0,   // поверхностное натяжение
+      wob: rnd(0, 6.28)
+    });
+  }
+  let seeded = false;
+  function seed() {                       // первые капли — только когда есть размер
+    if (seeded || !W) return;
+    seeded = true;
+    for (let i = 0; i < 30; i++) spawn(rnd(0, W), rnd(-H * .6, H * .5));
+  }
+
+  let mx = -999, my = -999, pmx = 0, pmy = 0;
+  host.addEventListener('pointermove', e => {
+    const r = host.getBoundingClientRect();
+    pmx = mx; pmy = my;
+    mx = e.clientX - r.left; my = e.clientY - r.top;
+    const speed = Math.hypot(mx - pmx, my - pmy);
+    if (speed > 34 && Math.random() < .3) spawn(mx + rnd(-8, 8), my + rnd(-8, 8), rnd(2.5, 5.5), rnd(.5, 1.4));
+  });
+  host.addEventListener('pointerleave', () => { mx = my = -999; });
+
+  /* удар мамбы — залп брызг сверху */
+  impacts.push(voice => {
+    if (voice !== 'wine') return;
+    for (let i = 0; i < 12; i++) spawn(rnd(W * .1, W * .95), rnd(-30, 60), rnd(4, 13), rnd(.8, 2.2));
+  });
+
+  (function loop() {
+    if (W !== host.clientWidth || H !== host.clientHeight) resize();
+    if (!W) { requestAnimationFrame(loop); return; }
+    seed();
+
+    /* подтёки не стираем, а очень медленно растворяем */
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,.0032)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = 'source-over';
+
+    for (let i = drops.length - 1; i >= 0; i--) {
+      const d = drops[i];
+
+      if (d.hold > 0) {            // висит и копит массу
+        d.hold--;
+        d.r += .02;
+      } else {
+        d.v += .035;               // разгон
+        d.v *= .992;               // вязкость держит скорость конечной
+        d.y += d.v;
+        d.r -= .0075 + d.v * .004; // масса остаётся в подтёке, струйка сужается
+        d.wob += .028;
+        d.x += Math.sin(d.wob) * .16;
+        if (Math.random() < .0015) d.hold = rnd(8, 34);   // зацепилась за неровность
+      }
+
+      /* курсор расталкивает струйки */
+      const dx = d.x - mx, dy = d.y - my, dist = Math.hypot(dx, dy);
+      if (dist < 130) {
+        const push = (1 - dist / 130) ** 2 * 2.6;
+        d.x += (dx / (dist || 1)) * push;
+        d.y += (dy / (dist || 1)) * push * .35;
+      }
+
+      /* след ведём явным штрихом от прошлой точки к текущей: на одном
+         только следе из перекрывающихся кругов подтёк получался рваным,
+         а тонкий хвост срезал фильтр. Заливка сплошная — полупрозрачные
+         края contrast() увёл бы в ноль. */
+      const r = Math.max(d.r, .6);
+      ctx.fillStyle = ctx.strokeStyle = '#A31222';
+      if (d.px !== null) {
+        ctx.lineWidth = r * 1.5;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(d.px, d.py);
+        ctx.lineTo(d.x, d.y);
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, r, 0, 6.283);
+      ctx.fill();
+      d.px = d.x; d.py = d.y;
+
+      if (d.r < 1.1 || d.y > H + 40) {
+        drops.splice(i, 1);
+        spawn();
+      }
+    }
+    if (drops.length < 34) spawn();
+
+    requestAnimationFrame(loop);
+  })();
+
+  /* канвас живёт в скрытой вкладке — пересчитываем, когда появится */
+  new ResizeObserver(() => resize()).observe(host);
+})();
+
+/* ============================================================
+   WebGL-ГЛИТЧ ИМЕНИ (аркада).
+   Имя рисуется в 2D-канвас, заливается текстурой и рвётся
+   шейдером. DOM-заголовок остаётся видимым, пока канвас не готов.
+   ============================================================ */
+(() => {
+  const host = document.getElementById('nameHost');
+  const canvas = document.getElementById('glName');
+  if (!host || !canvas || REDUCED) return;
+
+  const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false, antialias: true });
+  if (!gl) return;
+
+  const VERT = `attribute vec2 p;varying vec2 v;void main(){v=vec2(p.x*.5+.5,.5-p.y*.5);gl_Position=vec4(p,0.,1.);}`;
+  const FRAG = `precision highp float;
+varying vec2 v;uniform sampler2D tex;uniform float time,impact,hover;uniform vec2 mouse;
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);
+  return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
+void main(){
+  vec2 uv=v;
+  float prox=smoothstep(.42,0.,distance(uv,mouse))*hover;
+  float amp=.0045*prox+.03*impact;
+  float band=floor(uv.y*26.);
+  uv.x+=(hash(vec2(band,floor(time*13.)))-.5)*amp*2.3;
+  uv+=vec2(noise(uv*7.+time*.5)-.5,noise(uv*7.-time*.4)-.5)*amp;
+  float sep=amp*.75;
+  vec4 a=texture2D(tex,uv+vec2(sep,0.));
+  vec4 b=texture2D(tex,uv);
+  vec4 c=texture2D(tex,uv-vec2(sep,0.));
+  float al=max(a.a,max(b.a,c.a));
+  if(al<.01)discard;
+  gl_FragColor=vec4(a.r,b.g,c.b,al);
+}`;
+
+  const sh = (type, src) => {
+    const s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+  };
+  const vs = sh(gl.VERTEX_SHADER, VERT), fs = sh(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) return;
+  const prog = gl.createProgram();
+  gl.attachShader(prog, vs); gl.attachShader(prog, fs); gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+  gl.useProgram(prog);
+
+  gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 3,-1, -1,3]), gl.STATIC_DRAW);
+  const loc = gl.getAttribLocation(prog, 'p');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  const tex = gl.createTexture();
+  gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+  gl.enable(gl.BLEND);
+  gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+  const U = n => gl.getUniformLocation(prog, n);
+  const uTime = U('time'), uImpact = U('impact'), uHover = U('hover'), uMouse = U('mouse');
+
+  const pad = document.createElement('canvas'), p2 = pad.getContext('2d');
+  let painted = 0;
+
+  function paint() {
+    const h1 = host.querySelector('h1');
+    const w = Math.round(h1.offsetWidth), h = Math.round(h1.offsetHeight);
+
+    /* вкладка скрыта или шрифт ещё не пришёл — ширина нулевая.
+       В этом случае НЕ подменяем заголовок, иначе имя пропадает. */
+    if (w < 40 || h < 20) { host.classList.remove('gl'); return; }
+    if (w === painted && host.classList.contains('gl')) return;
+    painted = w;
+
+    const cs = getComputedStyle(h1);
+    const ratio = Math.min(devicePixelRatio || 1, 2);
+    pad.width = Math.round(w * ratio); pad.height = Math.round(h * ratio);
+    canvas.width = pad.width; canvas.height = pad.height;
+
+    p2.setTransform(ratio, 0, 0, ratio, 0, 0);
+    p2.clearRect(0, 0, w, h);
+    const size = parseFloat(cs.fontSize), lh = parseFloat(cs.lineHeight) || size * .95;
+    p2.font = `${cs.fontWeight} ${size}px ${cs.fontFamily}`;
+    p2.textBaseline = 'alphabetic';
+    const base = (lh - size) / 2 + size * .82;
+    p2.fillStyle = '#F2F1EE'; p2.fillText('АНАСТАСИЯ', 0, base);
+    p2.fillStyle = '#EDAD22'; p2.fillText('АРХИПЕНКО', 0, base + lh);
+
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, pad);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    host.classList.add('gl');
+  }
+
+  let hover = 0, hoverT = 0, impact = 0, mx = .5, my = .5;
+  host.addEventListener('pointermove', e => {
+    const r = host.getBoundingClientRect();
+    mx = (e.clientX - r.left) / r.width;
+    my = (e.clientY - r.top) / r.height;
+    hoverT = 1;
+  });
+  host.addEventListener('pointerleave', () => { hoverT = 0; });
+  impacts.push(voice => { if (voice === 'arcade') impact = 1; });
+
+  /* перерисовываем, когда заголовок получает реальный размер:
+     при загрузке шрифта, при показе вкладки и при смене ширины окна */
+  document.fonts.ready.then(paint);
+  new ResizeObserver(paint).observe(host);
+
+  (function loop(t) {
+    hover += (hoverT - hover) * .09;
+    impact *= .90;
+    gl.uniform1f(uTime, t * .001);
+    gl.uniform1f(uImpact, impact);
+    gl.uniform1f(uHover, hover);
+    gl.uniform2f(uMouse, mx, my);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    requestAnimationFrame(loop);
+  })(0);
+})();
+
+/* ---------- переключение тестов ---------- */
+const tabs = [...document.querySelectorAll('.bar__btn')];
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => {
+      const sel = t === tab;
+      t.setAttribute('aria-selected', String(sel));
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !sel;
+    });
+    sound.tick('arcade');
+    scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+</script>
