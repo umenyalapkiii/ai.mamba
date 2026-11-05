@@ -5,3 +5,5 @@ __pycache__/
 
 # служебная страница для выбора формулировок, на сайт не идёт
 _picker.html
+_stickers/
+_about.html

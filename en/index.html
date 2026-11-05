@@ -126,7 +126,11 @@
 :root{
   --yellow:#EDAD22;
   --yellow-dim:#8A6414;
-  --pink:#FF4FA3;
+  /* accent 2 из гайдлайнов, схема 4B Studio Magenta */
+  --pink:#CE1B6F;
+  /* осветлённая — только для тонких линий и мелкого текста, где #CE1B6F уходит в грязь */
+  --pink-lit:#F02E86;
+  --cream:#F5F1E8;
   --portrait:url("../assets/portrait-gum-white.webp");
   --bg:#08080A;
   --panel:#0D0D10;
@@ -136,6 +140,8 @@
   --muted:#8B8B93;
   --muted-dim:#5A5A64;
 
+  /* вторичный текст во всех блоках одного кегля: раньше он мельчал от блока к блоку */
+  --fs-body:clamp(14px,1.1vw,15.5px);
   --gutter:clamp(16px,4vw,56px);
   --nav-h:58px;
 
@@ -326,6 +332,12 @@ main,footer{position:relative;z-index:1}
   flex:1 1 auto;text-align:center;
   font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
   padding:7px 12px;border:1px solid #26262B;background:rgba(237,173,34,.03);color:#9B9AA2;
+  transition:color .28s,border-color .28s,box-shadow .28s,transform .28s cubic-bezier(.16,1,.3,1);
+}
+/* форматы загораются розовым под курсором */
+.fmt span:hover{
+  color:var(--pink-lit);border-color:var(--pink-lit);transform:translateY(-2px);
+  box-shadow:0 0 16px rgba(255,79,163,.18);
 }
 
 /* ---------- ОБЩЕЕ ДЛЯ СЕКЦИЙ ---------- */
@@ -403,7 +415,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   transition:color .3s,transform .45s cubic-bezier(.16,1,.3,1)}
 .srv__row:hover .srv__t,.srv__row.is-near .srv__t{color:var(--yellow);transform:translateX(8px)}
 .srv__row:hover .srv__d,.srv__row.is-near .srv__d{color:#D4D3CE}
-.srv__d{color:#A9A8A3;font-size:clamp(14px,1.1vw,15.5px);line-height:1.6;transition:color .3s}
+.srv__d{color:#A9A8A3;font-size:var(--fs-body);line-height:1.6;transition:color .3s}
 
 .tools{display:flex;flex-wrap:wrap;gap:7px;margin-top:clamp(18px,2.2vw,26px)}
 .tools + .tools{margin-top:7px}
@@ -702,7 +714,7 @@ footer{
   font-size:clamp(16px,1.9vw,22px);line-height:1.1;margin:0 0 10px;transition:color .25s;
 }
 .qs > div:hover h3{color:var(--yellow)}
-.qs p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+.qs p{margin:0;color:var(--muted);font-size:var(--fs-body);line-height:1.55}
 @media(max-width:820px){.qs{grid-template-columns:1fr}}
 
 /* ---------- как идет работа ---------- */
@@ -730,36 +742,67 @@ footer{
   font-size:clamp(15px,1.7vw,20px);line-height:1.1;margin-bottom:8px;transition:color .25s;
 }
 .fstep:hover b{color:var(--yellow)}
-.fstep span{display:block;color:var(--muted);font-size:12.5px;line-height:1.45}
+.fstep span{display:block;color:var(--muted);font-size:var(--fs-body);line-height:1.5}
 @media(max-width:860px){.flow__grid{grid-template-columns:1fr 1fr}}
 @media(max-width:480px){.flow__grid{grid-template-columns:1fr}}
 
-/* ---------- хлопушка с фразой ---------- */
-/* хлопушка висит над правым верхним углом сетки и заходит на последнюю
-   плитку только краем — текст шага под ней остаётся читаемым */
+/* ---------- хлопушка: собрана по стикеру из гайдлайнов ---------- */
 .clap{
   position:absolute;z-index:4;pointer-events:none;
-  right:-44px;top:-206px;width:clamp(240px,24vw,330px);
+  right:-58px;top:-214px;width:clamp(290px,29vw,396px);
   rotate:-13deg;filter:drop-shadow(0 20px 44px rgba(0,0,0,.62));
+  --ink:#0B0B0C;
 }
+/* верхняя планка: полосы под углом, кремовый контур, петля с заклёпкой слева */
 .clap__stick{
-  height:clamp(30px,3.1vw,42px);
-  background:repeating-linear-gradient(104deg,#0B0B0C 0 13%,var(--yellow) 13% 26%);
-  border:2px solid #F5F1E8;border-radius:3px;
-  rotate:-7deg;transform-origin:left bottom;margin-bottom:-3px;
+  position:relative;height:clamp(30px,3.1vw,42px);
+  background:repeating-linear-gradient(104deg,var(--ink) 0 13%,var(--yellow) 13% 26%);
+  border:3px solid var(--cream);border-radius:7px;
+  rotate:-7deg;transform-origin:left bottom;margin:0 0 -4px 26px;
 }
-.clap__body{border:2px solid #F5F1E8;border-radius:4px;background:#0B0B0C;padding:7px}
+.clap__stick i{
+  position:absolute;left:-30px;top:-1px;width:34px;height:100%;
+  background:var(--ink);border:3px solid var(--cream);border-radius:7px;
+  display:grid;place-items:center;
+}
+.clap__stick i::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--cream)}
+/* корпус */
+.clap__body{
+  position:relative;background:var(--ink);
+  border:3px solid var(--cream);border-radius:9px;padding:0 0 9px;
+  pointer-events:auto;cursor:default;overflow:hidden;
+}
+/* жёлтая полоса под планкой + своя петля */
+.clap__strip{
+  position:relative;height:clamp(20px,2.1vw,28px);
+  background:repeating-linear-gradient(104deg,var(--ink) 0 13%,var(--yellow) 13% 26%);
+  border-bottom:3px solid var(--cream);
+}
+.clap__strip i{
+  position:absolute;left:0;top:0;bottom:0;width:34px;background:var(--ink);
+  border-right:3px solid var(--cream);display:grid;place-items:center;
+}
+.clap__strip i::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--cream)}
+/* малиновая табличка с винтами по углам */
 .clap__screen{
-  margin:0;background:var(--pink);
-  padding:clamp(14px,1.8vw,24px) clamp(10px,1.4vw,16px);
+  margin:9px;padding:clamp(13px,1.7vw,22px) clamp(12px,1.5vw,18px);border-radius:3px;
   font-family:var(--display);font-weight:700;text-transform:uppercase;
   font-size:clamp(15px,1.74vw,25px);line-height:1.06;letter-spacing:-.005em;
   color:#FFF6F0;text-align:center;
+  background:
+    radial-gradient(circle at 9px 9px,var(--ink) 2.4px,transparent 2.9px),
+    radial-gradient(circle at calc(100% - 9px) 9px,var(--ink) 2.4px,transparent 2.9px),
+    radial-gradient(circle at 9px calc(100% - 9px),var(--ink) 2.4px,transparent 2.9px),
+    radial-gradient(circle at calc(100% - 9px) calc(100% - 9px),var(--ink) 2.4px,transparent 2.9px),
+    var(--pink);
 }
-.clap__bar{height:9px;margin-top:7px;background:#F5F1E8;border-radius:2px;opacity:.92}
-@media(max-width:1180px){.clap{right:-30px;top:-176px;width:clamp(215px,23vw,275px)}}
+/* кремовые линейки и поля для сцены и дубля */
+.clap__fields{display:grid;grid-template-columns:1fr 1fr;gap:3px;margin:0 9px;
+              border-top:3px solid var(--cream);padding-top:7px}
+.clap__fields span{height:16px;border-bottom:3px solid var(--cream)}
+@media(max-width:1180px){.clap{right:-34px;top:-182px;width:clamp(255px,27vw,310px)}}
 @media(max-width:1000px){
-  .clap{position:static;width:min(78%,296px);margin:88px auto 0;rotate:-4deg;
+  .clap{position:static;width:min(84%,320px);margin:88px auto 0;rotate:-4deg;
         filter:drop-shadow(0 12px 26px rgba(0,0,0,.5))}
 }
 
@@ -834,7 +877,7 @@ footer{
   position:absolute;left:-2%;top:0;width:104%;height:100%;overflow:visible;pointer-events:none;
 }
 .ink{
-  fill:none;stroke:var(--pink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
+  fill:none;stroke:var(--pink-lit);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
   vector-effect:non-scaling-stroke;stroke-dasharray:3000;stroke-dashoffset:3000;
   animation:draw 1.5s ease-out 1.05s forwards;
 }
@@ -870,7 +913,7 @@ footer{
   opacity:.12;animation:focusglow 3.6s ease-in-out infinite;
 }
 .focus__c{
-  position:absolute;width:27px;height:27px;border:5px solid var(--pink);
+  position:absolute;width:27px;height:27px;border:5px solid var(--pink-lit);
   transition:translate .4s cubic-bezier(.16,1,.3,1),border-color .3s;
 }
 .focus__c--tl{left:0;top:0;border-right:0;border-bottom:0;animation:huntTL 3.6s ease-in-out infinite}
@@ -896,13 +939,13 @@ footer{
   font-size:clamp(14.5px,1.42vw,19px);line-height:1.02;letter-spacing:.004em;
   color:var(--text);transition:color .3s;margin-top:-.4em;
 }
-.focus:hover span,.focus:focus-visible span{color:var(--pink)}
+.focus:hover span,.focus:focus-visible span{color:var(--pink-lit)}
 .focus:focus-visible{outline:0}
 /* стрелка снизу подталкивает к центру */
 .focus__a{
   position:absolute;left:50%;bottom:21%;margin-left:-7px;
   width:13px;height:13px;rotate:-45deg;
-  border-right:3.5px solid var(--pink);border-top:3.5px solid var(--pink);
+  border-right:3.5px solid var(--pink-lit);border-top:3.5px solid var(--pink-lit);
   animation:focusnudge 2s ease-in-out infinite;
 }
 @keyframes focusnudge{0%,100%{translate:0 5px;opacity:.3}50%{translate:0 -2px;opacity:1}}
@@ -946,6 +989,49 @@ footer{
   .clap,.clap.snap .clap__stick{animation:none}
   .clap{rotate:-13deg}
 }
+/* ---------- обо мне: заголовок, портрет с подписью, плитки ---------- */
+.ab__hl{
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(21px,2.95vw,44px);line-height:1.03;letter-spacing:-.015em;
+  max-width:36ch;margin:0 0 clamp(26px,3.4vw,44px);
+}
+.ab__hl .y{color:var(--yellow)}
+.about{align-items:start}
+.ab__port{margin:0 auto;width:100%;max-width:340px;display:flex;flex-direction:column;align-items:stretch}
+/* подпись под портретом со стрелкой вверх — имя уже стоит в первом экране */
+.ab__me{
+  display:flex;flex-direction:column;align-items:center;gap:7px;margin-top:-6px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);
+}
+.ab__arrow{
+  width:13px;height:13px;rotate:-45deg;
+  border-right:3.5px solid var(--pink-lit);border-top:3.5px solid var(--pink-lit);
+  animation:abnudge 2s ease-in-out infinite;
+}
+@keyframes abnudge{0%,100%{translate:0 5px;opacity:.3}50%{translate:0 -2px;opacity:1}}
+
+.ab__tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ab__t{padding:clamp(16px,1.9vw,24px);border-radius:4px;background:var(--bg);
+       transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.ab__t:hover{transform:translateY(-4px)}
+.ab__t p{margin:0;font-size:var(--fs-body);line-height:1.58;color:#cfced5}
+/* у каждой плитки своя обводка — ритм вместо одинаковых карточек */
+.ab__t:nth-child(1){grid-column:1/-1;border:4px solid var(--pink)}
+.ab__t:nth-child(2){border:4px solid var(--cream)}
+.ab__t:nth-child(3){border:4px solid var(--yellow)}
+.ab__t:nth-child(4){grid-column:1/-1;border:3px solid var(--pink);outline:3px solid var(--yellow);outline-offset:5px}
+.ab__t:nth-child(5){grid-column:1/-1;border:4px solid var(--cream)}
+.ab__s{display:inline-block;vertical-align:-.34em;width:2.1em;height:2.1em;object-fit:contain;
+       margin-left:.22em;filter:drop-shadow(0 3px 8px rgba(0,0,0,.55))}
+.ab__row{display:flex;gap:7px;align-items:center;margin-top:13px}
+.ab__row img{width:clamp(32px,3.4vw,44px);height:clamp(32px,3.4vw,44px);object-fit:contain;
+             filter:drop-shadow(0 4px 10px rgba(0,0,0,.6))}
+@media(max-width:860px){
+  .ab__tiles{grid-template-columns:1fr}
+  .ab__t:nth-child(n){grid-column:auto}
+  .ab__t:nth-child(4){outline-offset:4px}
+}
+@media(prefers-reduced-motion:reduce){.ab__arrow{animation:none;opacity:.8}}
 </style>
 </head>
 <body>
@@ -1094,7 +1180,10 @@ footer{
     <div class="sec-head">
       <h2>about</h2>
     </div>
+    <p class="ab__hl">I was teaching neural nets to understand industrial and business processes <span class="y">long before they learned to draw — and way before everyone started talking about ChatGPT</span></p>
+
     <div class="about">
+      <figure class="ab__port">
       <div class="pop" id="pop" role="button" tabindex="0"
            data-ru-label="Лопнуть пузырь" aria-label="Pop the bubble">
         <span class="pop__base" role="img"
@@ -1107,8 +1196,32 @@ footer{
           <i style="--a:180deg"></i><i style="--a:225deg"></i><i style="--a:270deg"></i><i style="--a:315deg"></i>
         </span>
       </div>
-      <div class="about__body">
-        <p class="about__todo">[this block is still to be written]</p>
+      <figcaption class="ab__me">
+        <i class="ab__arrow" aria-hidden="true"></i>
+        <span>that’s me</span>
+      </figcaption>
+      </figure>
+
+      <div class="ab__tiles">
+        <div class="ab__t">
+          <p>My background’s in business and deep tech: AI digital twins of major industrial plants, computer vision, the “brain” for UAVs, a virtual mobile carrier, NFT drops, and more. Co-founded AI startups with friends, then worked on the VC side.</p>
+          <span class="ab__row" aria-hidden="true"><img class="" src="../assets/stickers/coil.webp" alt="" loading="lazy"><img class="" src="../assets/stickers/coil.webp" alt="" loading="lazy"><img class="" src="../assets/stickers/coil.webp" alt="" loading="lazy"></span>
+        </div>
+        <div class="ab__t">
+          <p>I’ve run products and projects myself — milestones, metrics, deadlines. We speak the same language.</p>
+          <img class="ab__s" src="../assets/stickers/eye.webp" alt="" loading="lazy">
+        </div>
+        <div class="ab__t">
+          <p>Trained as an artist, and I still make mixed-media work by hand.</p>
+        </div>
+        <div class="ab__t">
+          <p>I dance hip-hop, try not to lose track of all the Aurelianos in Márquez, and I’m out to out-color Wong Kar-wai.</p>
+          <img class="ab__s" src="../assets/stickers/sneaker.webp" alt="" loading="lazy">
+        </div>
+        <div class="ab__t">
+          <p>I don’t stick to one style. People have layers — why hold back on bold experiments? Pop and viral today, niche and weird tomorrow. Never “that’s so AI”.</p>
+          <span class="ab__row" aria-hidden="true"><img class="" src="../assets/stickers/fangs.webp" alt="" loading="lazy"><img class="" src="../assets/stickers/fangs.webp" alt="" loading="lazy"></span>
+        </div>
       </div>
     </div>
   </section>
@@ -1163,10 +1276,11 @@ footer{
         </div>
       </div>
       <div class="clap">
-        <div class="clap__stick" aria-hidden="true"></div>
+        <div class="clap__stick" aria-hidden="true"><i></i></div>
         <div class="clap__body">
+          <div class="clap__strip" aria-hidden="true"><i></i></div>
           <p class="clap__screen">a vibe is enough.<br>i&#39;ll handle the rest</p>
-          <div class="clap__bar" aria-hidden="true"></div>
+          <div class="clap__fields" aria-hidden="true"><span></span><span></span></div>
         </div>
       </div>
     </div>
@@ -1677,7 +1791,7 @@ document.querySelectorAll('[data-scene]').forEach(root => {
 
 /* На телефоне события наведения не происходит вовсе — поэтому там
    звук идёт на касание. Мышь при этом не должна щёлкать дважды. */
-document.querySelectorAll('.srv__row, .soc, .lang a, .filt button, .fstep, .band__go, .rail a').forEach(el => {
+document.querySelectorAll('.srv__row, .soc, .lang a, .filt button, .fstep, .rail a, .focus, .clap__body').forEach(el => {
   el.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') sound.tick(); });
 });
 
@@ -1769,12 +1883,18 @@ renderWorks();
 (() => {
   const clap = document.querySelector('.clap');
   if (!clap || REDUCED) return;
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
+  const stick = clap.querySelector('.clap__stick');
+  /* перезапуск анимации: снимаем класс, заставляем браузер пересчитать, возвращаем */
+  const play = () => {
+    clap.classList.remove('snap');
+    void stick.getBoundingClientRect();
     clap.classList.add('snap');
-    io.unobserve(clap);
-  }), {threshold: .45});
-  io.observe(clap);
+  };
+  /* хлопает каждый раз, когда доезжает до экрана, а не только в первый */
+  new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) play(); }),
+                           {threshold: .45}).observe(clap);
+  /* и когда на неё попадает курсор */
+  clap.querySelector('.clap__body').addEventListener('pointerenter', play);
 })();
 
 /* ---------- боковой рейл: появляется, когда первый экран уехал ---------- */
