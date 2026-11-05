@@ -298,7 +298,7 @@ main,footer{position:relative;z-index:1}
   padding:clamp(20px,3.5vw,44px) 0 clamp(36px,5vw,64px);
 }
 .hero__eyebrow{
-  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  font-family:var(--mono);font-size:clamp(12px,1vw,13px);letter-spacing:.18em;text-transform:uppercase;
   color:var(--yellow);margin-bottom:clamp(12px,1.8vw,18px);
   /* формально надпись выровнена с «А» до сотых долей пикселя, но «А» —
      треугольник: края касается только нижняя засечка, а масса буквы
@@ -312,7 +312,7 @@ main,footer{position:relative;z-index:1}
 .hero__eyebrow b{font-weight:400;color:var(--muted)}
 .hero h1{
   font-family:var(--display);font-weight:700;
-  font-size:clamp(27px,4.9vw,62px);line-height:.95;letter-spacing:-.015em;
+  font-size:clamp(34px,4.9vw,62px);line-height:.95;letter-spacing:-.015em;
   text-transform:uppercase;margin:0;
   /* браузер ровняет по краю поля буквы, а глаз — по краю краски.
      Свес «А» в Oswald замерен через canvas: 3.02px при кегле 144,
@@ -427,8 +427,10 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .tools span:hover{color:var(--yellow);border-color:var(--yellow);background:rgba(237,173,34,.06)}
 
 /* ---------- ОБО МНЕ ---------- */
-.about{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:clamp(18px,3vw,50px);align-items:center}
-.pop{position:relative;aspect-ratio:1/1;max-width:340px;width:100%;cursor:pointer}
+/* на широком экране фото было зажато в 340px, а плитки разъезжались
+   в слишком длинные строки — переложили доли в пользу портрета */
+.about{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.2fr);gap:clamp(18px,3.4vw,56px);align-items:center}
+.pop{position:relative;aspect-ratio:1/1;max-width:470px;width:100%;cursor:pointer}
 .pop__base{
   position:absolute;inset:0;
   background-image:var(--portrait);background-size:100% 100%;background-repeat:no-repeat;
@@ -897,6 +899,8 @@ footer{
 .cta:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(237,173,34,.26)}
 .cta:hover i{transform:translateX(5px)}
 .cta:active{transform:translateY(0) scale(.98)}
+/* рядом с укрупнённым заголовком кнопка не должна спорить с ним по весу */
+@media(max-width:620px){.cta{font-size:14px;padding:15px 22px;gap:11px}}
 
 /* ---------- стикер «наводим фокус» ---------- */
 .srv{position:relative}
@@ -997,10 +1001,10 @@ footer{
 }
 .ab__hl .y{color:var(--yellow)}
 .about{align-items:start}
-.ab__port{margin:0 auto;width:100%;max-width:340px;display:flex;flex-direction:column;align-items:stretch}
+.ab__port{margin:0 auto;width:100%;max-width:470px;display:flex;flex-direction:column;align-items:stretch}
 /* подпись под портретом со стрелкой вверх — имя уже стоит в первом экране */
 .ab__me{
-  display:flex;flex-direction:column;align-items:center;gap:7px;margin-top:-6px;
+  display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:-6px;line-height:1.5;
   font-family:var(--mono);font-size:11px;letter-spacing:.17em;text-transform:uppercase;color:var(--muted);
 }
 .ab__arrow{
@@ -1199,6 +1203,7 @@ footer{
       <figcaption class="ab__me">
         <i class="ab__arrow" aria-hidden="true"></i>
         <span>that’s me</span>
+        <span>my name is Anastasia</span>
       </figcaption>
       </figure>
 
