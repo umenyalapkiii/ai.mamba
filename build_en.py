@@ -97,26 +97,26 @@ def main() -> int:
 
     # заголовок и описание для выдачи и превью
     html = re.sub(r"<title>.*?</title>",
-                  "<title>Anastasia Arkhipenko — AI Artist &amp; Director | advertising, fashion, music videos</title>",
+                  "<title>Anastasia Arkhipenko — AI Artist &amp; Director | commercials, fashion, music videos</title>",
                   html, flags=re.S)
     html = re.sub(r'(<meta name="description" content=")[^"]*"',
-                  r"\1Anastasia Arkhipenko — AI Artist &amp; Director. I design and direct projects: "
-                  r"commercials, product films, fashion campaigns, trailers, music videos and experimental art. "
-                  r'Fully AI, or mixed with real footage."', html)
+                  r"\1Anastasia Arkhipenko — AI Artist &amp; Director. Commercials, fashion, music videos, "
+                  r"cinematic shorts and experimental art. From visual language to final cut — "
+                  r'fully AI, or mixed with real footage."', html)
     html = html.replace('content="Анастасия Архипенко — AI Artist &amp; Director"',
                         'content="Anastasia Arkhipenko — AI Artist &amp; Director"')
-    html = html.replace('content="Проектирую и режиссирую проекты: от визуального языка до готового видео. '
-                        'Полностью на ИИ или в связке с реальной съемкой."',
-                        'content="I design and direct projects: from visual language to the final cut. '
-                        'Fully AI, or mixed with real footage."')
+    html = html.replace('content="Ко мне приходят не за генерациями, а за режиссурой. От визуального языка '
+                        'до готового видео — полностью на ИИ или в связке с реальной съемкой."',
+                        'content="People come to me for art direction, not prompts. From visual language '
+                        'to final cut — fully AI, or mixed with real footage."')
 
     # адреса: страница лежит на уровень глубже
     html = html.replace('href="https://aimamba.art/">\n<link rel="alternate" hreflang="ru"',
                         'href="https://aimamba.art/en/">\n<link rel="alternate" hreflang="ru"', 1)
     html = html.replace('<meta property="og:url" content="https://aimamba.art/">',
                         '<meta property="og:url" content="https://aimamba.art/en/">')
-    html = html.replace('content="https://aimamba.art/assets/og-2.jpg"',
-                        'content="https://aimamba.art/assets/og-en-2.jpg"')
+    html = html.replace('content="https://aimamba.art/assets/og-3.jpg"',
+                        'content="https://aimamba.art/assets/og-en-3.jpg"')
     html = html.replace('<meta property="og:locale" content="ru_RU">\n'
                         '<meta property="og:locale:alternate" content="en_US">',
                         '<meta property="og:locale" content="en_US">\n'
