@@ -142,6 +142,8 @@ def main() -> int:
         'aria-label="Включить звук"': 'aria-label="Unmute"',
         'aria-label="Лопнуть пузырь"': 'aria-label="Pop the bubble"',
         'aria-label="Язык / Language"': 'aria-label="Language"',
+        'aria-label="Разделы"': 'aria-label="Sections"',
+        'aria-label="Жанр"': 'aria-label="Genre"',
     }.items():
         html = html.replace(ru, en)
 

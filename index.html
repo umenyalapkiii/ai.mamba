@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Анастасия Архипенко — AI Artist &amp; Director | реклама, fashion, клипы</title>
+<title>Анастасия Архипенко — AI Artist &amp; Director | реклама, фэшн, клипы</title>
 <meta name="description" content="Анастасия Архипенко — AI Artist &amp; Director. Проектирую и режиссирую проекты: рекламные ролики, product-видео, fashion-кампании, трейлеры, клипы, экспериментальный арт. Полностью на ИИ или в связке с реальной съемкой.">
 <link rel="canonical" href="https://aimamba.art/">
 <link rel="alternate" hreflang="ru" href="https://aimamba.art/">
@@ -306,13 +306,12 @@ main,footer{position:relative;z-index:1}
 .hero__eyebrow b{font-weight:400;color:var(--muted)}
 .hero h1{
   font-family:var(--display);font-weight:700;
-  font-size:clamp(48px,10vw,150px);line-height:.95;letter-spacing:-.015em;
+  font-size:clamp(27px,4.9vw,62px);line-height:.95;letter-spacing:-.015em;
   text-transform:uppercase;margin:0;
   /* браузер ровняет по краю поля буквы, а глаз — по краю краски.
      Свес «А» в Oswald замерен через canvas: 3.02px при кегле 144,
-     минус собственный свес надписи 0.55px → 0.017em. В em, чтобы
-     поправка держалась на любом кегле */
-  margin-left:-.017em;
+     минус собственный свес надписи 0.55px → 0.017em.
+     Поправка снята: заголовок больше не начинается с «А» */
 }
 .hero h1 span{display:block}
 .hero h1 .y{color:var(--yellow)}
@@ -633,6 +632,320 @@ footer{
   html{scroll-behavior:auto}
   *{animation-duration:.01ms !important;transition-duration:.01ms !important}
 }
+/* ============================================================
+   НОВЫЕ БЛОКИ (ноябрь 2026)
+   ============================================================ */
+
+/* кадр, который проступает поверх постера при наведении на серию */
+.card__next{opacity:0;transition:opacity .45s ease}
+.card__next.on{opacity:1}
+@media(prefers-reduced-motion:reduce){.card__next{display:none}}
+
+/* ---------- фильтр над сеткой работ ---------- */
+.filt{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.filt button{
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted);background:transparent;border:1px solid var(--line);
+  padding:9px 14px;cursor:pointer;
+  transition:color .25s,border-color .25s,background .25s;
+}
+.filt button:hover{color:var(--yellow);border-color:var(--yellow-dim)}
+.filt button[aria-pressed="true"]{background:var(--yellow);border-color:var(--yellow);color:#151208}
+.gal__empty{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--muted-dim);padding:38px 0;
+}
+
+/* ---------- полоса с призывом после «что умею» ---------- */
+.band{
+  position:relative;overflow:hidden;margin-top:clamp(20px,2.8vw,34px);
+  background:var(--yellow);color:#151208;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  padding:clamp(20px,2.8vw,34px) clamp(18px,2.6vw,34px);
+}
+.band::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
+  background:repeating-linear-gradient(135deg,#151208 0 2px,transparent 2px 11px);
+}
+.band b{
+  position:relative;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(19px,3vw,38px);line-height:1.02;letter-spacing:-.01em;
+}
+.band__go{
+  position:relative;display:inline-flex;align-items:center;gap:10px;flex:none;
+  background:#0B0B0C;color:var(--yellow);
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  padding:16px 22px;transition:transform .3s cubic-bezier(.16,1,.3,1);
+}
+.band__go:hover{transform:translateX(6px)}
+@media(max-width:560px){
+  .band{flex-direction:column;align-items:stretch;gap:16px}
+  .band__go{justify-content:center;font-size:10.5px;padding:15px 16px}
+}
+
+/* ---------- три вопроса ---------- */
+.qs{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line-soft);
+  border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+}
+.qs > div{
+  background:var(--bg);padding:clamp(18px,2.4vw,30px) clamp(14px,1.8vw,24px);
+  transition:background .25s;
+}
+.qs > div:hover{background:var(--panel)}
+.qs__n{
+  font-family:var(--display);font-weight:700;font-size:clamp(32px,4.2vw,52px);
+  line-height:.8;color:var(--yellow);display:block;margin-bottom:clamp(14px,2vw,22px);
+}
+.qs h3{
+  font-family:var(--display);font-weight:600;text-transform:uppercase;
+  font-size:clamp(16px,1.9vw,22px);line-height:1.1;margin:0 0 10px;transition:color .25s;
+}
+.qs > div:hover h3{color:var(--yellow)}
+.qs p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.5}
+@media(max-width:820px){.qs{grid-template-columns:1fr}}
+
+/* ---------- как идет работа ---------- */
+.flow{position:relative}
+.flow__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.fstep{
+  position:relative;overflow:hidden;border:1px solid var(--line);background:var(--panel);
+  padding:clamp(16px,2vw,26px);
+  transition:border-color .25s,transform .25s cubic-bezier(.16,1,.3,1);
+}
+/* тот же «жик», что у карточек работ */
+.fstep::after{
+  content:"";position:absolute;left:0;right:0;height:62%;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(237,173,34,.16),transparent);
+  transform:translateY(-130%);transition:transform .6s cubic-bezier(.16,1,.3,1);
+}
+.fstep:hover{border-color:var(--yellow);transform:translateY(-4px)}
+.fstep:hover::after{transform:translateY(300%)}
+.fstep__n{
+  font-family:var(--display);font-weight:700;font-size:clamp(34px,4.2vw,54px);
+  line-height:.8;color:var(--yellow);display:block;margin-bottom:clamp(18px,2.4vw,32px);
+}
+.fstep b{
+  display:block;font-family:var(--display);font-weight:600;text-transform:uppercase;
+  font-size:clamp(15px,1.7vw,20px);line-height:1.1;margin-bottom:8px;transition:color .25s;
+}
+.fstep:hover b{color:var(--yellow)}
+.fstep span{display:block;color:var(--muted);font-size:12.5px;line-height:1.45}
+@media(max-width:860px){.flow__grid{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.flow__grid{grid-template-columns:1fr}}
+
+/* ---------- хлопушка с фразой ---------- */
+/* хлопушка висит над правым верхним углом сетки и заходит на последнюю
+   плитку только краем — текст шага под ней остаётся читаемым */
+.clap{
+  position:absolute;z-index:4;pointer-events:none;
+  right:-44px;top:-206px;width:clamp(240px,24vw,330px);
+  rotate:-13deg;filter:drop-shadow(0 20px 44px rgba(0,0,0,.62));
+}
+.clap__stick{
+  height:clamp(30px,3.1vw,42px);
+  background:repeating-linear-gradient(104deg,#0B0B0C 0 13%,var(--yellow) 13% 26%);
+  border:2px solid #F5F1E8;border-radius:3px;
+  rotate:-7deg;transform-origin:left bottom;margin-bottom:-3px;
+}
+.clap__body{border:2px solid #F5F1E8;border-radius:4px;background:#0B0B0C;padding:7px}
+.clap__screen{
+  margin:0;background:var(--pink);
+  padding:clamp(14px,1.8vw,24px) clamp(10px,1.4vw,16px);
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(15px,1.74vw,25px);line-height:1.06;letter-spacing:-.005em;
+  color:#FFF6F0;text-align:center;
+}
+.clap__bar{height:9px;margin-top:7px;background:#F5F1E8;border-radius:2px;opacity:.92}
+@media(max-width:1180px){.clap{right:-30px;top:-176px;width:clamp(215px,23vw,275px)}}
+@media(max-width:1000px){
+  .clap{position:static;width:min(100%,390px);margin:28px auto 0;rotate:-4deg;
+        filter:drop-shadow(0 12px 26px rgba(0,0,0,.5))}
+}
+
+/* ---------- контакт: крупно, в одну строку ---------- */
+.contact__line{display:flex;align-items:center;gap:clamp(14px,2.8vw,40px);flex-wrap:wrap}
+/* кегль заведомо ниже, чем у имени в первом экране (там clamp(48px,10vw,150px)) */
+.contact__line h2{margin:0;font-size:clamp(34px,6.6vw,104px);line-height:.9}
+/* рука и иконки — один неразрывный блок: на телефоне переносятся только целиком */
+.reach{display:flex;align-items:center;gap:clamp(9px,1.3vw,18px);flex-wrap:nowrap}
+.reach .point{font-size:clamp(32px,4.2vw,62px)}
+.reach .soc{width:clamp(50px,5.8vw,82px);height:clamp(50px,5.8vw,82px)}
+.reach .soc svg{width:46%;height:46%}
+@media(max-width:620px){.contact__line{gap:14px}.reach{gap:9px}}
+
+/* ---------- боковой рейл ---------- */
+.rail{
+  position:fixed;right:6px;top:50%;z-index:40;
+  display:flex;flex-direction:column;gap:2px;padding:7px 5px;
+  background:rgba(13,13,16,.82);border:1px solid var(--line);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  opacity:0;translate:14px -50%;pointer-events:none;
+  transition:opacity .4s,translate .4s cubic-bezier(.16,1,.3,1);
+}
+.rail.on{opacity:1;translate:0 -50%;pointer-events:auto}
+.rail a{position:relative;display:grid;place-items:center;width:22px;height:26px}
+.rail a i{
+  width:7px;height:7px;border-radius:50%;background:var(--muted-dim);
+  transition:background .25s,scale .25s cubic-bezier(.16,1,.3,1);
+}
+.rail a:hover i{background:var(--text);scale:1.35}
+.rail a.here i{background:var(--yellow);scale:1.5;box-shadow:0 0 10px rgba(237,173,34,.7)}
+.rail a span{
+  position:absolute;right:30px;white-space:nowrap;
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:7px 11px;background:rgba(13,13,16,.94);border:1px solid var(--line);color:var(--text);
+  opacity:0;translate:8px 0;pointer-events:none;
+  transition:opacity .25s,translate .3s cubic-bezier(.16,1,.3,1);
+}
+.rail:hover a span{opacity:.72;translate:0 0}
+.rail a:hover span,.rail:hover a.here span{opacity:1}
+/* рейл на телефоне висит внизу — отодвигаем подвал, чтобы не перекрывал */
+@media(max-width:900px){
+  footer{padding-bottom:84px}
+}
+@media(max-width:900px){
+  .rail{
+    flex-direction:row;right:auto;left:50%;top:auto;bottom:10px;
+    translate:-50% 16px;padding:5px;gap:0;
+  }
+  .rail.on{translate:-50% 0}
+  .rail a{width:auto;height:auto;padding:10px 11px}
+  .rail a:first-child,.rail a i{display:none}
+  .rail a span{position:static;opacity:.68;translate:0;background:none;border:0;padding:0}
+  .rail:hover a span{opacity:.68}
+  .rail a.here{background:var(--yellow)}
+  .rail a.here span,.rail:hover a.here span{opacity:1;color:#151208}
+}
+@media(prefers-reduced-motion:reduce){
+  .rail,.rail a span{transition:none}
+  .clap{filter:none}
+}
+/* ============================================================
+   v3: заглавный блок, стикер-фокус, полосатые контакты
+   ============================================================ */
+
+/* ---------- зачёркнутое слово в заголовке ---------- */
+/* span внутри h1 по умолчанию блочный — для зачёркивания возвращаем строчный */
+.hero h1 span.strike{
+  display:inline-block;position:relative;color:var(--muted-dim);margin-right:.02em;
+}
+.hero h1 span.strike svg{
+  position:absolute;left:-2%;top:0;width:104%;height:100%;overflow:visible;pointer-events:none;
+}
+.ink{
+  fill:none;stroke:var(--pink);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;stroke-dasharray:3000;stroke-dashoffset:3000;
+  animation:draw 1.5s ease-out 1.05s forwards;
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+/* последняя строка — итог, поэтому крупнее остальных */
+.hero h1 .big{font-size:1.42em;line-height:.92}
+
+/* ---------- кнопка в первом экране ---------- */
+.cta{
+  display:inline-flex;align-items:center;gap:14px;margin:clamp(18px,2.2vw,26px) 0 clamp(20px,2.6vw,30px);
+  background:var(--yellow);color:#151208;border:0;cursor:pointer;
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(15px,1.5vw,19px);letter-spacing:.02em;padding:17px 26px;
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s cubic-bezier(.16,1,.3,1);
+}
+.cta i{font-style:normal;transition:transform .3s cubic-bezier(.16,1,.3,1)}
+.cta:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(237,173,34,.26)}
+.cta:hover i{transform:translateX(5px)}
+.cta:active{transform:translateY(0) scale(.98)}
+
+/* ---------- стикер «наводим фокус» ---------- */
+.srv{position:relative}
+.focus{
+  position:absolute;right:0;bottom:4px;z-index:2;
+  display:grid;place-items:center;text-align:center;
+  width:clamp(152px,13.6vw,188px);aspect-ratio:1.26;
+}
+/* тихий розовый ореол под надписью — дышит, чтобы взгляд зацепился */
+.focus::before{
+  content:"";position:absolute;left:50%;top:48%;translate:-50% -50%;
+  width:86%;height:66%;border-radius:50%;pointer-events:none;filter:blur(7px);
+  background:radial-gradient(closest-side,rgba(255,79,163,.5),transparent);
+  opacity:.12;animation:focusglow 3.6s ease-in-out infinite;
+}
+.focus__c{
+  position:absolute;width:27px;height:27px;border:5px solid var(--pink);
+  transition:translate .4s cubic-bezier(.16,1,.3,1),border-color .3s;
+}
+.focus__c--tl{left:0;top:0;border-right:0;border-bottom:0;animation:huntTL 3.6s ease-in-out infinite}
+.focus__c--tr{right:0;top:0;border-left:0;border-bottom:0;animation:huntTR 3.6s ease-in-out infinite}
+.focus__c--bl{left:0;bottom:0;border-right:0;border-top:0;animation:huntBL 3.6s ease-in-out infinite}
+.focus__c--br{right:0;bottom:0;border-left:0;border-top:0;animation:huntBR 3.6s ease-in-out infinite}
+/* в покое уголки еле заметно «ищут» фокус, как автофокус объектива */
+@keyframes huntTL{0%,100%{translate:0 0}50%{translate:4px 4px}}
+@keyframes huntTR{0%,100%{translate:0 0}50%{translate:-4px 4px}}
+@keyframes huntBL{0%,100%{translate:0 0}50%{translate:4px -4px}}
+@keyframes huntBR{0%,100%{translate:0 0}50%{translate:-4px -4px}}
+@keyframes focusglow{0%,100%{opacity:.1}50%{opacity:.28}}
+/* наводишь — поиск прекращается, фокус встаёт жёстко */
+.focus:hover .focus__c,.focus:focus-visible .focus__c{animation:none}
+.focus:hover .focus__c--tl,.focus:focus-visible .focus__c--tl{translate:10px 10px}
+.focus:hover .focus__c--tr,.focus:focus-visible .focus__c--tr{translate:-10px 10px}
+.focus:hover .focus__c--bl,.focus:focus-visible .focus__c--bl{translate:10px -10px}
+.focus:hover .focus__c--br,.focus:focus-visible .focus__c--br{translate:-10px -10px}
+.focus:hover::before,.focus:focus-visible::before{opacity:.34;animation:none}
+.focus span{
+  position:relative;z-index:1;
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(14.5px,1.42vw,19px);line-height:1.02;letter-spacing:.004em;
+  color:var(--text);transition:color .3s;margin-top:-.4em;
+}
+.focus:hover span,.focus:focus-visible span{color:var(--pink)}
+.focus:focus-visible{outline:0}
+/* стрелка снизу подталкивает к центру */
+.focus__a{
+  position:absolute;left:50%;bottom:21%;margin-left:-7px;
+  width:13px;height:13px;rotate:-45deg;
+  border-right:3.5px solid var(--pink);border-top:3.5px solid var(--pink);
+  animation:focusnudge 2s ease-in-out infinite;
+}
+@keyframes focusnudge{0%,100%{translate:0 5px;opacity:.3}50%{translate:0 -2px;opacity:1}}
+.focus:hover .focus__a,.focus:focus-visible .focus__a{animation:none;opacity:0}
+/* двум нижним строкам списка оставляем место под стикер */
+@media(min-width:1001px){
+  .srv__row:nth-last-child(-n+2) .srv__d{padding-right:clamp(172px,15vw,212px)}
+}
+@media(max-width:1000px){
+  .focus{position:relative;right:auto;bottom:auto;margin:clamp(24px,3vw,34px) auto 0;width:min(100%,196px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .focus::before,.focus__c,.focus__a{animation:none}
+  .focus__a{opacity:.8}
+}
+
+/* ---------- контакты: полоска по жёлтому ---------- */
+.contact{position:relative;overflow:hidden}
+.contact::before{
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.15;
+  background:repeating-linear-gradient(135deg,#151208 0 2px,transparent 2px 11px);
+}
+.contact > .wrap{position:relative;z-index:1}
+
+/* ---------- хлопушка: щелчок при появлении + медленное покачивание ---------- */
+.clap{animation:clapsway 7.5s ease-in-out infinite alternate}
+@keyframes clapsway{from{rotate:-13deg}to{rotate:-11.2deg}}
+.clap .clap__stick{rotate:-7deg}
+/* доехала до экрана — хлопнула один раз и успокоилась */
+.clap.snap .clap__stick{animation:clapshut .72s cubic-bezier(.26,1.2,.36,1) forwards}
+@keyframes clapshut{
+  0%{rotate:-24deg}
+  46%{rotate:1deg}
+  62%{rotate:-4.5deg}
+  80%{rotate:-6deg}
+  100%{rotate:-7deg}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ink{stroke-dashoffset:0;animation:none}
+  .clap,.clap.snap .clap__stick{animation:none}
+  .clap{rotate:-13deg}
+}
 </style>
 </head>
 <body>
@@ -645,11 +958,10 @@ footer{
     <span class="nav__mark">ai<i>.</i>mamba</span>
   </a>
   <div class="nav__links">
-    <a href="#work"     data-ru="мои работы"   data-en="my work">мои работы</a>
-    <a href="#services" data-ru="услуги"   data-en="formats">услуги</a>
-    <a href="#about"    data-ru="обо мне"  data-en="about me">обо мне</a>
-    <a href="#process"  data-ru="о процессе"  data-en="process">о процессе</a>
-    <a href="#contact"  data-ru="написать мне"  data-en="get in touch">написать мне</a>
+    <a href="#work"     data-ru="работы"       data-en="work">работы</a>
+    <a href="#about"    data-ru="обо мне"      data-en="about">обо мне</a>
+    <a href="#services" data-ru="что умею"     data-en="what i do">что умею</a>
+    <a href="#contact"  data-ru="написать мне" data-en="get in touch">написать мне</a>
   </div>
   <div class="nav__right">
     <div class="lang" aria-label="Язык / Language">
@@ -666,10 +978,9 @@ footer{
 </nav>
 
 <div class="sheet" id="sheet" hidden>
-  <a href="#work"     data-ru="мои работы"  data-en="my work">мои работы</a>
-  <a href="#services" data-ru="услуги"  data-en="formats">услуги</a>
-  <a href="#about"    data-ru="обо мне" data-en="about me">обо мне</a>
-  <a href="#process"  data-ru="о процессе" data-en="process">о процессе</a>
+  <a href="#work"     data-ru="работы"       data-en="work">работы</a>
+  <a href="#about"    data-ru="обо мне"      data-en="about">обо мне</a>
+  <a href="#services" data-ru="что умею"     data-en="what i do">что умею</a>
   <a href="#contact"  data-ru="написать мне" data-en="get in touch">написать мне</a>
 </div>
 
@@ -688,18 +999,24 @@ footer{
   <header class="hero">
     <div>
       <div class="hero__eyebrow"
-           data-ru="ai artist &amp; director <s>·</s> <b>ии: авторское и коммерческое</b>"
-           data-en="ai artist &amp; director <s>·</s> <b>ai: commercial and experimental</b>">ai artist &amp; director <s>·</s> <b>ии: авторское и коммерческое</b></div>
-      <h1><span data-ru="Анастасия" data-en="Anastasia">Анастасия</span><span class="y" data-ru="Архипенко" data-en="Arkhipenko">Архипенко</span></h1>
+           data-ru="Анастасия Архипенко <s>·</s> <b>ai artist &amp; director</b>"
+           data-en="Anastasia Arkhipenko <s>·</s> <b>ai artist &amp; director</b>">Анастасия Архипенко <s>·</s> <b>ai artist &amp; director</b></div>
+      <h1>
+        <span data-ru="ко мне приходят" data-en="people come to me">ко мне приходят</span>
+        <span data-ru="за <span class=&quot;strike&quot;>генерациями<svg viewBox=&quot;0 0 100 40&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot;><path class=&quot;ink&quot; d=&quot;M2,26 C22,16 40,30 58,19 S88,14 98,24&quot;/></svg></span>"
+              data-en="for <span class=&quot;strike&quot;>prompts<svg viewBox=&quot;0 0 100 40&quot; preserveAspectRatio=&quot;none&quot; aria-hidden=&quot;true&quot;><path class=&quot;ink&quot; d=&quot;M2,26 C22,16 40,30 58,19 S88,14 98,24&quot;/></svg></span>">за <span class="strike">генерациями<svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path class="ink" d="M2,26 C22,16 40,30 58,19 S88,14 98,24"/></svg></span></span>
+        <span class="y big" data-ru="режиссурой" data-en="art direction">режиссурой</span>
+      </h1>
       <p class="hero__lede"
-         data-ru="Проектирую и режиссирую проекты: от визуального языка до готового видео — <strong>полностью на ИИ или в связке с реальной съемкой</strong>"
-         data-en="I design and direct projects: from visual language to final cut — <strong>AI only, or mixed with real footage</strong>">
-        Проектирую и режиссирую проекты: от визуального языка до готового видео — <strong>полностью на ИИ или в связке с реальной съемкой</strong></p>
+         data-ru="от визуального языка до готового видео — <strong>полностью на ИИ или в связке с реальной съемкой</strong>"
+         data-en="from visual language to final cut — <strong>AI only, or mixed with real footage</strong>">
+        от визуального языка до готового видео — <strong>полностью на ИИ или в связке с реальной съемкой</strong></p>
+      <a class="cta" href="#contact"><span data-ru="обсудить проект" data-en="let&#39;s talk">обсудить проект</span> <i aria-hidden="true">→</i></a>
       <div class="fmt">
-        <span data-ru="реклама" data-en="advertising">реклама</span>
-        <span>fashion</span>
-        <span data-ru="клипы" data-en="music videos">клипы</span>
-        <span data-ru="трейлеры" data-en="trailers">трейлеры</span>
+        <span data-ru="реклама" data-en="commercials">реклама</span>
+        <span data-ru="фэшн" data-en="fashion">фэшн</span>
+        <span data-ru="музыкальные клипы" data-en="music videos">музыкальные клипы</span>
+        <span data-ru="синематики" data-en="cinematic shorts">синематики</span>
         <span data-ru="экспериментальный арт" data-en="experimental art">экспериментальный арт</span>
       </div>
     </div>
@@ -720,15 +1037,17 @@ footer{
   <!-- ===================== РАБОТЫ ===================== -->
   <section id="work" class="sec-body">
     <div class="sec-head">
-      <h2 data-ru="мои работы" data-en="my work">мои работы</h2>
+      <h2 data-ru="работы" data-en="work">работы</h2>
     </div>
+    <div class="filt" id="filt" role="group"
+         data-ru-label="Жанр" aria-label="Жанр"></div>
     <div class="gal" id="gal"></div>
   </section>
 
   <!-- ===================== УСЛУГИ ===================== -->
   <section id="services" class="sec-body">
     <div class="sec-head">
-      <h2 data-ru="услуги" data-en="formats">услуги</h2>
+      <h2 data-ru="что умею" data-en="what i do">что умею</h2>
     </div>
 
     <div class="srv">
@@ -736,57 +1055,62 @@ footer{
         <span class="srv__n">01</span>
         <span class="srv__t" data-ru="бизнесу и брендам" data-en="business and brands">бизнесу и брендам</span>
         <span class="srv__d"
-          data-ru="рекламные ролики и промо · product-видео · наружные экраны и DOOH"
-          data-en="commercials and promos · product videos · DOOH and city screens">рекламные ролики и промо · product-видео · наружные экраны и DOOH</span>
+          data-ru="рекламные ролики и промо · для соцсетей и наружки"
+          data-en="commercials and promos · for social and outdoor">рекламные ролики и промо · для соцсетей и наружки</span>
       </div>
       <div class="srv__row">
         <span class="srv__n">02</span>
         <span class="srv__t" data-ru="артистам и блогерам" data-en="artists and creators">артистам и блогерам</span>
         <span class="srv__d"
-          data-ru="музыкальные клипы · вертикальные промо под релиз · сниппеты · обложки релизов · заставки для канала · превью для видео"
-          data-en="music videos · vertical release promos · snippets · cover art · channel intros · thumbnails">музыкальные клипы · вертикальные промо под релиз · сниппеты · обложки релизов · заставки для канала · превью для видео</span>
+          data-ru="музыкальные клипы · сниппеты · обложки треков и альбомов · оформление каналов и пабликов"
+          data-en="music videos · snippets · single and album covers · channel and community art">музыкальные клипы · сниппеты · обложки треков и альбомов · оформление каналов и пабликов</span>
       </div>
       <div class="srv__row">
         <span class="srv__n">03</span>
         <span class="srv__t" data-ru="фэшн" data-en="fashion">фэшн</span>
         <span class="srv__d"
-          data-ru="кампейны · лукбуки · бэкстейдж-эстетика · концептуальные видео"
-          data-en="campaigns · lookbooks · backstage aesthetics · concept films">кампейны · лукбуки · бэкстейдж-эстетика · концептуальные видео</span>
+          data-ru="кампейны · лукбуки · фотосеты · концептуальные видео"
+          data-en="campaigns · lookbooks · photo shoots · concept films">кампейны · лукбуки · фотосеты · концептуальные видео</span>
       </div>
       <div class="srv__row">
         <span class="srv__n">04</span>
         <span class="srv__t" data-ru="кино, сериалам, ТВ, продакшену" data-en="film, TV and production">кино, сериалам, ТВ, продакшену</span>
         <span class="srv__d"
-          data-ru="трейлеры и тизеры · сториборды · редактирование отснятого материала · сцены, которые дорого или невозможно снять · массовка и толпа · питч-материалы для инвесторов"
-          data-en="trailers and teasers · storyboards · work on existing footage · scenes that are too expensive or impossible to shoot · crowds and extras · pitch materials for investors">трейлеры и тизеры · сториборды · редактирование отснятого материала · сцены, которые дорого или невозможно снять · массовка и толпа · питч-материалы для инвесторов</span>
+          data-ru="трейлеры и тизеры · фильмы и мультфильмы (короткий формат и длинный от минуты) · сериалы для соцсетей (реализм и анимация) · редактирование отснятого материала · арт-дирекшн в вашей команде"
+          data-en="trailers and teasers · films and animation (shorts, and anything over a minute) · series for social (live action and animated) · work on existing footage · art direction inside your team">трейлеры и тизеры · фильмы и мультфильмы (короткий формат и длинный от минуты) · сериалы для соцсетей (реализм и анимация) · редактирование отснятого материала · арт-дирекшн в вашей команде</span>
       </div>
       <div class="srv__row">
         <span class="srv__n">05</span>
+        <span class="srv__t" data-ru="айдентика" data-en="identity">айдентика</span>
+        <span class="srv__d"
+          data-ru="логотипы · брендбуки · фирменный стиль · персонажи и маскоты"
+          data-en="logos · brand books · visual identity · characters and mascots">логотипы · брендбуки · фирменный стиль · персонажи и маскоты</span>
+      </div>
+      <div class="srv__row">
+        <span class="srv__n">06</span>
         <span class="srv__t" data-ru="искусству" data-en="art">искусству</span>
         <span class="srv__d"
           data-ru="экспериментальные работы · видеоарт · мини-фильмы · коллаборации"
           data-en="experimental work · video art · short films · collaborations">экспериментальные работы · видеоарт · мини-фильмы · коллаборации</span>
       </div>
+
+      <!-- стикер «наводим фокус»: уголки сводятся при наведении -->
+      <a class="focus" href="#contact">
+        <i class="focus__c focus__c--tl" aria-hidden="true"></i>
+        <i class="focus__c focus__c--tr" aria-hidden="true"></i>
+        <i class="focus__c focus__c--bl" aria-hidden="true"></i>
+        <i class="focus__c focus__c--br" aria-hidden="true"></i>
+        <span data-ru="обсудить<br>проект" data-en="let&#39;s<br>talk">обсудить<br>проект</span>
+        <i class="focus__a" aria-hidden="true"></i>
+      </a>
     </div>
 
-    <div class="tools">
-      <span data-ru="работа с реальной съемкой" data-en="working with real footage">работа с реальной съемкой</span>
-      <span data-ru="сценарий и раскадровка" data-en="script and storyboard">сценарий и раскадровка</span>
-      <span data-ru="визуальный язык под бренд-айдентику" data-en="visual language that matches your brand identity">визуальный язык под бренд-айдентику</span>
-      <span data-ru="версии под разные площадки и языки" data-en="cutdowns and localised versions">версии под разные площадки и языки</span>
-    </div>
-    <div class="tools">
-      <span>Seedance</span><span>Kling</span>
-      <span>Midjourney</span><span>Nano Banana</span><span>GPT Image</span>
-      <span>ElevenLabs</span><span>Suno</span>
-      <span>DaVinci Resolve</span><span>CapCut</span>
-    </div>
   </section>
 
   <!-- ===================== ОБО МНЕ ===================== -->
   <section id="about" class="sec-body">
     <div class="sec-head">
-      <h2 data-ru="обо мне" data-en="about me">обо мне</h2>
+      <h2 data-ru="обо мне" data-en="about">обо мне</h2>
     </div>
     <div class="about">
       <div class="pop" id="pop" role="button" tabindex="0"
@@ -811,55 +1135,65 @@ footer{
 
   <!-- ===================== ПРОЦЕСС ===================== -->
   <section id="process" class="sec-body">
-    <div class="sec-head">
-      <h2 data-ru="о процессе" data-en="process">о процессе</h2>
+    <div class="qs">
+      <div>
+        <span class="qs__n">01</span>
+        <h3 data-ru="где здесь я" data-en="where do i come in">где здесь я</h3>
+        <p data-ru="везде, кроме самого рендера: идея, драматургия, кадр, свет, цвет, ритм монтажа, звук, сборка. нейросеть не принимает решений — она инструмент"
+           data-en="everywhere but the render itself: the idea, the story, the framing, the light, the colour, the pacing of the cut, the sound, the final assembly. the AI doesn&#39;t make decisions — it&#39;s a tool">везде, кроме самого рендера: идея, драматургия, кадр, свет, цвет, ритм монтажа, звук, сборка. нейросеть не принимает решений — она инструмент</p>
+      </div>
+      <div>
+        <span class="qs__n">02</span>
+        <h3 data-ru="сколько занимает по времени" data-en="how long it takes">сколько занимает по времени</h3>
+        <p data-ru="быстрее традиционного продакшена в разы — здесь нет площадки, группы и графика смен. точный срок зависит от конкретного креатива. предоставлю оценку, когда обсудим задачу"
+           data-en="far quicker than a normal shoot — there&#39;s no set, no crew and no schedule to work around. the real timing comes down to the creative. i&#39;ll give you an estimate once we&#39;ve talked it through">быстрее традиционного продакшена в разы — здесь нет площадки, группы и графика смен. точный срок зависит от конкретного креатива. предоставлю оценку, когда обсудим задачу</p>
+      </div>
+      <div>
+        <span class="qs__n">03</span>
+        <h3 data-ru="сколько стоит" data-en="how much it costs">сколько стоит</h3>
+        <p data-ru="считается индивидуально по каждому проекту. на стоимость влияют глубина творческой задачи и уровень авторского вклада, хронометраж, адаптации под конкретную площадку и прочие факторы"
+           data-en="quoted per project. the price depends on how much creative work the idea takes and how much of it is authored, the running time, versions for specific platforms and other factors">считается индивидуально по каждому проекту. на стоимость влияют глубина творческой задачи и уровень авторского вклада, хронометраж, адаптации под конкретную площадку и прочие факторы</p>
+      </div>
     </div>
-    <div class="faq">
-      <details class="q">
-        <summary data-ru="что здесь делает человек, а не нейросеть" data-en="so what do you do, and what does the AI do?">что здесь делает человек, а не нейросеть</summary>
-        <p data-ru="все, кроме рендера: идея, драматургия, кадр, свет, цвет, ритм монтажа. нейросеть не принимает решений — она лишь инструмент"
-           data-en="everything but the render. the idea, the story, the framing, the lighting, the colour, the pacing of the cut. the AI doesn't decide anything — it's a tool">все, кроме рендера: идея, драматургия, кадр, свет, цвет, ритм монтажа. нейросеть не принимает решений — она лишь инструмент</p>
-      </details>
-      <details class="q">
-        <summary data-ru="можно ли соединить ИИ с реальной съемкой" data-en="can this be mixed with real footage?">можно ли соединить ИИ с реальной съемкой</summary>
-        <p data-ru="да, и часто это сильнее, чем каждое по отдельности. у вас может быть уже отснятый материал — я достраиваю то, чего в нем нет: локации, персонажей, их действия, предметы, и редактирую то, что нужно изменить"
-           data-en="yes, and it's usually stronger that way. if you've already shot something, i can add what isn't there — locations, characters, action, props — and fix whatever needs fixing">да, и часто это сильнее, чем каждое по отдельности. у вас может быть уже отснятый материал — я достраиваю то, чего в нем нет: локации, персонажей, их действия, предметы, и редактирую то, что нужно изменить</p>
-      </details>
-      <details class="q">
-        <summary data-ru="чем это отличается от 3D и CGI" data-en="how's this different from 3D and CGI?">чем это отличается от 3D и CGI</summary>
-        <p data-ru="в 3D сцену строят вручную: модели, текстуры, свет, симуляции. это недели и месяцы работы и команда специалистов. здесь путь к кадру короче, а правки дешевле — можно попробовать пять вариантов там, где в 3D едва хватило бы бюджета на один"
-           data-en="with 3D everything gets built by hand — models, textures, lighting, sims. that's weeks or months and a whole team. here you get to a shot far faster and changes are cheap, so you can try five ideas for what 3D would spend on one">в 3D сцену строят вручную: модели, текстуры, свет, симуляции. это недели и месяцы работы и команда специалистов. здесь путь к кадру короче, а правки дешевле — можно попробовать пять вариантов там, где в 3D едва хватило бы бюджета на один</p>
-      </details>
-      <details class="q">
-        <summary data-ru="что нужно, чтобы начать" data-en="what do you need from me to get started?">что нужно, чтобы начать</summary>
-        <p data-ru="задача — что хотите получить на выходе. все остальное полезно, но не обязательно: бренд-гайд, референсы, съемки продукта. если ничего нет — визуальную идею предлагаю я"
-           data-en="just the brief — what you want to end up with. brand guidelines, references, product footage all help, but none of it's essential. if you've got nothing, i'll come up with the look myself">задача — что хотите получить на выходе. все остальное полезно, но не обязательно: бренд-гайд, референсы, съемки продукта. если ничего нет — визуальную идею предлагаю я</p>
-      </details>
-      <details class="q">
-        <summary data-ru="сколько занимает по времени один ролик" data-en="how long does one film take?">сколько занимает по времени один ролик</summary>
-        <p data-ru="быстрее традиционного продакшена в разы — здесь нет площадки, группы и графика смен. точный срок зависит от конкретного креатива. дам оценку, как только пойму задачу"
-           data-en="far quicker than a normal shoot — there's no set, no crew and no schedule to work around. the real timing comes down to the creative. i'll give you a proper estimate once i've seen the brief">быстрее традиционного продакшена в разы — здесь нет площадки, группы и графика смен. точный срок зависит от конкретного креатива. дам оценку, как только пойму задачу</p>
-      </details>
-      <details class="q">
-        <summary data-ru="можно ли работать в фирменном стиле бренда" data-en="can you work to our brand guidelines?">можно ли работать в фирменном стиле бренда</summary>
-        <p data-ru="да. палитра, типографика, характер, транслируемые ценности и tone of voice задаются на старте и держатся во всех кадрах. если гайда нет — соберу визуальный язык с нуля"
-           data-en="yes. palette, type, tone of voice and what the brand stands for are set at the start and hold across every shot. no guidelines yet? i'll build the look from scratch">да. палитра, типографика, характер, транслируемые ценности и tone of voice задаются на старте и держатся во всех кадрах. если гайда нет — соберу визуальный язык с нуля</p>
-      </details>
-      <details class="q">
-        <summary data-ru="сколько это стоит" data-en="how much does it cost?">сколько это стоит</summary>
-        <p data-ru="считается индивидуально по каждому проекту — слишком разные бывают задачи. на стоимость влияют глубина творческой задачи и уровень авторского вклада, хронометраж, количество сцен, нужна ли озвучка, адаптации под конкретную площадку и права на креатив"
-           data-en="it's quoted per project — briefs vary far too much for a price list. it depends on how much creative work the idea actually takes, plus length, number of scenes, whether you need voice, cutdowns for different platforms, and what rights you want">считается индивидуально по каждому проекту — слишком разные бывают задачи. на стоимость влияют глубина творческой задачи и уровень авторского вклада, хронометраж, количество сцен, нужна ли озвучка, адаптации под конкретную площадку и права на креатив</p>
-      </details>
-      <details class="q">
-        <summary data-ru="кому принадлежат права на готовое видео" data-en="who owns the finished film?">кому принадлежат права на готовое видео</summary>
-        <p data-ru="объем прав обсуждается с каждым заказчиком отдельно и фиксируется до старта"
-           data-en="we agree the rights with each client individually and put it in writing before anything starts">объем прав обсуждается с каждым заказчиком отдельно и фиксируется до старта</p>
-      </details>
-      <details class="q">
-        <summary data-ru="можно ли использовать ролик в платной рекламе и на ТВ" data-en="can i run it as paid advertising or on TV?">можно ли использовать ролик в платной рекламе и на ТВ</summary>
-        <p data-ru="да. просто обсудим заранее, где ролик будет жить: таргет, ТВ, соцсети, наружка, маркетплейс — от этого зависят и формат выдачи, и объем прав"
-           data-en="yes. just tell me upfront where it's going — paid social, TV, organic, outdoor, marketplaces — because that decides both the deliverables and the rights">да. просто обсудим заранее, где ролик будет жить: таргет, ТВ, соцсети, наружка, маркетплейс — от этого зависят и формат выдачи, и объем прав</p>
-      </details>
+  </section>
+
+  <!-- ===================== КАК ИДЕТ РАБОТА ===================== -->
+  <section id="flow" class="sec-body">
+    <div class="sec-head">
+      <h2 data-ru="как идет работа" data-en="how it works">как идет работа</h2>
+    </div>
+    <div class="flow">
+      <div class="flow__grid">
+        <div class="fstep">
+          <span class="fstep__n">01</span>
+          <b data-ru="пишете мне" data-en="you message me">пишете мне</b>
+          <span data-ru="пара слов о задаче, сроке и бюджете" data-en="a few words about the task, timing and budget">пара слов о задаче, сроке и бюджете</span>
+        </div>
+        <div class="fstep">
+          <span class="fstep__n">02</span>
+          <b data-ru="созваниваемся" data-en="we get on a call">созваниваемся</b>
+          <span data-ru="разбираемся, что нужно на самом деле, и фиксируем условия" data-en="we work out what you actually need, and agree the terms">разбираемся, что нужно на самом деле, и фиксируем условия</span>
+        </div>
+        <div class="fstep">
+          <span class="fstep__n">03</span>
+          <b data-ru="показываю концепцию" data-en="i show you the concept">показываю концепцию</b>
+          <span data-ru="стиль, раскадровка, первые кадры" data-en="the look, the storyboard, the first frames">стиль, раскадровка, первые кадры</span>
+        </div>
+        <div class="fstep">
+          <span class="fstep__n">04</span>
+          <b data-ru="сдаю готовое" data-en="i deliver">сдаю готовое</b>
+          <span data-ru="с правками и в нужных форматах" data-en="revisions included, in the formats you need">с правками и в нужных форматах</span>
+        </div>
+      </div>
+      <div class="clap">
+        <div class="clap__stick" aria-hidden="true"></div>
+        <div class="clap__body">
+          <p class="clap__screen"
+             data-ru="с вас идея<br>или хотя бы вайб,<br>остальное на мне"
+             data-en="bring an idea<br>or just a vibe,<br>i&#39;ll handle the rest">с вас идея<br>или хотя бы вайб,<br>остальное на мне</p>
+          <div class="clap__bar" aria-hidden="true"></div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -868,14 +1202,9 @@ footer{
   <!-- ===================== КОНТАКТ ===================== -->
   <section id="contact" class="contact">
     <div class="wrap">
-    <h2 data-ru="есть <span class=&quot;y&quot;>задача?</span>" data-en="got a <span class=&quot;y&quot;>project?</span>">есть <span class="y">задача?</span></h2>
-    <ol class="steps">
-      <li data-ru="описываете задачу или идею" data-en="you tell me what you need">описываете задачу или идею</li>
-      <li data-ru="отвечаю: что можно сделать, сроки и стоимость" data-en="i come back with what's possible, timing and cost">отвечаю: что можно сделать, сроки и стоимость</li>
-      <li data-ru="фиксируем условия — и я приступаю" data-en="we agree the terms, and i get started">фиксируем условия — и я приступаю</li>
-    </ol>
-    <div class="socials">
-      <span class="writeme" data-ru="просто напишите" data-en="drop me a line">просто напишите</span>
+    <div class="contact__line">
+      <h2 data-ru="напишите мне" data-en="write to me">напишите мне</h2>
+      <div class="reach">
       <span class="point" aria-hidden="true">☞</span>
       <a class="soc" href="mailto:ai.mambaaa@gmail.com" aria-label="Email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -895,10 +1224,19 @@ footer{
           <circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/>
         </svg>
       </a>
+      </div>
     </div>
     </div>
   </section>
 </main>
+
+<aside class="rail" id="rail" data-ru-label="Разделы" aria-label="Разделы">
+  <a href="#top"><i></i><span data-ru="наверх" data-en="top">наверх</span></a>
+  <a href="#work"><i></i><span data-ru="работы" data-en="work">работы</span></a>
+  <a href="#services"><i></i><span data-ru="что умею" data-en="what i do">что умею</span></a>
+  <a href="#about"><i></i><span data-ru="обо мне" data-en="about">обо мне</span></a>
+  <a href="#contact"><i></i><span data-ru="написать мне" data-en="get in touch">написать мне</span></a>
+</aside>
 
 <footer>
   <span data-ru="© 2026 Анастасия Архипенко" data-en="© 2026 Anastasia Arkhipenko">© 2026 Анастасия Архипенко</span>
@@ -964,6 +1302,18 @@ const PLACEHOLDERS = [
 ];
 let WORKS = PLACEHOLDERS;
 
+/* Жанры для фильтра. У заглушек поля genre нет, поэтому они видны
+   только в «все» — так и задумано, пока не разложим реальные работы */
+const GENRES = [
+  {k:'all',      ru:'все',        en:'all'},
+  {k:'ad',       ru:'реклама',    en:'commercials'},
+  {k:'music',    ru:'музыка',     en:'music'},
+  {k:'fashion',  ru:'фэшн',       en:'fashion'},
+  {k:'cine',     ru:'синематики', en:'cinematic shorts'},
+  {k:'creative', ru:'креатив',    en:'creative'},
+];
+let FILTER = 'all';
+
 const L = {
   role:  {ru:'роль',  en:'role'},
   stack: {ru:'стек',  en:'stack'},
@@ -971,6 +1321,7 @@ const L = {
   slot:  {ru:'место под кадр', en:'frame goes here'},
   prev:  {ru:'Предыдущий кадр', en:'Previous frame'},
   next:  {ru:'Следующий кадр',  en:'Next frame'},
+  empty: {ru:'в этом разделе пока пусто', en:'nothing here yet'},
 };
 const nn = i => String(i + 1).padStart(2, '0');
 const ar = r => String(r).replace(':', '/');
@@ -983,14 +1334,18 @@ const frames = n => {
   return `${n} ${word}`;
 };
 
-function cardHTML(w, i) {
+/* i — место работы в WORKS (по нему открывается модалка),
+   n — порядковый номер в видимой сетке, он и печатается на карточке */
+function cardHTML(w, i, n) {
   const poster = w.poster ? `<img src="${w.poster}" alt="" loading="lazy">` : '';
   const prev   = w.preview ? `<video src="${w.preview}" muted loop playsinline preload="none"></video>` : '';
+  /* серия фото: второй кадр проступает поверх первого, пока держишь курсор */
+  const flip   = (w.photos && w.photos.length > 1) ? `<img class="card__next" alt="" loading="lazy">` : '';
   return `
   <a class="card" href="work/${w.slug}/" data-i="${i}">
     <span class="card__media" style="aspect-ratio:${ar(w.ratio)}">
-      ${poster}${prev}
-      <span class="card__n">${nn(i)}</span><span class="card__r">${w.ratio}</span>
+      ${poster}${prev}${flip}
+      <span class="card__n">${nn(n)}</span><span class="card__r">${w.ratio}</span>
       ${poster || prev ? '' : L.slot[LANG]}
       ${w.frames ? `<span class="card__series">${frames(w.frames)}</span>` : ''}
     </span>
@@ -1001,20 +1356,55 @@ function cardHTML(w, i) {
   </a>`;
 }
 
+/* кнопки жанров рисуем один раз, подпись берём по языку страницы */
+function renderFilter() {
+  const box = document.getElementById('filt');
+  if (!box) return;
+  box.innerHTML = GENRES.map(g =>
+    `<button type="button" data-g="${g.k}" aria-pressed="${g.k === FILTER}">${g[LANG]}</button>`).join('');
+  box.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b || b.dataset.g === FILTER) return;
+    FILTER = b.dataset.g;
+    box.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    renderWorks();
+  });
+}
+
 function renderWorks() {
   const gal = document.getElementById('gal');
-  gal.innerHTML = WORKS.map(cardHTML).join('');
+  const shown = WORKS
+    .map((w, i) => ({w, i}))
+    .filter(({w}) => FILTER === 'all' || w.genre === FILTER);
+
+  gal.innerHTML = shown.length
+    ? shown.map(({w, i}, n) => cardHTML(w, i, n)).join('')
+    : `<div class="gal__empty">${L.empty[LANG]}</div>`;
 
   gal.querySelectorAll('.card').forEach(card => {
     const w = WORKS[+card.dataset.i];
+    let flip = null;
     card.addEventListener('pointerenter', e => {
       if (e.pointerType !== 'touch') sound.tick();
       const v = card.querySelector('video');
       if (v) v.play().catch(() => {});
+      /* серия: кадры сменяют друг друга прямо в плитке */
+      const next = card.querySelector('.card__next');
+      if (next && w.photos && w.photos.length > 1 && !REDUCED) {
+        let k = 0;
+        flip = setInterval(() => {
+          k = (k + 1) % w.photos.length;
+          next.onload = () => next.classList.add('on');
+          next.classList.remove('on');
+          next.src = w.photos[k];
+        }, 1100);
+      }
     });
     card.addEventListener('pointerleave', () => {
       const v = card.querySelector('video');
       if (v) { v.pause(); v.currentTime = 0; }
+      clearInterval(flip); flip = null;
+      card.querySelector('.card__next')?.classList.remove('on');
     });
     /* ссылка настоящая: адрес вида work/<slug>/ уже закреплён за проектом.
        Пока страницы кейса нет — по обычному клику открываем модалку,
@@ -1312,7 +1702,7 @@ document.querySelectorAll('[data-scene]').forEach(root => {
 
 /* На телефоне события наведения не происходит вовсе — поэтому там
    звук идёт на касание. Мышь при этом не должна щёлкать дважды. */
-document.querySelectorAll('.srv__row, .q summary, .soc, .lang a').forEach(el => {
+document.querySelectorAll('.srv__row, .soc, .lang a, .filt button, .fstep, .band__go, .rail a').forEach(el => {
   el.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') sound.tick(); });
 });
 
@@ -1397,7 +1787,51 @@ document.querySelectorAll('.srv__row, .q summary, .soc, .lang a').forEach(el => 
   }));
 })();
 
+renderFilter();
 renderWorks();
+
+/* ---------- хлопушка щёлкает один раз, когда доезжает до экрана ---------- */
+(() => {
+  const clap = document.querySelector('.clap');
+  if (!clap || REDUCED) return;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    clap.classList.add('snap');
+    io.unobserve(clap);
+  }), {threshold: .45});
+  io.observe(clap);
+})();
+
+/* ---------- боковой рейл: появляется, когда первый экран уехал ---------- */
+(() => {
+  const rail = document.getElementById('rail');
+  const hero = document.querySelector('.hero');
+  if (!rail || !hero) return;
+
+  const links = [...rail.querySelectorAll('a')];
+  const marks = links.map(a => document.querySelector(a.getAttribute('href')));
+
+  new IntersectionObserver(
+    ([e]) => rail.classList.toggle('on', !e.isIntersecting)
+  ).observe(hero);
+
+  /* текущий — последний раздел, чей верх уже выше середины экрана;
+     у самого низа страницы принудительно последний пункт */
+  let queued = false;
+  const spy = () => {
+    queued = false;
+    let now = 0;
+    marks.forEach((m, i) => {
+      if (m && m.getBoundingClientRect().top < innerHeight * 0.5) now = i;
+    });
+    if (innerHeight + scrollY >= document.documentElement.scrollHeight - 4) now = marks.length - 1;
+    links.forEach((a, i) => a.classList.toggle('here', i === now));
+  };
+  addEventListener('scroll', () => {
+    if (!queued) { queued = true; requestAnimationFrame(spy); }
+  }, {passive: true});
+  spy();
+})();
 </script>
 </body>
 </html>

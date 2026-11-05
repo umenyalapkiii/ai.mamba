@@ -37,6 +37,8 @@ KEYS = {
     "client":   ["клиент", "заказчик", "client"],
     "category": ["категория", "раздел", "category"],
     "ratio":    ["формат", "пропорции", "ratio"],
+    # жанр для фильтра на главной: ad / music / fashion / cine / creative
+    "genre":    ["жанр", "genre"],
     "link":     ["ссылка", "link", "url"],
 }
 LOOKUP = {alias: field for field, aliases in KEYS.items() for alias in aliases}
