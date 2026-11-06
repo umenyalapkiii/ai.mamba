@@ -1580,15 +1580,24 @@ fetch('../projects.json', { cache: 'no-store' })
   .then(list => {
     LOADED = true;
     if (!Array.isArray(list) || !list.length) return renderWorks();
+    /* Каждое поле с путём к файлу идёт через BASE: английская страница
+       лежит уровнем глубже, и без префикса файл там отдаёт 404. Поля
+       перечислены списком, чтобы новое не забылось — так уже случилось
+       с роликами ленты, и в английской версии они не открывались. */
     const abs = v => (v && !/^(https?:)?\//.test(v)) ? BASE + v : v;
-    WORKS = list.map(p => ({
-      ...p,
-      poster: abs(p.poster), preview: abs(p.preview), video: abs(p.video),
-      photos: (p.photos || []).map(abs),
-      title: {ru: p.title,               en: (p.en && p.en.title) || p.title},
-      meta:  {ru: p.sub || p.category || '', en: (p.en && p.en.sub) || p.sub || p.category || ''},
-      desc:  {ru: p.desc || '',          en: (p.en && p.en.desc) || p.desc || ''},
-    }));
+    const ONE = ['poster', 'preview', 'video'];
+    const MANY = ['photos', 'clips', 'clipPosters'];
+    WORKS = list.map(p => {
+      const w = {
+        ...p,
+        title: {ru: p.title,               en: (p.en && p.en.title) || p.title},
+        meta:  {ru: p.sub || p.category || '', en: (p.en && p.en.sub) || p.sub || p.category || ''},
+        desc:  {ru: p.desc || '',          en: (p.en && p.en.desc) || p.desc || ''},
+      };
+      ONE.forEach(k => { if (w[k]) w[k] = abs(w[k]); });
+      MANY.forEach(k => { if (w[k]) w[k] = w[k].map(abs); });
+      return w;
+    });
     renderFilter();
     renderWorks();
   })
