@@ -354,53 +354,74 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .sec-body{padding:clamp(34px,5vw,74px) 0}
 
 /* ---------- РАБОТЫ ---------- */
-.gal{column-width:300px;column-gap:10px}
+/* Кладка на гриде, а не на columns: columns заполняет колонку сверху вниз,
+   и работы читались бы столбиками, а не слева направо. Высоту плитки задаёт
+   --span — его считает layoutGal() по пропорции, записанной в data-ar. */
+.gal{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(242px,1fr));
+  grid-auto-rows:6px;gap:10px;
+}
 .card{
-  display:block;width:100%;break-inside:avoid;margin-bottom:10px;
-  position:relative;text-align:left;
+  display:block;position:relative;overflow:hidden;grid-row:span var(--span,1);
   border:1px solid var(--line);background:var(--panel);
   transition:border-color .25s,transform .25s cubic-bezier(.16,1,.3,1);
 }
+/* горизонтальная обложка занимает две колонки — так ряд не становится таблицей */
+.card--wide{grid-column:span 2}
 .card:hover,.card:focus-visible{border-color:var(--yellow);transform:translateY(-4px)}
 .card__media{
-  position:relative;display:grid;place-items:center;overflow:hidden;
+  position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px),#111116;
   font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:#4E4E58;
 }
 .card__media img,.card__media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+/* видео проявляется не раньше, чем реально пошло: пока оно грузится,
+   поверх обложки висел бы чёрный прямоугольник */
+.card__vid{opacity:0;transition:opacity .45s ease}
+.card__vid.on{opacity:1}
 .card__media::after{
   content:"";position:absolute;left:0;right:0;height:38%;z-index:2;
   background:linear-gradient(180deg,transparent,rgba(237,173,34,.16),transparent);
   transform:translateY(-120%);transition:transform .6s cubic-bezier(.16,1,.3,1);
 }
 .card:hover .card__media::after{transform:translateY(300%)}
-.card__n{
-  position:absolute;left:8px;top:7px;z-index:3;
-  font-family:var(--mono);font-size:10px;color:var(--yellow);font-variant-numeric:tabular-nums;
-}
-.card__r{
-  position:absolute;right:8px;top:7px;z-index:3;
-  font-family:var(--mono);font-size:9.5px;color:var(--muted-dim);
-}
-/* серия кадров: метка снизу и две подложки, намекающие на стопку */
-.card__series{
-  position:absolute;left:8px;bottom:8px;z-index:3;
-  font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--yellow);border:1px solid var(--yellow-dim);padding:3px 7px;
-  background:rgba(8,8,10,.7);
-}
 
-/* display:block обязателен: подвал — <span>, а название внутри него
-   блочное, и блок внутри строчного элемента не смещается его
-   горизонтальными отступами — название липло к кромке */
-.card__foot{display:block;padding:12px 16px 15px}
+/* подложка под подписи: название и чип должны читаться и на чёрном кадре,
+   и на кислотно-розовом — поэтому затемнение, а не только тень у текста */
+.card__scrim{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(180deg,rgba(6,6,8,.5) 0,rgba(6,6,8,.1) 20%,transparent 40%),
+    linear-gradient(0deg,rgba(6,6,8,.9) 0,rgba(6,6,8,.52) 24%,transparent 56%);
+}
+.card__tag,.card__badge{
+  position:absolute;top:9px;z-index:3;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--cream);padding:5px 9px;
+  background:rgba(8,8,10,.5);border:1px solid rgba(255,255,255,.15);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12);
+  backdrop-filter:blur(10px) saturate(150%);
+}
+.card__tag{left:9px}
+.card__badge{right:9px;display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+.card__badge svg{display:block;fill:currentColor}
+.card__badge em{font-style:normal;letter-spacing:.08em}
+.card:hover .card__badge{color:var(--yellow);border-color:var(--yellow-dim)}
+.card__cap{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:14px 14px 13px}
 .card__name{
-  display:block;font-family:var(--display);font-weight:600;font-size:17px;
-  text-transform:uppercase;margin-bottom:5px;transition:color .25s;
+  display:block;font-family:var(--display);font-weight:600;
+  font-size:clamp(16px,1.3vw,20px);line-height:1.04;
+  text-transform:uppercase;transition:color .25s;
+  text-shadow:0 1px 12px rgba(0,0,0,.6);
 }
 .card:hover .card__name{color:var(--yellow)}
-.card__meta{
-  font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-dim);
+@media(max-width:620px){
+  .gal{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}
+  .card--wide{grid-column:span 1}
+  .card__cap{padding:11px 11px 10px}
+  .card__name{font-size:14px}
+  .card__tag,.card__badge{font-size:8.5px;padding:4px 7px;top:7px}
+  .card__tag{left:7px} .card__badge{right:7px}
 }
 
 /* ---------- УСЛУГИ ---------- */
@@ -1364,40 +1385,13 @@ footer{
 /* язык страницы. У английской версии build_en.py ставит здесь 'en' —
    больше ничем страницы не отличаются, источник текстов один */
 const LANG = 'en';
+/* пути к медиа в projects.json записаны от корня сайта;
+   английская страница лежит на уровень глубже — ей нужен префикс */
+const BASE = '../';
 const t = v => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[LANG] ?? v.ru ?? '') : (v ?? '');
 
-const PLACEHOLDERS = [
-  {slug:'reklamnyy-film', ratio:'16:9', year:'2026',
-   title:{ru:'Рекламный фильм',en:'Commercial film'}, meta:{ru:'реклама · продукт',en:'advertising · product'},
-   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
-   role:{ru:'идея, режиссура, монтаж',en:'concept, direction, edit'}, stack:{ru:'Seedance · DaVinci',en:'Seedance · DaVinci'}},
-  {slug:'feshn-kampaniya', ratio:'4:5', year:'2026', frames:5,
-   title:{ru:'Фэшн-кампания',en:'Fashion campaign'}, meta:{ru:'лукбук · кампейн',en:'lookbook · campaign'},
-   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
-   role:{ru:'идея, арт-дирекшн, цвет',en:'concept, art direction, colour'}, stack:{ru:'Nano Banana · Photoshop',en:'Nano Banana · Photoshop'}},
-  {slug:'klip', ratio:'9:16', year:'2026',
-   title:{ru:'Клип',en:'Music video'}, meta:{ru:'вертикаль · по битам',en:'vertical · beat-driven'},
-   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
-   role:{ru:'идея, монтаж, цвет',en:'concept, edit, colour'}, stack:{ru:'Seedance · DaVinci',en:'Seedance · DaVinci'}},
-  {slug:'treyler', ratio:'16:9', year:'2025',
-   title:{ru:'Трейлер',en:'Trailer'}, meta:{ru:'кино · тизер',en:'film · teaser'},
-   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
-   role:{ru:'режиссура, монтаж',en:'direction, edit'}, stack:{ru:'Veo · DaVinci',en:'Veo · DaVinci'}},
-  {slug:'product-film', ratio:'1:1', year:'2025',
-   title:{ru:'Product-фильм',en:'Product film'}, meta:{ru:'предмет · макро',en:'object · macro'},
-   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
-   role:{ru:'идея, режиссура',en:'concept, direction'}, stack:{ru:'Kling · DaVinci',en:'Kling · DaVinci'}},
-  {slug:'dooh', ratio:'21:9', year:'2025',
-   title:{ru:'Наружный экран',en:'Outdoor screen'}, meta:{ru:'DOOH · медиафасад',en:'DOOH · media facade'},
-   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',
-         en:'Project description goes here: the idea, the brief, what makes this one different'},
-   role:{ru:'идея, режиссура',en:'concept, direction'}, stack:{ru:'Kling · DaVinci',en:'Kling · DaVinci'}},
-  {slug:'art', ratio:'3:2', year:'2025',
-   title:{ru:'Экспериментальный арт',en:'Experimental art'}, meta:{ru:'видеоарт · авторское',en:'video art · personal'},
-   desc:{ru:'Здесь будет описание проекта: идея, задача и чем этот ролик отличается',en:'Project description goes here: the idea, the brief, what makes this one different'},
-   role:{ru:'идея, режиссура, звук',en:'concept, direction, sound'}, stack:{ru:'Veo · Suno · DaVinci',en:'Veo · Suno · DaVinci'}},
-];
-let WORKS = PLACEHOLDERS;
+let WORKS = [];
+let LOADED = false;   // пока projects.json не пришёл, сетку не рисуем — чтобы не мигало пустотой
 
 /* Жанры для фильтра. У заглушек поля genre нет, поэтому они видны
    только в «все» — так и задумано, пока не разложим реальные работы */
@@ -1431,26 +1425,49 @@ const frames = n => {
   return `${n} ${word}`;
 };
 
-/* i — место работы в WORKS (по нему открывается модалка),
-   n — порядковый номер в видимой сетке, он и печатается на карточке */
-function cardHTML(w, i, n) {
-  const poster = w.poster ? `<img src="${w.poster}" alt="" loading="lazy">` : '';
-  const prev   = w.preview ? `<video src="${w.preview}" muted loop playsinline preload="none"></video>` : '';
-  /* серия фото: второй кадр проступает поверх первого, пока держишь курсор */
-  const flip   = (w.photos && w.photos.length > 1) ? `<img class="card__next" alt="" loading="lazy">` : '';
+const PLAY = '<svg width="9" height="11" viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0v11l9-5.5z"/></svg>';
+/* пропорция как число: в info.txt её пишут и «4/5», и «4:5» */
+const arNum = r => { const [a, b] = String(r).split(/[:/]/).map(Number); return (a && b) ? a / b : 0.8; };
+/* чип слева вверху: своя подпись из info.txt, иначе название жанра */
+const tagOf = w => {
+  if (w.tag) return LANG === 'en' ? (w.tag_en || w.tag) : w.tag;
+  const g = GENRES.find(g => g.k === w.genre);
+  return g && g.k !== 'all' ? g[LANG] : '';
+};
+
+function cardHTML(w, i) {
+  /* object-position: обложку режет браузер под высоту плитки,
+     «фокус» говорит, какую часть кадра при этом беречь */
+  const foc = w.focus ? ` style="object-position:${w.focus}"` : '';
+  const poster = w.poster ? `<img src="${w.poster}" alt="" loading="lazy"${foc}>` : '';
+  const prev = w.preview ? `<video class="card__vid" src="${w.preview}" muted loop playsinline preload="none"${foc}></video>` : '';
+  /* серия фото: следующий кадр проступает поверх первого, пока держишь курсор */
+  const flip = (w.photos && w.photos.length > 1) ? `<img class="card__next" alt="" loading="lazy"${foc}>` : '';
+  const badge = (w.video || w.preview)
+    ? `<span class="card__badge">${PLAY}${w.dur ? `<em>${w.dur}</em>` : ''}</span>`
+    : (w.photos && w.photos.length > 1 ? `<span class="card__badge"><em>${frames(w.photos.length)}</em></span>` : '');
+  const tag = tagOf(w);
   return `
-  <a class="card" href="../work/${w.slug}/" data-i="${i}">
-    <span class="card__media" style="aspect-ratio:${ar(w.ratio)}">
+  <a class="card${w.wide ? ' card--wide' : ''}" href="../work/${w.slug}/" data-i="${i}" data-ar="${arNum(w.ratio)}">
+    <span class="card__media">
       ${poster}${prev}${flip}
-      <span class="card__n">${nn(n)}</span><span class="card__r">${w.ratio}</span>
       ${poster || prev ? '' : L.slot[LANG]}
-      ${w.frames ? `<span class="card__series">${frames(w.frames)}</span>` : ''}
-    </span>
-    <span class="card__foot">
-      <span class="card__name">${t(w.title)}</span>
-      <span class="card__meta">${t(w.meta)}${t(w.meta) ? ' · ' : ''}${w.year || ''}</span>
+      <span class="card__scrim"></span>
+      ${tag ? `<span class="card__tag">${tag}</span>` : ''}
+      ${badge}
+      <span class="card__cap"><span class="card__name">${t(w.title)}</span></span>
     </span>
   </a>`;
+}
+
+/* Высота плитки = ширина колонки / пропорция. Переводим её в число строк
+   сетки: строка 6px, зазор 10px, значит n строк занимают 16n-10 пикселей. */
+const ROW = 6, GAP = 10;
+function layoutGal() {
+  document.querySelectorAll('#gal .card').forEach(card => {
+    const h = card.getBoundingClientRect().width / (+card.dataset.ar || 0.8);
+    card.style.setProperty('--span', Math.max(2, Math.round((h + GAP) / (ROW + GAP))));
+  });
 }
 
 /* кнопки жанров рисуем один раз, подпись берём по языку страницы */
@@ -1470,20 +1487,24 @@ function renderFilter() {
 
 function renderWorks() {
   const gal = document.getElementById('gal');
+  if (!LOADED && !WORKS.length) { gal.innerHTML = ''; return; }
   const shown = WORKS
     .map((w, i) => ({w, i}))
     .filter(({w}) => FILTER === 'all' || w.genre === FILTER);
 
   gal.innerHTML = shown.length
-    ? shown.map(({w, i}, n) => cardHTML(w, i, n)).join('')
+    ? shown.map(({w, i}) => cardHTML(w, i)).join('')
     : `<div class="gal__empty">${L.empty[LANG]}</div>`;
+  layoutGal();
 
   gal.querySelectorAll('.card').forEach(card => {
     const w = WORKS[+card.dataset.i];
+    const v = card.querySelector('video');
+    /* ждём не загрузки, а настоящего старта: только тогда видео проявляем */
+    if (v) v.addEventListener('playing', () => v.classList.add('on'));
     let flip = null;
     card.addEventListener('pointerenter', e => {
       if (e.pointerType !== 'touch') sound.tick();
-      const v = card.querySelector('video');
       if (v) v.play().catch(() => {});
       /* серия: кадры сменяют друг друга прямо в плитке */
       const next = card.querySelector('.card__next');
@@ -1498,8 +1519,7 @@ function renderWorks() {
       }
     });
     card.addEventListener('pointerleave', () => {
-      const v = card.querySelector('video');
-      if (v) { v.pause(); v.currentTime = 0; }
+      if (v) { v.pause(); v.currentTime = 0; v.classList.remove('on'); }
       clearInterval(flip); flip = null;
       card.querySelector('.card__next')?.classList.remove('on');
     });
@@ -1514,21 +1534,27 @@ function renderWorks() {
     });
   });
 }
+/* колонок стало больше или меньше — пересчитываем высоты */
+new ResizeObserver(layoutGal).observe(document.getElementById('gal'));
 
 /* подтягиваем реальные проекты, если build.py их уже собрал */
 fetch('../projects.json', { cache: 'no-store' })
   .then(r => r.ok ? r.json() : null)
   .then(list => {
-    if (!Array.isArray(list) || !list.length) return;
+    LOADED = true;
+    if (!Array.isArray(list) || !list.length) return renderWorks();
+    const abs = v => (v && !/^(https?:)?\//.test(v)) ? BASE + v : v;
     WORKS = list.map(p => ({
       ...p,
+      poster: abs(p.poster), preview: abs(p.preview), video: abs(p.video),
+      photos: (p.photos || []).map(abs),
       title: {ru: p.title,               en: (p.en && p.en.title) || p.title},
       meta:  {ru: p.sub || p.category || '', en: (p.en && p.en.sub) || p.sub || p.category || ''},
       desc:  {ru: p.desc || '',          en: (p.en && p.en.desc) || p.desc || ''},
     }));
     renderWorks();
   })
-  .catch(() => {});   // нет файла — остаются заглушки, это нормально
+  .catch(() => { LOADED = true; renderWorks(); });
 
 /* ---------- карусель кадров внутри окна проекта ---------- */
 function wireCarousel(root, total) {
@@ -1562,7 +1588,7 @@ function openModal(w) {
   const rows = [[L.stack, w.stack], [L.year, w.year]]
     .map(([k, v]) => `<div class="meta__row"><span class="meta__k">${k[LANG]}</span><span>${t(v) || '—'}</span></div>`);
   document.getElementById('mMeta').innerHTML = rows.join('');
-  const [aw, ah] = String(w.ratio).split(':').map(Number);
+  const [aw, ah] = String(w.ratio).split(/[:/]/).map(Number);
   const isSeries = !!(w.frames || (w.photos && w.photos.length));
   /* серию показываем в широком окне: иначе в него влезает ровно один
      кадр и лента не читается как лента */

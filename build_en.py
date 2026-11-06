@@ -123,6 +123,7 @@ def main() -> int:
                         '<meta property="og:locale:alternate" content="ru_RU">')
     html = html.replace('"assets/', '"../assets/')
     html = html.replace("fetch('projects.json'", "fetch('../projects.json'")
+    html = html.replace("const BASE = '';", "const BASE = '../';")
     html = html.replace('href="work/${w.slug}/"', 'href="../work/${w.slug}/"')
 
     # переключатель языка

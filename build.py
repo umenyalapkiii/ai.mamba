@@ -37,6 +37,15 @@ KEYS = {
     "client":   ["клиент", "заказчик", "client"],
     "category": ["категория", "раздел", "category"],
     "ratio":    ["формат", "пропорции", "ratio"],
+    # куда смотреть при обрезке плитки: центр / верх / низ / «50% 22%»
+    "focus":    ["фокус", "кадрирование", "focus"],
+    # плитка на две колонки — для горизонтальных обложек
+    "wide":     ["широкая", "wide"],
+    # подпись на значке проигрывания, вида 0:38
+    "dur":      ["длительность", "хронометраж", "duration"],
+    # подпись на чипе слева вверху; по умолчанию берётся из жанра
+    "tag":      ["тег", "чип", "tag"],
+    "tag_en":   ["тег en", "tag en"],
     # жанр для фильтра на главной: ad / music / fashion / cine / creative
     "genre":    ["жанр", "genre"],
     "link":     ["ссылка", "link", "url"],
@@ -64,30 +73,22 @@ def parse_info(path: Path) -> dict:
     return data
 
 
-def probe_ratio(path: Path) -> str:
-    """Определяет пропорцию медиафайла и округляет до ближайшего ходового формата."""
-    w = h = None
-    if path.suffix.lower() in PHOTO_EXT:
-        try:
-            from PIL import Image
-            with Image.open(path) as im:
-                w, h = im.size
-        except Exception:
-            pass
-    elif HAS_FFMPEG:
-        try:
-            out = subprocess.run(
-                ["ffprobe", "-v", "error", "-select_streams", "v:0",
-                 "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x", str(path)],
-                capture_output=True, text=True, timeout=20).stdout.strip()
-            w, h = (int(v) for v in out.split("x")[:2])
-        except Exception:
-            pass
-    if not w or not h:
-        return "16/9"
-    target = w / h
-    known = {"9/16": 9 / 16, "4/5": 4 / 5, "1/1": 1.0, "3/2": 1.5, "16/9": 16 / 9, "21/9": 21 / 9}
-    return min(known, key=lambda k: abs(known[k] - target))
+RHYTHM = ["4/5", "1/1", "3/4", "9/16", "4/5", "3/4", "1/1", "4/5"]
+
+
+def probe_duration(video: Path) -> str:
+    """Длительность ролика как 0:38 — её печатает значок проигрывания."""
+    if not HAS_FFMPEG:
+        return ""
+    try:
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+             "-of", "csv=p=0", str(video)],
+            capture_output=True, text=True, timeout=20).stdout.strip()
+        sec = round(float(out))
+        return f"{sec // 60}:{sec % 60:02d}"
+    except Exception:
+        return ""
 
 
 def make_poster(video: Path, dest: Path) -> bool:
@@ -141,7 +142,7 @@ def rel(p: Path) -> str:
     return p.relative_to(ROOT).as_posix()
 
 
-def collect(folder: Path) -> dict | None:
+def collect(folder: Path, idx: int = 0) -> dict | None:
     info = parse_info(folder / "info.txt")
     cover = pick(folder, COVER_NAMES, PHOTO_EXT)
     manual_preview = pick(folder, PREVIEW_NAMES, VIDEO_EXT)
@@ -173,6 +174,11 @@ def collect(folder: Path) -> dict | None:
         "category": info.get("category", ""),
         # ключ фильтра на главной: ad / music / fashion / cine / creative
         "genre": info.get("genre", ""),
+        "tag": info.get("tag", ""),
+        "tag_en": info.get("tag_en", ""),
+        # object-position обложки: кадр обрезается под плитку, а не наоборот
+        "focus": info.get("focus", ""),
+        "wide": info.get("wide", "").strip().lower() in {"да", "yes", "true", "1", "+"},
         "link": info.get("link", ""),
         "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en") if k in info},
         "photos": [rel(p) for p in photos],
@@ -197,11 +203,13 @@ def collect(folder: Path) -> dict | None:
     elif photos:
         project["poster"] = rel(photos[0])
 
-    # пропорцию плитки задаёт обложка, а не видео: обложки вертикальные,
-    # а ролики чаще горизонтальные — иначе плитка не совпала бы с картинкой
-    ratio_src = cover or (ROOT / project["video"] if "video" in project else None) \
-                or (ROOT / project["photos"][0] if project["photos"] else None)
-    project["ratio"] = info.get("ratio") or (probe_ratio(ratio_src) if ratio_src else "4/5")
+    if videos:
+        project["dur"] = info.get("dur") or probe_duration(ROOT / project["video"])
+
+    # Пропорцию задаёт СЕТКА, а не файл: плитки должны быть разной высоты,
+    # иначе галерея выглядит как таблица. Обложку под плитку подрезает
+    # браузер (object-fit), а куда смотреть при обрезке — ключ «фокус».
+    project["ratio"] = info.get("ratio") or RHYTHM[idx % len(RHYTHM)]
     return project
 
 
@@ -212,7 +220,7 @@ def main() -> int:
 
     folders = sorted(p for p in WORKS.iterdir()
                      if p.is_dir() and not p.name.startswith((".", "_")))
-    projects = [pr for pr in (collect(f) for f in folders) if pr]
+    projects = [pr for pr in (collect(f, i) for i, f in enumerate(folders)) if pr]
 
     OUT.write_text(json.dumps(projects, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -221,6 +229,8 @@ def main() -> int:
         flags = []
         if p.get("preview"):
             flags.append("превью")
+        if p.get("wide"):
+            flags.append("широкая")
         if p["hasCase"]:
             flags.append("кейс-страница")
         if not p["desc"]:
@@ -230,7 +240,7 @@ def main() -> int:
     if not HAS_FFMPEG:
         print("\nffmpeg не установлен — постеры и лёгкие превью не сделаны.")
         print("поставить:  brew install ffmpeg")
-        print("без него положи в папку проекта cover.jpg вручную.")
+        print("без него положи в папку проекта cover.webp и preview.mp4 вручную.")
     print(f"\nзаписано в {OUT.name}\n")
     return 0
 
