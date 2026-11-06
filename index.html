@@ -358,7 +358,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
    и работы читались бы столбиками, а не слева направо. Высоту плитки задаёт
    --span — его считает layoutGal() по пропорции, записанной в data-ar. */
 .gal{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(max(180px,calc((100% - 50px) / 6)),1fr));
   grid-auto-rows:6px;gap:10px;grid-auto-flow:row dense;
 }
 .card{
@@ -371,9 +371,20 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 /* главная плитка: закреплена справа сверху, над ней ничего не встаёт.
    Работает только там, где колонок хватает; на узком экране она просто
    течёт вместе со всеми — так задумано */
-@media(min-width:1200px){
-  .card--hero{grid-column:-3/-1;grid-row:1/span var(--span,1)}
-}
+/* В разделе фильтра работ мало, и закреплённые места превращаются в
+   пустое поле: «главная» уезжает к правому краю, а между ней и соседкой
+   дыра на пол-экрана. Внутри раздела плитки идут подряд слева и одной
+   ширины — разница остаётся только в высоте кадра */
+.gal--filtered .card{grid-column-start:auto}
+.gal--filtered .card--hero,
+.gal--filtered .card--wide{grid-column:span 1;grid-row:span var(--span,1)}
+
+/* «колонка» из info.txt доводит композицию на полном экране: без неё
+   укладка разбрасывает нижний ряд и в середине остаётся дыра.
+   Класс вешает layoutGal и только когда колонок ровно шесть: на пяти
+   номера колонок уже не те, и плитка улетает под «главную» */
+.gal--pin .card{grid-column-start:var(--col,auto)}
+.gal--pin .card--hero{grid-column:-3/-1;grid-row:1/span var(--span,1)}
 .card:hover,.card:focus-visible{border-color:var(--yellow);transform:translateY(-4px)}
 .card__media{
   position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;
@@ -1493,8 +1504,9 @@ function cardHTML(w, i) {
     : (w.photos && w.photos.length > 1 ? `<span class="card__badge"><em>${frames(w.photos.length)}</em></span>` : '');
   const tag = tagOf(w);
   const big = w.hero ? ' card--hero' : w.wide ? ' card--wide' : '';
+  const col = w.col ? `;--col:${w.col}` : '';
   return `
-  <a class="card${big}" href="work/${w.slug}/" data-i="${i}" data-ar="${arNum(w.ratio)}">
+  <a class="card${big}" href="work/${w.slug}/" data-i="${i}" data-ar="${arNum(w.ratio)}" style="--span:1${col}">
     <span class="card__media">
       ${poster}${prev}${flip}
       ${poster || prev ? '' : L.slot[LANG]}
@@ -1510,7 +1522,10 @@ function cardHTML(w, i) {
    сетки: строка 6px, зазор 10px, значит n строк занимают 16n-10 пикселей. */
 const ROW = 6, GAP = 10;
 function layoutGal() {
-  document.querySelectorAll('#gal .card').forEach(card => {
+  const gal = document.getElementById('gal');
+  const cols = getComputedStyle(gal).gridTemplateColumns.split(' ').length;
+  gal.classList.toggle('gal--pin', cols === 6 && FILTER === 'all');
+  gal.querySelectorAll('.card').forEach(card => {
     const h = card.getBoundingClientRect().width / (+card.dataset.ar || 0.8);
     card.style.setProperty('--span', Math.max(2, Math.round((h + GAP) / (ROW + GAP))));
   });
@@ -1539,6 +1554,7 @@ function renderWorks() {
     .map((w, i) => ({w, i}))
     .filter(({w}) => FILTER === 'all' || w.genre === FILTER);
 
+  gal.classList.toggle('gal--filtered', FILTER !== 'all');
   gal.innerHTML = shown.length
     ? shown.map(({w, i}) => cardHTML(w, i)).join('')
     : `<div class="gal__empty">${L.empty[LANG]}</div>`;

@@ -17,6 +17,7 @@
     "focus": "",
     "wide": false,
     "hero": false,
+    "col": "",
     "link": "",
     "en": {
       "title": "Voskresenskii · France",
@@ -45,6 +46,7 @@
     "focus": "",
     "wide": false,
     "hero": false,
+    "col": "",
     "link": "",
     "en": {
       "title": "The Banker, Valentina and the Magic Mushrooms",
@@ -76,6 +78,7 @@
     "focus": "",
     "wide": false,
     "hero": false,
+    "col": "",
     "link": "",
     "en": {
       "title": "APRO · GACH (feat. Garzón Robie, DeVita)",
@@ -104,6 +107,7 @@
     "focus": "",
     "wide": false,
     "hero": false,
+    "col": "",
     "link": "",
     "en": {
       "title": "Antoha MC, Kroshevo festival",
@@ -132,6 +136,7 @@
     "focus": "",
     "wide": false,
     "hero": true,
+    "col": "",
     "link": "",
     "en": {
       "title": "There's Something About Nastya",
@@ -160,6 +165,7 @@
     "focus": "",
     "wide": false,
     "hero": false,
+    "col": "2",
     "link": "",
     "en": {
       "title": "Magssory Basketball",
@@ -188,6 +194,7 @@
     "focus": "",
     "wide": false,
     "hero": false,
+    "col": "3",
     "link": "",
     "en": {
       "title": "METY, Petr Osipov",
@@ -216,6 +223,7 @@
     "focus": "",
     "wide": false,
     "hero": false,
+    "col": "4",
     "link": "",
     "en": {
       "title": "Off the Wall",

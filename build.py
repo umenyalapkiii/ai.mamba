@@ -43,6 +43,8 @@ KEYS = {
     "wide":     ["широкая", "wide"],
     # то же, но закреплена справа сверху: над ней ничего не встаёт
     "hero":     ["главная", "hero"],
+    # номер колонки на широком экране — им доводится композиция
+    "col":      ["колонка", "col"],
     # подпись на значке проигрывания, вида 0:38
     "dur":      ["длительность", "хронометраж", "duration"],
     # подпись на чипе слева вверху; по умолчанию берётся из жанра
@@ -185,6 +187,7 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         "focus": info.get("focus", ""),
         "wide": info.get("wide", "").strip().lower() in YES,
         "hero": info.get("hero", "").strip().lower() in YES,
+        "col": info.get("col", "").strip(),
         "link": info.get("link", ""),
         "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en") if k in info},
         "photos": [rel(p) for p in photos],
