@@ -599,7 +599,8 @@ footer{
 }
 .modal.open{display:grid;place-items:center}
 .modal__box{
-  width:min(1040px,100%);max-height:92vh;overflow:auto;
+  width:min(1320px, 100%, max(360px, calc(74vh * var(--ar,1.6))));
+  max-height:94vh;overflow:auto;
   background:var(--panel);border:1px solid var(--line);position:relative;
 }
 .modal__close{
@@ -608,11 +609,9 @@ footer{
 }
 .modal__close:hover{color:var(--yellow);border-color:var(--yellow)}
 .modal__media{
-  /* кадр упирается в ту сторону, которая кончается первой: по высоте
-     в экран, по ширине в окно. --ar (ширина/высота) ставит скрипт,
-     поэтому пересчёт при повороте телефона идёт сам, без JS */
-  width:min(100%, calc(62vh * var(--ar,1)));
-  max-width:100%;margin-inline:auto;
+  /* ширину задаёт карточка, она же считается от --ar: пересчёт при
+     повороте телефона идёт сам, без JS */
+  width:100%;
   position:relative;display:grid;place-items:center;min-height:180px;
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),#111116;
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#4E4E58;
@@ -1602,7 +1601,8 @@ fetch('../projects.json', { cache: 'no-store' })
 function setBoxAr(ar) {
   const a = +ar || 1;
   mMedia.style.aspectRatio = String(a);
-  mMedia.style.setProperty('--ar', a.toFixed(4));
+  /* --ar живёт на карточке: от него считается и её ширина, и высота кадра */
+  modal.querySelector('.modal__box').style.setProperty('--ar', a.toFixed(4));
 }
 
 function wireCarousel(root, list) {
