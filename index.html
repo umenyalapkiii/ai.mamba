@@ -359,7 +359,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
    --span — его считает layoutGal() по пропорции, записанной в data-ar. */
 .gal{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(212px,1fr));
-  grid-auto-rows:6px;gap:10px;
+  grid-auto-rows:6px;gap:10px;grid-auto-flow:row dense;
 }
 .card{
   display:block;position:relative;overflow:hidden;grid-row:span var(--span,1);
@@ -616,7 +616,7 @@ footer{
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),#15151A;
   font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:#4E4E58;
 }
-.car__track img{width:100%;height:100%;object-fit:contain}
+.car__track img,.car__track video{width:100%;height:100%;object-fit:contain;background:#000}
 .car__nav{
   position:absolute;top:50%;transform:translateY(-50%);z-index:3;
   width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
@@ -1453,6 +1453,13 @@ const L = {
 const nn = i => String(i + 1).padStart(2, '0');
 const ar = r => String(r).replace(':', '/');
 /* «5 кадров», но «2 кадра» и «1 кадр» — иначе режет глаз */
+const clipsWord = n => {
+  if (LANG === 'en') return `${n} clip${n === 1 ? '' : 's'}`;
+  const t = n % 10, h = n % 100;
+  const word = (t === 1 && h !== 11) ? 'ролик'
+             : (t >= 2 && t <= 4 && (h < 12 || h > 14)) ? 'ролика' : 'роликов';
+  return `${n} ${word}`;
+};
 const frames = n => {
   if (LANG === 'en') return `${n} frame${n === 1 ? '' : 's'}`;
   const t = n % 10, h = n % 100;
@@ -1479,8 +1486,10 @@ function cardHTML(w, i) {
   const prev = w.preview ? `<video class="card__vid" src="${w.preview}" muted loop playsinline preload="none"${foc}></video>` : '';
   /* серия фото: следующий кадр проступает поверх первого, пока держишь курсор */
   const flip = (w.photos && w.photos.length > 1) ? `<img class="card__next" alt="" loading="lazy"${foc}>` : '';
+  const nClips = (w.clips && w.clips.length > 1) ? w.clips.length : 0;
   const badge = (w.video || w.preview)
-    ? `<span class="card__badge">${PLAY}${w.dur ? `<em>${w.dur}</em>` : ''}</span>`
+    ? `<span class="card__badge">${PLAY}${nClips ? `<em>${clipsWord(nClips)}</em>`
+        : w.dur ? `<em>${w.dur}</em>` : ''}</span>`
     : (w.photos && w.photos.length > 1 ? `<span class="card__badge"><em>${frames(w.photos.length)}</em></span>` : '');
   const tag = tagOf(w);
   const big = w.hero ? ' card--hero' : w.wide ? ' card--wide' : '';
@@ -1606,6 +1615,7 @@ function wireCarousel(root, total) {
   const show = n => {
     i = Math.max(0, Math.min(total - 1, n));
     track.style.transform = `translateX(${-i * 100}%)`;
+    track.querySelectorAll('video').forEach((v, k) => { if (k !== i) v.pause(); });
     dots.forEach((d, k) => d.classList.toggle('on', k === i));
     count.textContent = `${i + 1} / ${total}`;
     prev.disabled = i === 0;
@@ -1628,16 +1638,20 @@ function openModal(w) {
     .map(([k, v]) => `<div class="meta__row"><span class="meta__k">${k[LANG]}</span><span>${t(v) || '—'}</span></div>`);
   document.getElementById('mMeta').innerHTML = rows.join('');
   const [aw, ah] = String(w.ratio).split(/[:/]/).map(Number);
-  const isSeries = !!(w.frames || (w.photos && w.photos.length));
+  /* несколько роликов листаются так же, как кадры, только видео */
+  const clipList = (w.clips && w.clips.length > 1) ? w.clips : null;
+  const isSeries = !!(clipList || w.frames || (w.photos && w.photos.length));
   /* серию показываем в широком окне: иначе в него влезает ровно один
      кадр и лента не читается как лента */
-  const boxAr = isSeries ? 2.1 : aw / ah;
+  const boxAr = clipList ? 16 / 9 : isSeries ? 2.1 : aw / ah;
   mMedia.style.aspectRatio = String(boxAr);
   mMedia.style.setProperty('--ar', boxAr.toFixed(4));
   mMedia.style.setProperty('--frame-ar', `${aw}/${ah}`);
   const photos = w.photos && w.photos.length ? w.photos : null;
-  if (photos || w.frames) {
-    const items = photos
+  if (clipList || photos || w.frames) {
+    const items = clipList
+      ? clipList.map(src => `<video src="${src}" controls playsinline preload="metadata"></video>`)
+      : photos
       ? photos.map(src => `<img src="${src}" alt="" loading="lazy">`)
       : Array.from({length: w.frames}, () => `<span>${L.slot[LANG]}</span>`);
     mMedia.classList.add('is-series');

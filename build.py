@@ -194,6 +194,9 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
     if videos:
         main = videos[0]
         project["video"] = rel(main)
+        # несколько роликов в папке — это серия: в карточке они идут каруселью
+        if len(videos) > 1:
+            project["clips"] = [rel(v) for v in videos]
         if manual_preview:
             project["preview"] = rel(manual_preview)
         elif make_preview(main, folder / "_preview.mp4"):
@@ -233,6 +236,8 @@ def main() -> int:
     print(f"\nсобрано проектов: {len(projects)}\n")
     for p in projects:
         flags = []
+        if p.get("clips"):
+            flags.append(f"роликов: {len(p['clips'])}")
         if p.get("preview"):
             flags.append("превью")
         if p.get("hero"):
