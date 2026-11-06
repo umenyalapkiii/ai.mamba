@@ -1,11 +1,11 @@
-название: Метаигры
-название en: Metagames
-подзаголовок: синематик
-подзаголовок en: cinematic short
+название: APRO · GACH (feat. Garzón Robie, DeVita)
+название en: APRO · GACH (feat. Garzón Robie, DeVita)
+тег: концепт · музыка
+тег en: concept · music
 год: 2026
-жанр: cine
-формат: 4/5
-фокус: 
+жанр: music
+формат: 3/4
+фокус: 50% 75%
 роль: идея, режиссура, монтаж
 стек:
 клиент:

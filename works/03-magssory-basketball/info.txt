@@ -1,10 +1,10 @@
-название: Грибы
-название en: Mushrooms
-подзаголовок: серия постеров
-подзаголовок en: poster series
+название: Magssory Basketball
+название en: Magssory Basketball
+тег: реклама · реализм
+тег en: commercial · live action
 год: 2026
-жанр: creative
-формат: 3/4
+жанр: ad
+формат: 9/16
 фокус: 
 роль: идея, режиссура, монтаж
 стек:
