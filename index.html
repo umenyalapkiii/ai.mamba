@@ -1659,7 +1659,16 @@ function wireCarousel(root, list) {
     });
     const cur = track.children[i];
     if (cur && cur.tagName === 'VIDEO') {
-      cur.play().catch(() => { cur.muted = true; cur.play().catch(() => {}); });
+      /* каждый раз пробуем со звуком заново: один раз заглушенный ролик
+         иначе оставался немым навсегда */
+      cur.muted = false;
+      cur.play().catch(() => {
+        /* браузер не пустил со звуком — играем молча, но звук вернём,
+           как только человек хоть что-нибудь нажмёт */
+        cur.muted = true;
+        cur.play().catch(() => {});
+        modal.addEventListener('pointerdown', () => { cur.muted = false; }, {once: true});
+      });
     }
     dots.forEach((d, k) => d.classList.toggle('on', k === i));
     count.textContent = `${i + 1} / ${total}`;
