@@ -1,11 +1,11 @@
-название: Voskresenskii · Франсе
-название en: 
-тег: концепт · музыка
-тег en: concept · music
+название: Magssory Basketball
+название en: Magssory Basketball
+тег: реклама · реализм
+тег en: commercial · live action
 год: 2026
-жанр: music
-формат: 4/5
-фокус: 50% 30%
+жанр: ad
+формат: 9/16
+широкая: 
 роль: идея, режиссура, монтаж
 стек:
 клиент:
