@@ -127,14 +127,29 @@ def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name).strip("-")
 
 
+# обложку и петлю можно положить руками — так кадр выбираешь ты, а не ffmpeg
+COVER_NAMES = {"cover", "обложка", "poster", "постер"}
+PREVIEW_NAMES = {"preview", "превью", "loop", "петля"}
+
+
+def pick(folder: Path, names: set, exts: set) -> Path | None:
+    return next((p for p in sorted(folder.iterdir())
+                 if p.is_file() and p.stem.lower() in names and p.suffix.lower() in exts), None)
+
+
 def rel(p: Path) -> str:
     return p.relative_to(ROOT).as_posix()
 
 
 def collect(folder: Path) -> dict | None:
     info = parse_info(folder / "info.txt")
+    cover = pick(folder, COVER_NAMES, PHOTO_EXT)
+    manual_preview = pick(folder, PREVIEW_NAMES, VIDEO_EXT)
+    # обложка и петля — служебные файлы, в серию кадров они не попадают
+    skip = {p.name for p in (cover, manual_preview) if p}
     media = sorted(p for p in folder.iterdir()
                    if p.is_file() and not p.name.startswith((".", "_"))
+                   and p.name not in skip
                    and "preview" not in p.stem and "poster" not in p.stem)
     videos = [p for p in media if p.suffix.lower() in VIDEO_EXT]
     photos = [p for p in media if p.suffix.lower() in PHOTO_EXT]
@@ -156,6 +171,8 @@ def collect(folder: Path) -> dict | None:
         "year": info.get("year", ""),
         "client": info.get("client", ""),
         "category": info.get("category", ""),
+        # ключ фильтра на главной: ad / music / fashion / cine / creative
+        "genre": info.get("genre", ""),
         "link": info.get("link", ""),
         "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en") if k in info},
         "photos": [rel(p) for p in photos],
@@ -165,19 +182,26 @@ def collect(folder: Path) -> dict | None:
     if videos:
         main = videos[0]
         project["video"] = rel(main)
-        poster = folder / "_poster.jpg"
-        preview = folder / "_preview.mp4"
-        if make_poster(main, poster):
-            project["poster"] = rel(poster)
-        if make_preview(main, preview):
-            project["preview"] = rel(preview)
+        if manual_preview:
+            project["preview"] = rel(manual_preview)
+        elif make_preview(main, folder / "_preview.mp4"):
+            project["preview"] = rel(folder / "_preview.mp4")
+        if cover:
+            project["poster"] = rel(cover)
+        elif make_poster(main, folder / "_poster.jpg"):
+            project["poster"] = rel(folder / "_poster.jpg")
         elif photos:
             project["poster"] = rel(photos[0])
+    elif cover:
+        project["poster"] = rel(cover)
     elif photos:
         project["poster"] = rel(photos[0])
 
-    first = project.get("video") or (project["photos"][0] if project["photos"] else None)
-    project["ratio"] = info.get("ratio") or (probe_ratio(ROOT / first) if first else "16/9")
+    # пропорцию плитки задаёт обложка, а не видео: обложки вертикальные,
+    # а ролики чаще горизонтальные — иначе плитка не совпала бы с картинкой
+    ratio_src = cover or (ROOT / project["video"] if "video" in project else None) \
+                or (ROOT / project["photos"][0] if project["photos"] else None)
+    project["ratio"] = info.get("ratio") or (probe_ratio(ratio_src) if ratio_src else "4/5")
     return project
 
 
