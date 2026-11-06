@@ -2,7 +2,7 @@
   {
     "slug": "voskresenskii-franse",
     "folder": "works/01-voskresenskii-франсе",
-    "type": "photos",
+    "type": "video",
     "title": "Voskresenskii · Франсе",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
@@ -25,13 +25,16 @@
     },
     "photos": [],
     "hasCase": false,
+    "video": "works/01-voskresenskii-франсе/video.mp4",
+    "preview": "works/01-voskresenskii-франсе/preview.mp4",
     "poster": "works/01-voskresenskii-франсе/cover.webp",
+    "dur": "0:12",
     "ratio": "9/16"
   },
   {
     "slug": "bankir-valentina-i-griby",
     "folder": "works/02-банкир-валентина-и-грибы",
-    "type": "photos",
+    "type": "video",
     "title": "Банкир, Валентина и волшебные грибы",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
@@ -52,18 +55,18 @@
       "title": "The Banker, Valentina and the Magic Mushrooms",
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
-    "photos": [
-      "works/02-банкир-валентина-и-грибы/01.webp",
-      "works/02-банкир-валентина-и-грибы/02.webp"
-    ],
+    "photos": [],
     "hasCase": false,
-    "poster": "works/02-банкир-валентина-и-грибы/01.webp",
+    "video": "works/02-банкир-валентина-и-грибы/video.mp4",
+    "preview": "works/02-банкир-валентина-и-грибы/preview.mp4",
+    "poster": "works/02-банкир-валентина-и-грибы/cover.webp",
+    "dur": "2:04",
     "ratio": "9/16"
   },
   {
     "slug": "apro-gach",
     "folder": "works/03-apro-gach",
-    "type": "photos",
+    "type": "video",
     "title": "APRO · GACH (feat. Garzón Robie, DeVita)",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
@@ -86,7 +89,10 @@
     },
     "photos": [],
     "hasCase": false,
+    "video": "works/03-apro-gach/video.mp4",
+    "preview": "works/03-apro-gach/preview.mp4",
     "poster": "works/03-apro-gach/cover.webp",
+    "dur": "0:09",
     "ratio": "9/16"
   },
   {
@@ -129,7 +135,7 @@
   {
     "slug": "vse-bez-uma-ot-nasti",
     "folder": "works/05-все-без-ума-от-насти",
-    "type": "photos",
+    "type": "video",
     "title": "Все без ума от Насти",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
@@ -152,13 +158,16 @@
     },
     "photos": [],
     "hasCase": false,
+    "video": "works/05-все-без-ума-от-насти/video.mp4",
+    "preview": "works/05-все-без-ума-от-насти/preview.mp4",
     "poster": "works/05-все-без-ума-от-насти/cover.webp",
+    "dur": "1:12",
     "ratio": "2/3"
   },
   {
     "slug": "magssory-basketball",
     "folder": "works/06-magssory-basketball",
-    "type": "photos",
+    "type": "video",
     "title": "Magssory Basketball",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
@@ -181,7 +190,10 @@
     },
     "photos": [],
     "hasCase": false,
+    "video": "works/06-magssory-basketball/video.mp4",
+    "preview": "works/06-magssory-basketball/preview.mp4",
     "poster": "works/06-magssory-basketball/cover.webp",
+    "dur": "0:20",
     "ratio": "9/16"
   },
   {
@@ -213,20 +225,20 @@
     "video": "works/07-меты-петр-осипов/1.mp4",
     "clips": [
       "works/07-меты-петр-осипов/1.mp4",
-      "works/07-меты-петр-осипов/2.mov",
-      "works/07-меты-петр-осипов/3.mov",
+      "works/07-меты-петр-осипов/2.mp4",
+      "works/07-меты-петр-осипов/3.mp4",
       "works/07-меты-петр-осипов/4.mp4",
-      "works/07-меты-петр-осипов/5.mov"
+      "works/07-меты-петр-осипов/5.mp4"
     ],
     "preview": "works/07-меты-петр-осипов/preview.mp4",
     "poster": "works/07-меты-петр-осипов/cover.webp",
-    "dur": "",
+    "dur": "0:02",
     "ratio": "4/5"
   },
   {
     "slug": "graffiti-bro",
     "folder": "works/08-граффити-бро",
-    "type": "photos",
+    "type": "video",
     "title": "Граффити-бро",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
@@ -249,7 +261,10 @@
     },
     "photos": [],
     "hasCase": false,
+    "video": "works/08-граффити-бро/video.mp4",
+    "preview": "works/08-граффити-бро/preview.mp4",
     "poster": "works/08-граффити-бро/cover.webp",
+    "dur": "0:23",
     "ratio": "3/4"
   }
 ]

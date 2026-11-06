@@ -204,12 +204,14 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
             project["preview"] = rel(manual_preview)
         elif make_preview(main, folder / "_preview.mp4"):
             project["preview"] = rel(folder / "_preview.mp4")
+        # случайный кадр из видео — последнее средство: руками положенная
+        # картинка всегда лучше того, что выхватит ffmpeg на первой секунде
         if cover:
             project["poster"] = rel(cover)
-        elif make_poster(main, folder / "_poster.jpg"):
-            project["poster"] = rel(folder / "_poster.jpg")
         elif photos:
             project["poster"] = rel(photos[0])
+        elif make_poster(main, folder / "_poster.jpg"):
+            project["poster"] = rel(folder / "_poster.jpg")
     elif cover:
         project["poster"] = rel(cover)
     elif photos:
