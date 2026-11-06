@@ -113,7 +113,15 @@
       "title": "Antoha MC, Kroshevo festival",
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
-    "photos": [],
+    "photos": [
+      "works/04-antoha-ms-kroshevo/01.webp",
+      "works/04-antoha-ms-kroshevo/02.webp",
+      "works/04-antoha-ms-kroshevo/03.webp",
+      "works/04-antoha-ms-kroshevo/04.webp",
+      "works/04-antoha-ms-kroshevo/05.webp",
+      "works/04-antoha-ms-kroshevo/06.webp",
+      "works/04-antoha-ms-kroshevo/07.webp"
+    ],
     "hasCase": false,
     "poster": "works/04-antoha-ms-kroshevo/cover.webp",
     "ratio": "4/5"

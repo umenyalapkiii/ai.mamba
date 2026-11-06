@@ -1648,9 +1648,8 @@ function wireCarousel(root, total) {
 const modal = document.getElementById('modal'), mMedia = document.getElementById('mMedia');
 function openModal(w) {
   document.getElementById('mTitle').textContent = t(w.title);
-  document.getElementById('mDesc').textContent = t(w.desc);
   /* строки показываем всегда — это каркас карточки, а не необязательные поля */
-  const rows = [[L.stack, w.stack], [L.year, w.year]]
+  const rows = [[L.year, w.year]]
     .map(([k, v]) => `<div class="meta__row"><span class="meta__k">${k[LANG]}</span><span>${t(v) || '—'}</span></div>`);
   document.getElementById('mMeta').innerHTML = rows.join('');
   const [aw, ah] = String(w.ratio).split(/[:/]/).map(Number);
