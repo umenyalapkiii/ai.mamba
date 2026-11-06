@@ -16,6 +16,7 @@
     "tag_en": "concept · music",
     "focus": "",
     "wide": false,
+    "hero": false,
     "link": "",
     "en": {
       "title": "",
@@ -43,6 +44,7 @@
     "tag_en": "cinematic · science · animation",
     "focus": "",
     "wide": false,
+    "hero": false,
     "link": "",
     "en": {
       "title": "The Banker, Valentina and the Magic Mushrooms",
@@ -73,6 +75,7 @@
     "tag_en": "concept · music",
     "focus": "",
     "wide": false,
+    "hero": false,
     "link": "",
     "en": {
       "title": "APRO · GACH (feat. Garzón Robie, DeVita)",
@@ -100,6 +103,7 @@
     "tag_en": "concept",
     "focus": "",
     "wide": false,
+    "hero": false,
     "link": "",
     "en": {
       "title": "",
@@ -126,7 +130,8 @@
     "tag": "синематик · реализм",
     "tag_en": "cinematic · live action",
     "focus": "",
-    "wide": true,
+    "wide": false,
+    "hero": true,
     "link": "",
     "en": {
       "title": "There's Something About Nastya",
@@ -135,7 +140,7 @@
     "photos": [],
     "hasCase": false,
     "poster": "works/05-все-без-ума-от-насти/cover.webp",
-    "ratio": "5/8"
+    "ratio": "2/3"
   },
   {
     "slug": "magssory-basketball",
@@ -154,6 +159,7 @@
     "tag_en": "commercial · live action",
     "focus": "",
     "wide": false,
+    "hero": false,
     "link": "",
     "en": {
       "title": "Magssory Basketball",
@@ -181,6 +187,7 @@
     "tag_en": "concept · stylised",
     "focus": "",
     "wide": false,
+    "hero": false,
     "link": "",
     "en": {
       "title": "",
@@ -208,6 +215,7 @@
     "tag_en": "live action and animation",
     "focus": "",
     "wide": false,
+    "hero": false,
     "link": "",
     "en": {
       "title": "Off the Wall",

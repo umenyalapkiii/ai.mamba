@@ -41,6 +41,8 @@ KEYS = {
     "focus":    ["фокус", "кадрирование", "focus"],
     # плитка на две колонки — для горизонтальных обложек
     "wide":     ["широкая", "wide"],
+    # то же, но закреплена справа сверху: над ней ничего не встаёт
+    "hero":     ["главная", "hero"],
     # подпись на значке проигрывания, вида 0:38
     "dur":      ["длительность", "хронометраж", "duration"],
     # подпись на чипе слева вверху; по умолчанию берётся из жанра
@@ -142,6 +144,9 @@ def rel(p: Path) -> str:
     return p.relative_to(ROOT).as_posix()
 
 
+YES = {"да", "yes", "true", "1", "+"}
+
+
 def collect(folder: Path, idx: int = 0) -> dict | None:
     info = parse_info(folder / "info.txt")
     cover = pick(folder, COVER_NAMES, PHOTO_EXT)
@@ -178,7 +183,8 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         "tag_en": info.get("tag_en", ""),
         # object-position обложки: кадр обрезается под плитку, а не наоборот
         "focus": info.get("focus", ""),
-        "wide": info.get("wide", "").strip().lower() in {"да", "yes", "true", "1", "+"},
+        "wide": info.get("wide", "").strip().lower() in YES,
+        "hero": info.get("hero", "").strip().lower() in YES,
         "link": info.get("link", ""),
         "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en") if k in info},
         "photos": [rel(p) for p in photos],
@@ -229,7 +235,9 @@ def main() -> int:
         flags = []
         if p.get("preview"):
             flags.append("превью")
-        if p.get("wide"):
+        if p.get("hero"):
+            flags.append("главная")
+        elif p.get("wide"):
             flags.append("широкая")
         if p["hasCase"]:
             flags.append("кейс-страница")
