@@ -128,6 +128,16 @@ def make_poster(video: Path, dest: Path) -> bool:
     return dest.exists()
 
 
+def make_clip_poster(video: Path, dest: Path) -> bool:
+    """Первый кадр ролика. Пока ролик качается, в ленте стоит он,
+    а не чёрный прямоугольник — это особенно заметно на медленной сети."""
+    if not HAS_FFMPEG:
+        return False
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "0.3", "-i", str(video),
+                    "-frames:v", "1", "-vf", "scale=720:-2", "-q:v", "4", str(dest)], timeout=60)
+    return dest.exists()
+
+
 def make_preview(video: Path, dest: Path) -> bool:
     """Делает немую петлю 6 секунд, 720p — её сайт крутит на наведение."""
     if not HAS_FFMPEG or dest.exists():
@@ -227,6 +237,11 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         if len(videos) > 1:
             project["clips"] = [rel(v) for v in videos]
             project["clipsAr"] = [probe_ar(v) for v in videos]
+            posters = []
+            for n, v in enumerate(videos, 1):
+                dest = folder / f"_kadr-{n:02d}.jpg"
+                posters.append(rel(dest) if make_clip_poster(v, dest) else "")
+            project["clipPosters"] = posters
         if manual_preview:
             project["preview"] = rel(manual_preview)
         elif make_preview(main, folder / "_preview.mp4"):

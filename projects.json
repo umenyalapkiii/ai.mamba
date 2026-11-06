@@ -264,6 +264,13 @@
       0.8,
       0.8
     ],
+    "clipPosters": [
+      "works/07-меты-петр-осипов/_kadr-01.jpg",
+      "works/07-меты-петр-осипов/_kadr-02.jpg",
+      "works/07-меты-петр-осипов/_kadr-03.jpg",
+      "works/07-меты-петр-осипов/_kadr-04.jpg",
+      "works/07-меты-петр-осипов/_kadr-05.jpg"
+    ],
     "preview": "works/07-меты-петр-осипов/preview.mp4",
     "poster": "works/07-меты-петр-осипов/cover.webp",
     "posterAr": 0.8,

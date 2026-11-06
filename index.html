@@ -1679,7 +1679,8 @@ function openModal(w) {
   const clipList = (w.clips && w.clips.length > 1) ? w.clips : null;
   const photos = w.photos && w.photos.length ? w.photos : null;
   /* лента: несколько роликов, серия кадров или пустые места под кадры */
-  const list = clipList ? clipList.map((src, i) => ({src, ar: ar(w.clipsAr, i), video: true}))
+  const list = clipList ? clipList.map((src, i) => ({src, ar: ar(w.clipsAr, i), video: true,
+                                                     poster: (w.clipPosters && w.clipPosters[i]) || ''}))
              : photos  ? photos.map((src, i) => ({src, ar: ar(w.photosAr, i)}))
              : w.frames ? Array.from({length: w.frames}, () => ({ar: tileAr}))
              : null;
@@ -1688,7 +1689,7 @@ function openModal(w) {
     mMedia.classList.add('is-series');
     /* у роликов в ленте нет штатного плеера: его заменяют стрелки карусели */
     const items = list.map(it => it.video
-      ? `<video src="${it.src}" loop playsinline preload="metadata"></video>`
+      ? `<video src="${it.src}"${it.poster ? ` poster="${it.poster}"` : ''} loop playsinline preload="auto"></video>`
       : it.src ? `<img src="${it.src}" alt="" loading="lazy">` : `<span>${L.slot[LANG]}</span>`);
     mMedia.innerHTML = `
       <div class="car">
@@ -1707,7 +1708,7 @@ function openModal(w) {
     mMedia.classList.remove('is-series');
     setBoxAr(w.video ? (w.videoAr || tileAr) : (w.posterAr || tileAr));
     mMedia.innerHTML = w.video
-      ? `<video src="${w.video}" controls autoplay playsinline></video>`
+      ? `<video src="${w.video}"${w.poster ? ` poster="${w.poster}"` : ''} controls autoplay playsinline></video>`
       : (w.poster ? `<img src="${w.poster}" alt="">` : L.slot[LANG]);
   }
   modal.classList.add('open');
