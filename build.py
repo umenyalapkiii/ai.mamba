@@ -80,6 +80,30 @@ def parse_info(path: Path) -> dict:
 RHYTHM = ["4/5", "1/1", "3/4", "9/16", "4/5", "3/4", "1/1", "4/5"]
 
 
+def probe_ar(path: Path) -> float | None:
+    """Пропорция файла. По ней окно проекта принимает форму самого кадра:
+    горизонтальный ролик разворачивается во всю ширину, вертикальный
+    встаёт вертикально. Форма плитки тут ни при чём."""
+    if path.suffix.lower() in PHOTO_EXT:
+        try:
+            from PIL import Image
+            with Image.open(path) as im:
+                return round(im.width / im.height, 4)
+        except Exception:
+            return None
+    if not HAS_FFMPEG:
+        return None
+    try:
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-select_streams", "v:0",
+             "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x", str(path)],
+            capture_output=True, text=True, timeout=20).stdout.strip()
+        w, h = (int(v) for v in out.split("x")[:2])
+        return round(w / h, 4) if h else None
+    except Exception:
+        return None
+
+
 def probe_duration(video: Path) -> str:
     """Длительность ролика как 0:38 — её печатает значок проигрывания."""
     if not HAS_FFMPEG:
@@ -191,6 +215,7 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         "link": info.get("link", ""),
         "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en") if k in info},
         "photos": [rel(p) for p in photos],
+        "photosAr": [probe_ar(p) for p in photos],
         "hasCase": (folder / "case.md").exists(),
     }
 
@@ -198,8 +223,10 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         main = videos[0]
         project["video"] = rel(main)
         # несколько роликов в папке — это серия: в карточке они идут каруселью
+        project["videoAr"] = probe_ar(main)
         if len(videos) > 1:
             project["clips"] = [rel(v) for v in videos]
+            project["clipsAr"] = [probe_ar(v) for v in videos]
         if manual_preview:
             project["preview"] = rel(manual_preview)
         elif make_preview(main, folder / "_preview.mp4"):
@@ -216,6 +243,9 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         project["poster"] = rel(cover)
     elif photos:
         project["poster"] = rel(photos[0])
+
+    if "poster" in project:
+        project["posterAr"] = probe_ar(ROOT / project["poster"])
 
     if videos:
         project["dur"] = info.get("dur") or probe_duration(ROOT / project["video"])

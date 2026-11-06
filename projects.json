@@ -24,10 +24,13 @@
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
     "photos": [],
+    "photosAr": [],
     "hasCase": false,
     "video": "works/01-voskresenskii-франсе/video.mp4",
+    "videoAr": 0.5625,
     "preview": "works/01-voskresenskii-франсе/preview.mp4",
     "poster": "works/01-voskresenskii-франсе/cover.webp",
+    "posterAr": 0.5653,
     "dur": "0:12",
     "ratio": "9/16"
   },
@@ -56,10 +59,13 @@
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
     "photos": [],
+    "photosAr": [],
     "hasCase": false,
     "video": "works/02-банкир-валентина-и-грибы/video.mp4",
+    "videoAr": 1.7741,
     "preview": "works/02-банкир-валентина-и-грибы/preview.mp4",
     "poster": "works/02-банкир-валентина-и-грибы/cover.webp",
+    "posterAr": 0.5628,
     "dur": "2:04",
     "ratio": "9/16"
   },
@@ -88,10 +94,13 @@
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
     "photos": [],
+    "photosAr": [],
     "hasCase": false,
     "video": "works/03-apro-gach/video.mp4",
+    "videoAr": 1.7778,
     "preview": "works/03-apro-gach/preview.mp4",
     "poster": "works/03-apro-gach/cover.webp",
+    "posterAr": 0.5625,
     "dur": "0:09",
     "ratio": "9/16"
   },
@@ -128,8 +137,18 @@
       "works/04-antoha-ms-kroshevo/06.webp",
       "works/04-antoha-ms-kroshevo/07.webp"
     ],
+    "photosAr": [
+      0.8,
+      0.8007,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8007
+    ],
     "hasCase": false,
     "poster": "works/04-antoha-ms-kroshevo/cover.webp",
+    "posterAr": 0.8,
     "ratio": "4/5"
   },
   {
@@ -157,10 +176,13 @@
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
     "photos": [],
+    "photosAr": [],
     "hasCase": false,
     "video": "works/05-все-без-ума-от-насти/video.mp4",
+    "videoAr": 1.7778,
     "preview": "works/05-все-без-ума-от-насти/preview.mp4",
     "poster": "works/05-все-без-ума-от-насти/cover.webp",
+    "posterAr": 0.6665,
     "dur": "1:12",
     "ratio": "2/3"
   },
@@ -189,10 +211,13 @@
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
     "photos": [],
+    "photosAr": [],
     "hasCase": false,
     "video": "works/06-magssory-basketball/video.mp4",
+    "videoAr": 1.7778,
     "preview": "works/06-magssory-basketball/preview.mp4",
     "poster": "works/06-magssory-basketball/cover.webp",
+    "posterAr": 0.558,
     "dur": "0:20",
     "ratio": "9/16"
   },
@@ -221,8 +246,10 @@
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
     "photos": [],
+    "photosAr": [],
     "hasCase": false,
     "video": "works/07-меты-петр-осипов/1.mp4",
+    "videoAr": 0.8,
     "clips": [
       "works/07-меты-петр-осипов/1.mp4",
       "works/07-меты-петр-осипов/2.mp4",
@@ -230,8 +257,16 @@
       "works/07-меты-петр-осипов/4.mp4",
       "works/07-меты-петр-осипов/5.mp4"
     ],
+    "clipsAr": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+    ],
     "preview": "works/07-меты-петр-осипов/preview.mp4",
     "poster": "works/07-меты-петр-осипов/cover.webp",
+    "posterAr": 0.8,
     "dur": "0:02",
     "ratio": "4/5"
   },
@@ -260,10 +295,13 @@
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
     "photos": [],
+    "photosAr": [],
     "hasCase": false,
     "video": "works/08-граффити-бро/video.mp4",
+    "videoAr": 1.7778,
     "preview": "works/08-граффити-бро/preview.mp4",
     "poster": "works/08-граффити-бро/cover.webp",
+    "posterAr": 0.75,
     "dur": "0:23",
     "ratio": "3/4"
   }
