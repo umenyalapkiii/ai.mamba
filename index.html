@@ -457,6 +457,9 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .card:hover .card__name{color:var(--yellow)}
 @media(max-width:620px){
   .gal{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}
+  /* на телефоне своя очерёдность: лента одна и длинная, порядок
+     композиции широкого экрана там читается иначе */
+  .card{order:var(--mo,0)}
   /* «главная» на телефоне становится обычной, а широкой отдаём обе
      колонки: горизонтальный кадр в половину экрана не читается, да и
      чип с тегами в него не помещался */
@@ -1535,9 +1538,9 @@ function cardHTML(w, i) {
     : (w.photos && w.photos.length > 1 ? `<span class="card__badge"><em>${frames(w.photos.length)}</em></span>` : '');
   const tag = tagOf(w);
   const big = w.hero ? ' card--hero' : w.wide ? ' card--wide' : '';
-  const col = w.col ? `;--col:${w.col}` : '';
+  const col = (w.col ? `;--col:${w.col}` : '') + (w.morder ? `;--mo:${w.morder}` : '');
   return `
-  <a class="card${big}" href="work/${w.slug}/" data-i="${i}" data-ar="${arNum(w.ratio)}" style="--span:1${col}">
+  <a class="card${big}" href="work/${w.slug}/" data-i="${i}" data-ar="${arNum(w.ratio)}"${w.mratio ? ` data-ar-m="${arNum(w.mratio)}"` : ''} style="--span:1${col}">
     <span class="card__media">
       ${poster}${prev}${flip}
       ${poster || prev ? '' : L.slot[LANG]}
@@ -1554,8 +1557,12 @@ function cardHTML(w, i) {
 const ROW = 6, GAP = 10;
 function layoutGal() {
   const gal = document.getElementById('gal');
+  /* на телефоне у плитки может быть своя пропорция: горизонтальный кадр
+     во всю ширину экрана иначе читается полосой */
+  const narrow = matchMedia('(max-width:620px)').matches;
   gal.querySelectorAll('.card').forEach(card => {
-    const h = card.getBoundingClientRect().width / (+card.dataset.ar || 0.8);
+    const ar = (narrow && card.dataset.arM) || card.dataset.ar;
+    const h = card.getBoundingClientRect().width / (+ar || 0.8);
     card.style.setProperty('--span', Math.max(2, Math.round((h + GAP) / (ROW + GAP))));
   });
 }

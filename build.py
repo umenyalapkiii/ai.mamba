@@ -45,6 +45,12 @@ KEYS = {
     "hero":     ["главная", "hero"],
     # номер колонки на широком экране — им доводится композиция
     "col":      ["колонка", "col"],
+    # своё место в ленте на телефоне: там одна длинная лента, и порядок
+    # просится другой, чем в композиции на широком экране
+    "morder":   ["телефон", "порядок на телефоне", "mobile"],
+    # своя пропорция на телефоне: горизонтальный кадр во всю ширину
+    # экрана превращается в полосу, ему идёт что-то поквадратнее
+    "mratio":   ["формат на телефоне", "mratio"],
     # подпись на значке проигрывания, вида 0:38
     "dur":      ["длительность", "хронометраж", "duration"],
     # подпись на чипе слева вверху; по умолчанию берётся из жанра
@@ -225,6 +231,8 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         "wide": info.get("wide", "").strip().lower() in YES,
         "hero": info.get("hero", "").strip().lower() in YES,
         "col": info.get("col", "").strip(),
+        "morder": info.get("morder", "").strip(),
+        "mratio": info.get("mratio", "").strip(),
         "link": info.get("link", ""),
         "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en") if k in info},
         "photos": [rel(p) for p in photos],

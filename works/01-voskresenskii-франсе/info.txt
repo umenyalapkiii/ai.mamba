@@ -12,3 +12,4 @@
 длительность: 0:12
 описание: Здесь будет описание проекта: идея, задача и чем эта работа отличается.
 описание en: Project description goes here: the idea, the brief and what makes this one different.
+телефон: 2

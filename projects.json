@@ -21,6 +21,8 @@
     "wide": false,
     "hero": false,
     "col": "",
+    "morder": "2",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "Voskresenskii · France",
@@ -59,6 +61,8 @@
     "wide": false,
     "hero": false,
     "col": "",
+    "morder": "3",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "The Banker, Valentina and the Magic Mushrooms",
@@ -97,6 +101,8 @@
     "wide": false,
     "hero": false,
     "col": "",
+    "morder": "4",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "APRO · GACH (feat. Garzón Robie, DeVita)",
@@ -135,6 +141,8 @@
     "wide": false,
     "hero": false,
     "col": "",
+    "morder": "7",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "Off the Wall",
@@ -173,6 +181,8 @@
     "wide": false,
     "hero": true,
     "col": "",
+    "morder": "5",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "There's Something About Nastya",
@@ -211,6 +221,8 @@
     "wide": false,
     "hero": false,
     "col": "1",
+    "morder": "9",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "METY, Petr Osipov",
@@ -270,6 +282,8 @@
     "wide": false,
     "hero": false,
     "col": "2",
+    "morder": "8",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "Magssory Basketball",
@@ -308,6 +322,8 @@
     "wide": false,
     "hero": false,
     "col": "3",
+    "morder": "10",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "Antoha MC, Kroshevo festival",
@@ -359,6 +375,8 @@
     "wide": false,
     "hero": false,
     "col": "4",
+    "morder": "6",
+    "mratio": "",
     "link": "",
     "en": {
       "title": "BONYA BEAUTY — SO EXOTIC",
@@ -399,6 +417,8 @@
     "wide": true,
     "hero": false,
     "col": "5",
+    "morder": "1",
+    "mratio": "4/3",
     "link": "",
     "en": {
       "title": "BONYA BEAUTY: Little Lady",
