@@ -1,7 +1,7 @@
 название: BONYA BEAUTY — SO EXOTIC
 название en: BONYA BEAUTY — SO EXOTIC
-тег: реклама · фэшн · реализм
-тег en: commercial · fashion · live action
+тег: реклама · бьюти · реализм
+тег en: commercial · beauty · live action
 год: 2026
 жанр: ad, fashion
 формат: 9/16

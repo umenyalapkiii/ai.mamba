@@ -1,7 +1,7 @@
 название: BONYA BEAUTY: «Маленькая леди»
 название en: BONYA BEAUTY: Little Lady
-тег: реклама · синематик · фэшн · реализм
-тег en: commercial · cinematic · fashion · live action
+тег: реклама · синематик · бьюти · реализм
+тег en: commercial · cinematic · beauty · live action
 год: 2026
 жанр: ad, fashion, cine
 формат: 3/2
