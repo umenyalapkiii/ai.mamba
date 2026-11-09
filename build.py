@@ -213,8 +213,11 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         "year": info.get("year", ""),
         "client": info.get("client", ""),
         "category": info.get("category", ""),
-        # ключ фильтра на главной: ad / music / fashion / cine / creative
+        # ключ фильтра на главной: ad / music / fashion / cine / creative.
+        # Жанров может быть несколько через запятую — реклама нередко
+        # одновременно и фэшн, и работа должна быть в обоих разделах
         "genre": info.get("genre", ""),
+        "genres": [g.strip() for g in re.split(r"[,/·]", info.get("genre", "")) if g.strip()],
         "tag": info.get("tag", ""),
         "tag_en": info.get("tag_en", ""),
         # object-position обложки: кадр обрезается под плитку, а не наоборот

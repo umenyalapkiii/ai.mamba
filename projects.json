@@ -12,6 +12,9 @@
     "client": "",
     "category": "",
     "genre": "music",
+    "genres": [
+      "music"
+    ],
     "tag": "концепт · музыка",
     "tag_en": "concept · music",
     "focus": "",
@@ -47,6 +50,9 @@
     "client": "",
     "category": "",
     "genre": "cine",
+    "genres": [
+      "cine"
+    ],
     "tag": "синематик · научпоп · анимация",
     "tag_en": "cinematic · science · animation",
     "focus": "",
@@ -82,6 +88,9 @@
     "client": "",
     "category": "",
     "genre": "music",
+    "genres": [
+      "music"
+    ],
     "tag": "концепт · музыка",
     "tag_en": "concept · music",
     "focus": "",
@@ -105,10 +114,10 @@
     "ratio": "9/16"
   },
   {
-    "slug": "antoha-ms-kroshevo",
-    "folder": "works/04-antoha-ms-kroshevo",
-    "type": "photos",
-    "title": "Антоха МС, фестиваль «Крошево»",
+    "slug": "graffiti-bro",
+    "folder": "works/04-граффити-бро",
+    "type": "video",
+    "title": "Граффити-бро",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
     "role": "идея, режиссура, монтаж",
@@ -116,40 +125,31 @@
     "year": "2026",
     "client": "",
     "category": "",
-    "genre": "music",
-    "tag": "концепт",
-    "tag_en": "concept",
+    "genre": "creative",
+    "genres": [
+      "creative"
+    ],
+    "tag": "микс реализма и анимации",
+    "tag_en": "live action and animation",
     "focus": "",
     "wide": false,
     "hero": false,
     "col": "",
     "link": "",
     "en": {
-      "title": "Antoha MC, Kroshevo festival",
+      "title": "Off the Wall",
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
-    "photos": [
-      "works/04-antoha-ms-kroshevo/01.webp",
-      "works/04-antoha-ms-kroshevo/02.webp",
-      "works/04-antoha-ms-kroshevo/03.webp",
-      "works/04-antoha-ms-kroshevo/04.webp",
-      "works/04-antoha-ms-kroshevo/05.webp",
-      "works/04-antoha-ms-kroshevo/06.webp",
-      "works/04-antoha-ms-kroshevo/07.webp"
-    ],
-    "photosAr": [
-      0.8,
-      0.8007,
-      0.8,
-      0.8,
-      0.8,
-      0.8,
-      0.8007
-    ],
+    "photos": [],
+    "photosAr": [],
     "hasCase": false,
-    "poster": "works/04-antoha-ms-kroshevo/cover.webp",
-    "posterAr": 0.8,
-    "ratio": "4/5"
+    "video": "works/04-граффити-бро/video.mp4",
+    "videoAr": 1.7778,
+    "preview": "works/04-граффити-бро/preview.mp4",
+    "poster": "works/04-граффити-бро/cover.webp",
+    "posterAr": 0.75,
+    "dur": "0:23",
+    "ratio": "3/4"
   },
   {
     "slug": "vse-bez-uma-ot-nasti",
@@ -164,6 +164,9 @@
     "client": "",
     "category": "",
     "genre": "cine",
+    "genres": [
+      "cine"
+    ],
     "tag": "синематик · реализм",
     "tag_en": "cinematic · live action",
     "focus": "",
@@ -187,8 +190,67 @@
     "ratio": "2/3"
   },
   {
+    "slug": "mety-petr-osipov",
+    "folder": "works/06-меты-петр-осипов",
+    "type": "video",
+    "title": "МЕТЫ, Петр Осипов",
+    "sub": "",
+    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "role": "идея, режиссура, монтаж",
+    "stack": "",
+    "year": "2026",
+    "client": "",
+    "category": "",
+    "genre": "creative",
+    "genres": [
+      "creative"
+    ],
+    "tag": "концепт · стилизация",
+    "tag_en": "concept · stylised",
+    "focus": "",
+    "wide": false,
+    "hero": false,
+    "col": "1",
+    "link": "",
+    "en": {
+      "title": "METY, Petr Osipov",
+      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+    },
+    "photos": [],
+    "photosAr": [],
+    "hasCase": false,
+    "video": "works/06-меты-петр-осипов/1.mp4",
+    "videoAr": 0.8,
+    "clips": [
+      "works/06-меты-петр-осипов/1.mp4",
+      "works/06-меты-петр-осипов/2.mp4",
+      "works/06-меты-петр-осипов/3.mp4",
+      "works/06-меты-петр-осипов/4.mp4",
+      "works/06-меты-петр-осипов/5.mp4"
+    ],
+    "clipsAr": [
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8
+    ],
+    "clipPosters": [
+      "works/06-меты-петр-осипов/_kadr-01.jpg",
+      "works/06-меты-петр-осипов/_kadr-02.jpg",
+      "works/06-меты-петр-осипов/_kadr-03.jpg",
+      "works/06-меты-петр-осипов/_kadr-04.jpg",
+      "works/06-меты-петр-осипов/_kadr-05.jpg"
+    ],
+    "preview": "works/06-меты-петр-осипов/preview.mp4",
+    "poster": "works/06-меты-петр-осипов/cover.webp",
+    "posterAr": 0.8,
+    "dur": "0:02",
+    "ratio": "4/5"
+  },
+  {
     "slug": "magssory-basketball",
-    "folder": "works/06-magssory-basketball",
+    "folder": "works/07-magssory-basketball",
     "type": "video",
     "title": "Magssory Basketball",
     "sub": "",
@@ -199,6 +261,9 @@
     "client": "",
     "category": "",
     "genre": "ad",
+    "genres": [
+      "ad"
+    ],
     "tag": "реклама · реализм",
     "tag_en": "commercial · live action",
     "focus": "",
@@ -213,19 +278,19 @@
     "photos": [],
     "photosAr": [],
     "hasCase": false,
-    "video": "works/06-magssory-basketball/video.mp4",
+    "video": "works/07-magssory-basketball/video.mp4",
     "videoAr": 1.7778,
-    "preview": "works/06-magssory-basketball/preview.mp4",
-    "poster": "works/06-magssory-basketball/cover.webp",
+    "preview": "works/07-magssory-basketball/preview.mp4",
+    "poster": "works/07-magssory-basketball/cover.webp",
     "posterAr": 0.558,
     "dur": "0:20",
     "ratio": "9/16"
   },
   {
-    "slug": "mety-petr-osipov",
-    "folder": "works/07-меты-петр-осипов",
-    "type": "video",
-    "title": "МЕТЫ, Петр Осипов",
+    "slug": "antoha-ms-kroshevo",
+    "folder": "works/08-antoha-ms-kroshevo",
+    "type": "photos",
+    "title": "Антоха МС, фестиваль «Крошево»",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
     "role": "идея, режиссура, монтаж",
@@ -233,83 +298,121 @@
     "year": "2026",
     "client": "",
     "category": "",
-    "genre": "creative",
-    "tag": "концепт · стилизация",
-    "tag_en": "concept · stylised",
+    "genre": "music",
+    "genres": [
+      "music"
+    ],
+    "tag": "концепт",
+    "tag_en": "concept",
     "focus": "",
     "wide": false,
     "hero": false,
     "col": "3",
     "link": "",
     "en": {
-      "title": "METY, Petr Osipov",
+      "title": "Antoha MC, Kroshevo festival",
       "desc": "Project description goes here: the idea, the brief and what makes this one different."
     },
-    "photos": [],
-    "photosAr": [],
+    "photos": [
+      "works/08-antoha-ms-kroshevo/01.webp",
+      "works/08-antoha-ms-kroshevo/02.webp",
+      "works/08-antoha-ms-kroshevo/03.webp",
+      "works/08-antoha-ms-kroshevo/04.webp",
+      "works/08-antoha-ms-kroshevo/05.webp",
+      "works/08-antoha-ms-kroshevo/06.webp",
+      "works/08-antoha-ms-kroshevo/07.webp"
+    ],
+    "photosAr": [
+      0.8,
+      0.8007,
+      0.8,
+      0.8,
+      0.8,
+      0.8,
+      0.8007
+    ],
     "hasCase": false,
-    "video": "works/07-меты-петр-осипов/1.mp4",
-    "videoAr": 0.8,
-    "clips": [
-      "works/07-меты-петр-осипов/1.mp4",
-      "works/07-меты-петр-осипов/2.mp4",
-      "works/07-меты-петр-осипов/3.mp4",
-      "works/07-меты-петр-осипов/4.mp4",
-      "works/07-меты-петр-осипов/5.mp4"
-    ],
-    "clipsAr": [
-      0.8,
-      0.8,
-      0.8,
-      0.8,
-      0.8
-    ],
-    "clipPosters": [
-      "works/07-меты-петр-осипов/_kadr-01.jpg",
-      "works/07-меты-петр-осипов/_kadr-02.jpg",
-      "works/07-меты-петр-осипов/_kadr-03.jpg",
-      "works/07-меты-петр-осипов/_kadr-04.jpg",
-      "works/07-меты-петр-осипов/_kadr-05.jpg"
-    ],
-    "preview": "works/07-меты-петр-осипов/preview.mp4",
-    "poster": "works/07-меты-петр-осипов/cover.webp",
+    "poster": "works/08-antoha-ms-kroshevo/cover.webp",
     "posterAr": 0.8,
-    "dur": "0:02",
     "ratio": "4/5"
   },
   {
-    "slug": "graffiti-bro",
-    "folder": "works/08-граффити-бро",
+    "slug": "bonya-so-exotic",
+    "folder": "works/09-bonya-so-exotic",
     "type": "video",
-    "title": "Граффити-бро",
+    "title": "BONYA BEAUTY — SO EXOTIC",
     "sub": "",
-    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "desc": "",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
-    "client": "",
+    "client": "Bonya Beauty",
     "category": "",
-    "genre": "creative",
-    "tag": "микс реализма и анимации",
-    "tag_en": "live action and animation",
+    "genre": "ad, fashion",
+    "genres": [
+      "ad",
+      "fashion"
+    ],
+    "tag": "реклама · фэшн",
+    "tag_en": "commercial · fashion",
     "focus": "",
     "wide": false,
     "hero": false,
     "col": "4",
     "link": "",
     "en": {
-      "title": "Off the Wall",
-      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+      "title": "BONYA BEAUTY — SO EXOTIC",
+      "desc": ""
     },
     "photos": [],
     "photosAr": [],
     "hasCase": false,
-    "video": "works/08-граффити-бро/video.mp4",
+    "video": "works/09-bonya-so-exotic/video.mp4",
+    "videoAr": 0.5625,
+    "preview": "works/09-bonya-so-exotic/preview.mp4",
+    "poster": "works/09-bonya-so-exotic/cover.webp",
+    "posterAr": 0.5595,
+    "dur": "0:10",
+    "ratio": "9/16"
+  },
+  {
+    "slug": "bonya-malenkaya-ledi",
+    "folder": "works/10-bonya-malenkaya-ledi",
+    "type": "video",
+    "title": "BONYA BEAUTY: «Маленькая леди»",
+    "sub": "",
+    "desc": "",
+    "role": "идея, режиссура, монтаж",
+    "stack": "",
+    "year": "2026",
+    "client": "Bonya Beauty",
+    "category": "",
+    "genre": "ad, fashion, cine",
+    "genres": [
+      "ad",
+      "fashion",
+      "cine"
+    ],
+    "tag": "реклама · синематик · фэшн",
+    "tag_en": "commercial · cinematic · fashion",
+    "focus": "",
+    "wide": true,
+    "hero": false,
+    "col": "5",
+    "link": "",
+    "en": {
+      "title": "BONYA BEAUTY: Little Lady",
+      "desc": ""
+    },
+    "photos": [],
+    "photosAr": [],
+    "hasCase": false,
+    "video": "works/10-bonya-malenkaya-ledi/video.mp4",
     "videoAr": 1.7778,
-    "preview": "works/08-граффити-бро/preview.mp4",
-    "poster": "works/08-граффити-бро/cover.webp",
-    "posterAr": 0.75,
-    "dur": "0:23",
-    "ratio": "3/4"
+    "preview": "works/10-bonya-malenkaya-ledi/preview.mp4",
+    "poster": "works/10-bonya-malenkaya-ledi/cover.webp",
+    "posterAr": 1.7886,
+    "dur": "0:32",
+    "ratio": "16/9"
   }
 ]

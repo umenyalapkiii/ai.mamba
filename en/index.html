@@ -383,8 +383,17 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
    укладка разбрасывает нижний ряд и в середине остаётся дыра.
    Класс вешает layoutGal и только когда колонок ровно шесть: на пяти
    номера колонок уже не те, и плитка улетает под «главную» */
-.gal--pin .card{grid-column-start:var(--col,auto)}
-.gal--pin .card--hero{grid-column:-3/-1;grid-row:1/span var(--span,1)}
+/* Закрепление целиком на CSS, без участия скрипта: раньше класс вешал
+   layoutGal по числу колонок, и при сжатии окна сетка оставалась
+   шестиколоночной — событие ресайза до него не доходило.
+   1280px — ширина, с которой колонок заведомо шесть. */
+@media(min-width:1280px){
+  .gal:not(.gal--filtered) .card{grid-column-start:var(--col,auto)}
+  /* широкой плитке мало задать начало: grid-column-start стирает размах
+     из сокращённой записи, и она схлопывается в одну колонку */
+  .gal:not(.gal--filtered) .card--wide{grid-column:var(--col,auto) / span 2}
+  .gal:not(.gal--filtered) .card--hero{grid-column:-3/-1;grid-row:1/span var(--span,1)}
+}
 .card:hover,.card:focus-visible{border-color:var(--yellow);transform:translateY(-4px)}
 .card__media{
   position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;
@@ -1456,10 +1465,14 @@ const frames = n => {
 const PLAY = '<svg width="9" height="11" viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0v11l9-5.5z"/></svg>';
 /* пропорция как число: в info.txt её пишут и «4/5», и «4:5» */
 const arNum = r => { const [a, b] = String(r).split(/[:/]/).map(Number); return (a && b) ? a / b : 0.8; };
+/* У работы может быть несколько жанров: реклама нередко одновременно
+   и фэшн, и в обоих разделах ей место */
+const inGenre = (w, k) => (w.genres && w.genres.length ? w.genres : [w.genre]).includes(k);
 /* чип слева вверху: своя подпись из info.txt, иначе название жанра */
 const tagOf = w => {
   if (w.tag) return LANG === 'en' ? (w.tag_en || w.tag) : w.tag;
-  const g = GENRES.find(g => g.k === w.genre);
+  const first = (w.genres && w.genres[0]) || w.genre;
+  const g = GENRES.find(g => g.k === first);
   return g && g.k !== 'all' ? g[LANG] : '';
 };
 
@@ -1497,8 +1510,6 @@ function cardHTML(w, i) {
 const ROW = 6, GAP = 10;
 function layoutGal() {
   const gal = document.getElementById('gal');
-  const cols = getComputedStyle(gal).gridTemplateColumns.split(' ').length;
-  gal.classList.toggle('gal--pin', cols === 6 && FILTER === 'all');
   gal.querySelectorAll('.card').forEach(card => {
     const h = card.getBoundingClientRect().width / (+card.dataset.ar || 0.8);
     card.style.setProperty('--span', Math.max(2, Math.round((h + GAP) / (ROW + GAP))));
@@ -1509,7 +1520,7 @@ function layoutGal() {
 function renderFilter() {
   const box = document.getElementById('filt');
   if (!box) return;
-  const live = GENRES.filter(g => g.k === 'all' || WORKS.some(w => w.genre === g.k));
+  const live = GENRES.filter(g => g.k === 'all' || WORKS.some(w => inGenre(w, g.k)));
   box.innerHTML = live.map(g =>
     `<button type="button" data-g="${g.k}" aria-pressed="${g.k === FILTER}">${g[LANG]}</button>`).join('');
   box.addEventListener('click', e => {
@@ -1526,7 +1537,7 @@ function renderWorks() {
   if (!LOADED && !WORKS.length) { gal.innerHTML = ''; return; }
   const shown = WORKS
     .map((w, i) => ({w, i}))
-    .filter(({w}) => FILTER === 'all' || w.genre === FILTER);
+    .filter(({w}) => FILTER === 'all' || inGenre(w, FILTER));
 
   gal.classList.toggle('gal--filtered', FILTER !== 'all');
   gal.innerHTML = shown.length
@@ -1573,6 +1584,7 @@ function renderWorks() {
 }
 /* колонок стало больше или меньше — пересчитываем высоты */
 new ResizeObserver(layoutGal).observe(document.getElementById('gal'));
+addEventListener('resize', () => requestAnimationFrame(layoutGal));
 
 /* подтягиваем реальные проекты, если build.py их уже собрал */
 fetch('../projects.json', { cache: 'no-store' })

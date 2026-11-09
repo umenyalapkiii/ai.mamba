@@ -1,10 +1,10 @@
-название: Граффити-бро
-название en: Off the Wall
-тег: микс реализма и анимации
-тег en: live action and animation
+название: Антоха МС, фестиваль «Крошево»
+название en: Antoha MC, Kroshevo festival
+тег: концепт
+тег en: concept
 год: 2026
-жанр: creative
-формат: 3/4
+жанр: music
+формат: 4/5
 широкая: 
 роль: идея, режиссура, монтаж
 стек:
@@ -12,4 +12,4 @@
 длительность:
 описание: Здесь будет описание проекта: идея, задача и чем эта работа отличается.
 описание en: Project description goes here: the idea, the brief and what makes this one different.
-колонка: 4
+колонка: 3
