@@ -437,6 +437,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   backdrop-filter:blur(10px) saturate(150%);
 }
 .card__tag{left:9px;max-width:62%;line-height:1.45;white-space:normal}
+.card__tag i{font-style:normal;margin:0 .22em;letter-spacing:0;color:var(--muted)}
 /* широкая плитка низкая, и чип в две строки съедает её заметнее, чем
    высокую. Места по ширине там хватает — отдаём его чипу */
 .card--wide .card__tag{max-width:78%}
@@ -1508,6 +1509,9 @@ const arNum = r => { const [a, b] = String(r).split(/[:/]/).map(Number); return 
 /* У работы может быть несколько жанров: реклама нередко одновременно
    и фэшн, и в обоих разделах ей место */
 const inGenre = (w, k) => (w.genres && w.genres.length ? w.genres : [w.genre]).includes(k);
+/* точку между тегами рисуем своим элементом: так её отступы не зависят
+   от межбуквенного интервала чипа и строка тегов не разъезжается */
+const sep = t => t.replace(/\s*·\s*/g, '<i>·</i>');
 /* чип слева вверху: своя подпись из info.txt, иначе название жанра */
 const tagOf = w => {
   if (w.tag) return LANG === 'en' ? (w.tag_en || w.tag) : w.tag;
@@ -1538,7 +1542,7 @@ function cardHTML(w, i) {
       ${poster}${prev}${flip}
       ${poster || prev ? '' : L.slot[LANG]}
       <span class="card__scrim"></span>
-      ${tag ? `<span class="card__tag">${tag}</span>` : ''}
+      ${tag ? `<span class="card__tag">${sep(tag)}</span>` : ''}
       ${badge}
       <span class="card__cap"><span class="card__name">${t(w.title)}</span></span>
     </span>
