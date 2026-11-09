@@ -437,6 +437,9 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   backdrop-filter:blur(10px) saturate(150%);
 }
 .card__tag{left:9px;max-width:62%;line-height:1.45;white-space:normal}
+/* широкая плитка низкая, и чип в две строки съедает её заметнее, чем
+   высокую. Места по ширине там хватает — отдаём его чипу */
+.card--wide .card__tag{max-width:78%}
 .card__badge{right:9px;display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
 .card__badge svg{display:block;fill:currentColor}
 .card__badge em{font-style:normal;letter-spacing:.08em}
@@ -453,7 +456,11 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .card:hover .card__name{color:var(--yellow)}
 @media(max-width:620px){
   .gal{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}
-  .card--wide,.card--hero{grid-column:span 1}
+  /* «главная» на телефоне становится обычной, а широкой отдаём обе
+     колонки: горизонтальный кадр в половину экрана не читается, да и
+     чип с тегами в него не помещался */
+  .card--hero{grid-column:span 1}
+  .card--wide{grid-column:span 2}
   .card__cap{padding:11px 11px 10px}
   .card__name{font-size:14px}
   .card__tag,.card__badge{font-size:8.5px;padding:4px 7px;top:7px}

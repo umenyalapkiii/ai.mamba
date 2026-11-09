@@ -353,8 +353,8 @@
       "ad",
       "fashion"
     ],
-    "tag": "реклама · фэшн",
-    "tag_en": "commercial · fashion",
+    "tag": "реклама · фэшн · реализм",
+    "tag_en": "commercial · fashion · live action",
     "focus": "",
     "wide": false,
     "hero": false,
@@ -393,8 +393,8 @@
       "fashion",
       "cine"
     ],
-    "tag": "реклама · синематик · фэшн",
-    "tag_en": "commercial · cinematic · fashion",
+    "tag": "реклама · синематик · фэшн · реализм",
+    "tag_en": "commercial · cinematic · fashion · live action",
     "focus": "",
     "wide": true,
     "hero": false,
