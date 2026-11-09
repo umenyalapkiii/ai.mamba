@@ -131,9 +131,9 @@
     "year": "2026",
     "client": "",
     "category": "",
-    "genre": "creative",
+    "genre": "music",
     "genres": [
-      "creative"
+      "music"
     ],
     "tag": "микс реализма и анимации",
     "tag_en": "live action and animation",
@@ -211,10 +211,8 @@
     "year": "2026",
     "client": "",
     "category": "",
-    "genre": "creative",
-    "genres": [
-      "creative"
-    ],
+    "genre": "",
+    "genres": [],
     "tag": "концепт · стилизация",
     "tag_en": "concept · stylised",
     "focus": "",
