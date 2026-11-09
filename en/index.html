@@ -376,8 +376,12 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
    дыра на пол-экрана. Внутри раздела плитки идут подряд слева и одной
    ширины — разница остаётся только в высоте кадра */
 .gal--filtered .card{grid-column-start:auto}
-.gal--filtered .card--hero,
-.gal--filtered .card--wide{grid-column:span 1;grid-row:span var(--span,1)}
+/* «главная» внутри раздела становится обычной плиткой: работ там мало,
+   и огромный кадр посреди трёх соседок смотрелся бы случайным */
+.gal--filtered .card--hero{grid-column:span 1;grid-row:span var(--span,1)}
+/* а широкой две колонки нужны и в разделе: горизонтальный кадр в одной
+   колонке превращается в полоску высотой с ладонь */
+.gal--filtered .card--wide{grid-column:span 2;grid-row:span var(--span,1)}
 
 /* «колонка» из info.txt доводит композицию на полном экране: без неё
    укладка разбрасывает нижний ряд и в середине остаётся дыра.
@@ -1429,7 +1433,7 @@ const GENRES = [
   {k:'all',      ru:'все',        en:'all'},
   {k:'ad',       ru:'реклама',    en:'commercials'},
   {k:'music',    ru:'музыка',     en:'music'},
-  {k:'fashion',  ru:'фэшн',       en:'fashion'},
+  {k:'fashion',  ru:'бьюти/фэшн', en:'beauty/fashion'},
   {k:'cine',     ru:'синематики', en:'cinematic shorts'},
   {k:'creative', ru:'креатив',    en:'creative'},
 ];
