@@ -132,7 +132,7 @@
   /* осветлённая — только для тонких линий и мелкого текста, где #CE1B6F уходит в грязь */
   --pink-lit:#F02E86;
   --cream:#F5F1E8;
-  --portrait:url("../assets/portrait-2026-flare.webp");
+  --portrait:url("../assets/portrait-2026.webp");
   --bg:#08080A;
   --panel:#0D0D10;
   --line:#232328;
@@ -503,6 +503,8 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .pop__base{
   position:absolute;inset:0;
   background-image:var(--portrait);background-size:100% 100%;background-repeat:no-repeat;
+  -webkit-mask-image:linear-gradient(180deg,#000 88%,transparent 100%);
+  mask-image:linear-gradient(180deg,#000 88%,transparent 100%);
 }
 /* круглое окно поверх жвачки: внутри тот же портрет, увеличенный так,
    чтобы пузырь совпал сам с собой — поэтому он и «надувается» */
@@ -1263,8 +1265,8 @@ footer{
            data-ru-label="Лопнуть пузырь" aria-label="Pop the bubble">
         <span class="pop__base" role="img"
               aria-label="Anastasia Arkhipenko blowing a bubble"></span>
-        <span class="pop__bubble" style="left:38.965%;top:50.684%;width:24.023%;height:22.852%">
-          <span class="pop__slice" style="width:416.26%;height:437.61%;left:-162.20%;top:-221.79%"></span>
+        <span class="pop__bubble" style="left:35.742%;top:40.430%;width:30.469%;height:28.906%">
+          <span class="pop__slice" style="width:328.21%;height:345.95%;left:-117.31%;top:-139.86%"></span>
         </span>
         <span class="pop__burst" aria-hidden="true">
           <i style="--a:0deg"></i><i style="--a:45deg"></i><i style="--a:90deg"></i><i style="--a:135deg"></i>
