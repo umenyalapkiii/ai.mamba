@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy — Anastasia Arkhipenko</title>
+<meta name="description" content="How aimamba.art handles data: no forms, no analytics, no cookies.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://aimamba.art/en/privacy.html">
+<style>
+@font-face{
+  font-family:'Oswald';font-style:normal;font-weight:600;font-display:swap;
+  src:url("../assets/fonts/Oswald-600-cyrillic.woff2") format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face{
+  font-family:'Oswald';font-style:normal;font-weight:600;font-display:swap;
+  src:url("../assets/fonts/Oswald-600-latin.woff2") format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Oswald';font-style:normal;font-weight:700;font-display:swap;
+  src:url("../assets/fonts/Oswald-700-cyrillic.woff2") format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face{
+  font-family:'Oswald';font-style:normal;font-weight:700;font-display:swap;
+  src:url("../assets/fonts/Oswald-700-latin.woff2") format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Manrope';font-style:normal;font-weight:400;font-display:swap;
+  src:url("../assets/fonts/Manrope-400-cyrillic.woff2") format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face{
+  font-family:'Manrope';font-style:normal;font-weight:400;font-display:swap;
+  src:url("../assets/fonts/Manrope-400-latin.woff2") format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Manrope';font-style:normal;font-weight:500;font-display:swap;
+  src:url("../assets/fonts/Manrope-500-cyrillic.woff2") format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face{
+  font-family:'Manrope';font-style:normal;font-weight:500;font-display:swap;
+  src:url("../assets/fonts/Manrope-500-latin.woff2") format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'Manrope';font-style:normal;font-weight:600;font-display:swap;
+  src:url("../assets/fonts/Manrope-600-cyrillic.woff2") format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face{
+  font-family:'Manrope';font-style:normal;font-weight:600;font-display:swap;
+  src:url("../assets/fonts/Manrope-600-latin.woff2") format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url("../assets/fonts/JetBrainsMono-400-cyrillic.woff2") format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face{
+  font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url("../assets/fonts/JetBrainsMono-400-latin.woff2") format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face{
+  font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url("../assets/fonts/JetBrainsMono-500-cyrillic.woff2") format('woff2');
+  unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face{
+  font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;
+  src:url("../assets/fonts/JetBrainsMono-500-latin.woff2") format('woff2');
+  unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ============================================================
+   ai.mamba — лендинг
+   Жёлтый #EDAD22 снят пипеткой с костюма на исходнике.
+   Визуальный язык: аркадный файтинг — сетка, луч, HUD, искры.
+   ============================================================ */
+:root{
+  --yellow:#EDAD22;
+  --yellow-dim:#8A6414;
+  /* accent 2 из гайдлайнов, схема 4B Studio Magenta */
+  --pink:#CE1B6F;
+  /* осветлённая — только для тонких линий и мелкого текста, где #CE1B6F уходит в грязь */
+  --pink-lit:#F02E86;
+  --cream:#F5F1E8;
+  --portrait:url("../assets/portrait-gum-pink.webp");
+  --bg:#08080A;
+  --panel:#0D0D10;
+  --line:#232328;
+  --line-soft:#1B1B20;
+  --text:#F2F1EE;
+  --muted:#8B8B93;
+  --muted-dim:#5A5A64;
+
+  /* вторичный текст во всех блоках одного кегля: раньше он мельчал от блока к блоку */
+  --fs-body:clamp(14px,1.1vw,15.5px);
+  --gutter:clamp(16px,4vw,56px);
+  --nav-h:58px;
+
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  --display:'Oswald',system-ui,sans-serif;
+
+  --scene-w:2168;
+  --scene-h:2896;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+img{display:block;max-width:100%;height:auto}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Manrope',system-ui,sans-serif;font-size:17px;line-height:1.6;
+  padding:clamp(28px,6vw,72px) var(--gutter) 0;
+  overflow-x:clip;
+}
+.wrap{max-width:720px;margin:0 auto}
+.back{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-dim);text-decoration:none;display:inline-block;margin-bottom:38px;
+}
+.back:hover{color:var(--yellow)}
+h1{
+  font-family:var(--display);font-weight:700;font-size:clamp(34px,7vw,56px);
+  line-height:1.02;text-transform:uppercase;letter-spacing:.01em;
+  margin-left:-.017em;        /* оптический свес, как на главной */
+}
+.rev{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--muted-dim);margin:14px 0 34px;
+}
+ul{list-style:none;display:grid;gap:18px}
+li{padding-left:22px;position:relative;color:var(--muted)}
+li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:2px;background:var(--yellow)}
+li b{color:var(--text);font-weight:600}
+a{color:var(--text)}
+a:hover{color:var(--yellow)}
+footer{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  margin-top:clamp(48px,9vw,96px);padding:20px 0;border-top:1px solid var(--line-soft);
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted-dim);
+}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="./">← back</a>
+<h1>Privacy</h1>
+<p class="rev">Updated 15 November 2026</p>
+<ul>
+  <li>The site <b>aimamba.art</b> is run by Anastasia Arkhipenko</li>
+  <li>The site <b>does not collect personal data</b>: no forms, no sign-up, no analytics or ad trackers. No cookies, nothing is stored in your browser</li>
+  <li>Every file, fonts included, is served from the site’s own domain — no third-party service learns about your visit</li>
+  <li>The hosting provider may automatically log technical request data: IP address, time, browser type. This keeps the server running and protected. I don’t use it and don’t identify visitors by it</li>
+  <li>If you message me on Telegram, Instagram or by email, I use your name and contacts only to reply and discuss the project, and never share them</li>
+  <li>To ask a question or have our correspondence deleted, write to <a href="mailto:ai.mambaaa@gmail.com">ai.mambaaa@gmail.com</a></li>
+  <li>Links to Instagram and Telegram lead to third-party services with their own privacy rules</li>
+</ul>
+<footer><span>© 2026 Anastasia Arkhipenko</span></footer>
+</div>
+</body>
+</html>
