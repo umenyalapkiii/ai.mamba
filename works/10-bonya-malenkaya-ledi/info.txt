@@ -1,5 +1,5 @@
-название: BONYA BEAUTY: «Маленькая леди»
-название en: BONYA BEAUTY: Little Lady
+название: Маленькая дива
+название en: Little Diva
 тег: реклама · синематик · бьюти · реализм
 тег en: commercial · cinematic · beauty · live action
 год: 2026
@@ -13,5 +13,9 @@
 стек:
 клиент: Bonya Beauty
 длительность:
-описание:
-описание en:
+описание: Глянец 90-х, реализм, длинные планы — уютно, как в старом фильме
+описание en: Nineties gloss, live action, long takes — as cosy as an old film
+подзаголовок: BONYA BEAUTY / бренд косметики Виктории Бони
+подзаголовок en: BONYA BEAUTY / cosmetics brand by Victoria Bonya
+достижение: Лайки BONYA BEAUTY и Виктории Бони
+достижение en: Liked by BONYA BEAUTY and Victoria Bonya

@@ -4,8 +4,9 @@
     "folder": "works/01-voskresenskii-франсе",
     "type": "video",
     "title": "Voskresenskii · Франсе",
-    "sub": "",
-    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "sub": "Музыкальный сниппет",
+    "desc": "Mixed media: коллаж, 3D-графика и реализм — парижские символы, склеенные на бит",
+    "win": "",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -15,8 +16,8 @@
     "genres": [
       "music"
     ],
-    "tag": "концепт · музыка",
-    "tag_en": "concept · music",
+    "tag": "концепт · музыка · mixed media",
+    "tag_en": "concept · music · mixed media",
     "focus": "",
     "wide": false,
     "hero": false,
@@ -26,7 +27,8 @@
     "link": "",
     "en": {
       "title": "Voskresenskii · France",
-      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+      "sub": "Music snippet",
+      "desc": "Mixed media: collage, 3D and live action — Paris landmarks cut to the beat"
     },
     "photos": [],
     "photosAr": [],
@@ -45,7 +47,8 @@
     "type": "video",
     "title": "Банкир, Валентина и волшебные грибы",
     "sub": "",
-    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "desc": "Как русская женщина научила американца есть грибы и запустила психоделическую революцию",
+    "win": "",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -66,7 +69,7 @@
     "link": "",
     "en": {
       "title": "The Banker, Valentina and the Magic Mushrooms",
-      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+      "desc": "How a Russian woman taught an American to eat mushrooms and set off a psychedelic revolution"
     },
     "photos": [],
     "photosAr": [],
@@ -84,8 +87,9 @@
     "folder": "works/03-apro-gach",
     "type": "video",
     "title": "APRO · GACH (feat. Garzón Robie, DeVita)",
-    "sub": "",
-    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "sub": "Музыкальный концепт / корейский продюсер",
+    "desc": "Видеосниппет к выходу трека и альбома: mixed media коллаж в эстетике Y2K — силуэты, звуковые дорожки, вырезки",
+    "win": "Лайк и комментарий от артиста",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -95,8 +99,8 @@
     "genres": [
       "music"
     ],
-    "tag": "концепт · музыка",
-    "tag_en": "concept · music",
+    "tag": "концепт · музыка · mixed media",
+    "tag_en": "concept · music · mixed media",
     "focus": "",
     "wide": false,
     "hero": false,
@@ -106,7 +110,9 @@
     "link": "",
     "en": {
       "title": "APRO · GACH (feat. Garzón Robie, DeVita)",
-      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+      "sub": "Music concept / Korean producer",
+      "desc": "A video snippet for the single and album release: a mixed-media collage in Y2K aesthetics — silhouettes, waveforms, paper cut-outs",
+      "win": "Liked and commented on by the artist"
     },
     "photos": [],
     "photosAr": [],
@@ -123,9 +129,10 @@
     "slug": "graffiti-bro",
     "folder": "works/04-граффити-бро",
     "type": "video",
-    "title": "Граффити-бро",
-    "sub": "",
-    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "title": "Shumiha Dance Camp",
+    "sub": "Персонаж из граффити / хип-хоп",
+    "desc": "Граффити сходит со стены и танцует со мной хип-хоп",
+    "win": "Лайки Shumiha Dance Camp, основателей и лидеров танцевального комьюнити. Репост основателей в сторис и в ленту (публикация с личного аккаунта)",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -145,8 +152,10 @@
     "mratio": "",
     "link": "",
     "en": {
-      "title": "Off the Wall",
-      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+      "title": "Shumiha Dance Camp",
+      "sub": "Graffiti character / hip-hop",
+      "desc": "A graffiti piece steps off the wall and dances hip-hop with me",
+      "win": "Liked by Shumiha Dance Camp, its founders and leaders of the dance community. Reposted by the founders to stories and to the feed, from a personal account"
     },
     "photos": [],
     "photosAr": [],
@@ -164,8 +173,9 @@
     "folder": "works/05-все-без-ума-от-насти",
     "type": "video",
     "title": "Все без ума от Насти",
-    "sub": "",
-    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "sub": "Мокьюментари",
+    "desc": "Мои бывшие дают показания 💅😭",
+    "win": "",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -186,7 +196,8 @@
     "link": "",
     "en": {
       "title": "There's Something About Nastya",
-      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+      "sub": "Mockumentary",
+      "desc": "My exes give their testimony 💅😭"
     },
     "photos": [],
     "photosAr": [],
@@ -206,6 +217,7 @@
     "title": "МЕТЫ, Петр Осипов",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "win": "",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -263,8 +275,9 @@
     "folder": "works/07-magssory-basketball",
     "type": "video",
     "title": "Magssory Basketball",
-    "sub": "",
-    "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "sub": "MAGSSORY / премиальные магнитные аксессуары",
+    "desc": "Динамичные броски баскетболиста в параллель с гаджетами, которые приземляются на зарядку в студии",
+    "win": "Лайк бренда, лайк и репост в сторис от основателя бренда",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -285,7 +298,9 @@
     "link": "",
     "en": {
       "title": "Magssory Basketball",
-      "desc": "Project description goes here: the idea, the brief and what makes this one different."
+      "sub": "MAGSSORY / premium magnetic accessories",
+      "desc": "A basketball player's shots cut in parallel with gadgets landing on their chargers in the studio",
+      "win": "Liked by the brand; liked and reposted to stories by its founder"
     },
     "photos": [],
     "photosAr": [],
@@ -305,6 +320,7 @@
     "title": "Антоха МС, фестиваль «Крошево»",
     "sub": "",
     "desc": "Здесь будет описание проекта: идея, задача и чем эта работа отличается.",
+    "win": "",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -354,9 +370,10 @@
     "slug": "bonya-so-exotic",
     "folder": "works/09-bonya-so-exotic",
     "type": "video",
-    "title": "BONYA BEAUTY — SO EXOTIC",
-    "sub": "",
-    "desc": "",
+    "title": "So Exotic",
+    "sub": "BONYA BEAUTY / бренд косметики Виктории Бони",
+    "desc": "Короткий стильный формат в фирменных цветах, бэкстейдж фэшн-съёмки: студийный фон, продукт как единственный яркий акцент",
+    "win": "Лайки бренда BONYA BEAUTY и Виктории Бони",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -377,8 +394,10 @@
     "mratio": "",
     "link": "",
     "en": {
-      "title": "BONYA BEAUTY — SO EXOTIC",
-      "desc": ""
+      "title": "So Exotic",
+      "sub": "BONYA BEAUTY / cosmetics brand by Victoria Bonya",
+      "desc": "A short, stylish cut in the brand's own colours — a fashion shoot backstage: studio backdrop, the product the only bright accent",
+      "win": "Liked by BONYA BEAUTY and Victoria Bonya"
     },
     "photos": [],
     "photosAr": [],
@@ -395,9 +414,10 @@
     "slug": "bonya-malenkaya-ledi",
     "folder": "works/10-bonya-malenkaya-ledi",
     "type": "video",
-    "title": "BONYA BEAUTY: «Маленькая леди»",
-    "sub": "",
-    "desc": "",
+    "title": "Маленькая дива",
+    "sub": "BONYA BEAUTY / бренд косметики Виктории Бони",
+    "desc": "Глянец 90-х, реализм, длинные планы — уютно, как в старом фильме",
+    "win": "Лайки BONYA BEAUTY и Виктории Бони",
     "role": "идея, режиссура, монтаж",
     "stack": "",
     "year": "2026",
@@ -419,8 +439,10 @@
     "mratio": "4/3",
     "link": "",
     "en": {
-      "title": "BONYA BEAUTY: Little Lady",
-      "desc": ""
+      "title": "Little Diva",
+      "sub": "BONYA BEAUTY / cosmetics brand by Victoria Bonya",
+      "desc": "Nineties gloss, live action, long takes — as cosy as an old film",
+      "win": "Liked by BONYA BEAUTY and Victoria Bonya"
     },
     "photos": [],
     "photosAr": [],

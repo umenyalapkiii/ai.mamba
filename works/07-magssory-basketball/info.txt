@@ -10,7 +10,11 @@
 стек:
 клиент:
 длительность: 0:20
-описание: Здесь будет описание проекта: идея, задача и чем эта работа отличается.
-описание en: Project description goes here: the idea, the brief and what makes this one different.
+описание: Динамичные броски баскетболиста в параллель с гаджетами, которые приземляются на зарядку в студии
+описание en: A basketball player's shots cut in parallel with gadgets landing on their chargers in the studio
 колонка: 2
 телефон: 8
+подзаголовок: MAGSSORY / премиальные магнитные аксессуары
+подзаголовок en: MAGSSORY / premium magnetic accessories
+достижение: Лайк бренда, лайк и репост в сторис от основателя бренда
+достижение en: Liked by the brand; liked and reposted to stories by its founder

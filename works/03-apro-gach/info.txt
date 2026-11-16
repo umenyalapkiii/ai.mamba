@@ -1,7 +1,7 @@
 название: APRO · GACH (feat. Garzón Robie, DeVita)
 название en: APRO · GACH (feat. Garzón Robie, DeVita)
-тег: концепт · музыка
-тег en: concept · music
+тег: концепт · музыка · mixed media
+тег en: concept · music · mixed media
 год: 2026
 жанр: music
 формат: 9/16
@@ -10,6 +10,10 @@
 стек:
 клиент:
 длительность: 0:09
-описание: Здесь будет описание проекта: идея, задача и чем эта работа отличается.
-описание en: Project description goes here: the idea, the brief and what makes this one different.
+описание: Видеосниппет к выходу трека и альбома: mixed media коллаж в эстетике Y2K — силуэты, звуковые дорожки, вырезки
+описание en: A video snippet for the single and album release: a mixed-media collage in Y2K aesthetics — silhouettes, waveforms, paper cut-outs
 телефон: 4
+подзаголовок: Музыкальный концепт / корейский продюсер
+подзаголовок en: Music concept / Korean producer
+достижение: Лайк и комментарий от артиста
+достижение en: Liked and commented on by the artist

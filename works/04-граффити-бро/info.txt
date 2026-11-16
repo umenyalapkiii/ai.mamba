@@ -1,5 +1,5 @@
-название: Граффити-бро
-название en: Off the Wall
+название: Shumiha Dance Camp
+название en: Shumiha Dance Camp
 тег: микс реализма и анимации
 тег en: live action and animation
 год: 2026
@@ -10,7 +10,11 @@
 стек:
 клиент:
 длительность:
-описание: Здесь будет описание проекта: идея, задача и чем эта работа отличается.
-описание en: Project description goes here: the idea, the brief and what makes this one different.
+описание: Граффити сходит со стены и танцует со мной хип-хоп
+описание en: A graffiti piece steps off the wall and dances hip-hop with me
 колонка: 
 телефон: 7
+подзаголовок: Персонаж из граффити / хип-хоп
+подзаголовок en: Graffiti character / hip-hop
+достижение: Лайки Shumiha Dance Camp, основателей и лидеров танцевального комьюнити. Репост основателей в сторис и в ленту (публикация с личного аккаунта)
+достижение en: Liked by Shumiha Dance Camp, its founders and leaders of the dance community. Reposted by the founders to stories and to the feed, from a personal account

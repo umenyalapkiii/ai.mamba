@@ -1,5 +1,5 @@
-название: BONYA BEAUTY — SO EXOTIC
-название en: BONYA BEAUTY — SO EXOTIC
+название: So Exotic
+название en: So Exotic
 тег: реклама · бьюти · реализм
 тег en: commercial · beauty · live action
 год: 2026
@@ -12,5 +12,9 @@
 стек:
 клиент: Bonya Beauty
 длительность:
-описание:
-описание en:
+описание: Короткий стильный формат в фирменных цветах, бэкстейдж фэшн-съёмки: студийный фон, продукт как единственный яркий акцент
+описание en: A short, stylish cut in the brand's own colours — a fashion shoot backstage: studio backdrop, the product the only bright accent
+подзаголовок: BONYA BEAUTY / бренд косметики Виктории Бони
+подзаголовок en: BONYA BEAUTY / cosmetics brand by Victoria Bonya
+достижение: Лайки бренда BONYA BEAUTY и Виктории Бони
+достижение en: Liked by BONYA BEAUTY and Victoria Bonya

@@ -1,7 +1,7 @@
 название: Voskresenskii · Франсе
 название en: Voskresenskii · France
-тег: концепт · музыка
-тег en: concept · music
+тег: концепт · музыка · mixed media
+тег en: concept · music · mixed media
 год: 2026
 жанр: music
 формат: 9/16
@@ -10,6 +10,8 @@
 стек:
 клиент:
 длительность: 0:12
-описание: Здесь будет описание проекта: идея, задача и чем эта работа отличается.
-описание en: Project description goes here: the idea, the brief and what makes this one different.
+описание: Mixed media: коллаж, 3D-графика и реализм — парижские символы, склеенные на бит
+описание en: Mixed media: collage, 3D and live action — Paris landmarks cut to the beat
 телефон: 2
+подзаголовок: Музыкальный сниппет
+подзаголовок en: Music snippet

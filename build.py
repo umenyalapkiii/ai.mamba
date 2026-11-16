@@ -31,6 +31,10 @@ KEYS = {
     "sub_en":   ["подзаголовок en", "sub en"],
     "desc":     ["описание", "текст", "desc"],
     "desc_en":  ["описание en", "desc en"],
+    # отклик на работу: лайки и репосты от бренда или артиста. В карточке
+    # он выделен печатью — это единственное место, где говорит не автор
+    "win":      ["достижение", "отклик", "win"],
+    "win_en":   ["достижение en", "отклик en", "win en"],
     "role":     ["роль", "role"],
     "stack":    ["стек", "инструменты", "stack"],
     "year":     ["год", "year"],
@@ -214,6 +218,7 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         "title": info.get("title") or folder.name,
         "sub": info.get("sub", ""),
         "desc": info.get("desc", ""),
+        "win": info.get("win", ""),
         "role": info.get("role", ""),
         "stack": info.get("stack", ""),
         "year": info.get("year", ""),
@@ -234,7 +239,7 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
         "morder": info.get("morder", "").strip(),
         "mratio": info.get("mratio", "").strip(),
         "link": info.get("link", ""),
-        "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en") if k in info},
+        "en": {k[:-3]: info[k] for k in ("title_en", "sub_en", "desc_en", "win_en") if k in info},
         "photos": [rel(p) for p in photos],
         "photosAr": [probe_ar(p) for p in photos],
         "hasCase": (folder / "case.md").exists(),

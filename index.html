@@ -686,6 +686,38 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
 .modal__info{padding:clamp(16px,2.4vw,26px);border-top:1px solid var(--line-soft)}
 .modal__info h3{font-family:var(--display);font-weight:600;font-size:clamp(20px,2.6vw,30px);text-transform:uppercase;margin:0 0 8px}
 .modal__desc{color:#A9A8A3;font-size:15px;line-height:1.65;margin:0 0 16px;max-width:64ch}
+/* строка клиента под названием: тем же кеглем и разрядкой, что строки
+   ниже, — иначе в карточке получается три разных мелких шрифта */
+.modal__sub{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 14px;line-height:1.5}
+
+/* ---- печать «отклик»: лайки и репосты от бренда или артиста ----
+   Единственное место в карточке, где говорит не автор, поэтому оно и
+   выделено. Печать слегка повёрнута, как наклеенная, и выпрямляется
+   при наведении — графика собрана из SVG, картинок не грузим. */
+/* display:flex перебивает атрибут hidden — без этой строки пустая
+   печать остаётся на экране с чужим текстом внутри */
+.win[hidden]{display:none}
+.win{display:flex;align-items:center;gap:14px;max-width:64ch;
+  margin:0 0 18px;padding:12px 16px;border-radius:3px;
+  border:1px solid color-mix(in srgb,var(--yellow) 30%,transparent);
+  background:linear-gradient(135deg,color-mix(in srgb,var(--yellow) 7%,transparent),transparent 70%)}
+.win__seal{flex:none;width:44px;height:44px;color:var(--yellow);
+  transform:rotate(-8deg);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.win:hover .win__seal{transform:rotate(0) scale(1.06)}
+.win__seal svg{display:block;width:100%;height:100%}
+.win__k{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--yellow);margin-bottom:5px}
+.win__t{display:block;font-size:13.5px;line-height:1.5;color:var(--cream)}
+@media (max-width:560px){
+  /* на узком экране текст уходит в четыре строки, и печать по центру
+     отъезжает от своей подписи — там она встаёт в начало */
+  .win{gap:11px;padding:11px 13px;align-items:flex-start}
+  .win__seal{margin-top:1px}
+  .win__seal{width:36px;height:36px}
+  .win__t{font-size:12.5px}
+}
+@media (prefers-reduced-motion:reduce){.win__seal{transition:none}}
 .meta{display:grid;gap:7px}
 .meta__row{display:grid;grid-template-columns:96px 1fr;gap:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
 .meta__k{color:var(--muted-dim)}
@@ -1452,7 +1484,23 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
     <div class="modal__media" id="mMedia"></div>
     <div class="modal__info">
       <h3 id="mTitle"></h3>
-      <p class="modal__desc" id="mDesc"></p>
+      <p class="modal__sub" id="mSub" hidden></p>
+      <p class="modal__desc" id="mDesc" hidden></p>
+      <div class="win" id="mWin" hidden>
+        <span class="win__seal" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="21.2" stroke="currentColor" stroke-width="1.1"
+                    stroke-dasharray="1.6 4.2" stroke-linecap="round"/>
+            <circle cx="24" cy="24" r="16.4" stroke="currentColor" stroke-width="1.3"/>
+            <path d="M24 32.1c0 0-7.4-4.9-7.4-9.6 0-2.5 2-4.5 4.4-4.5 1.5 0 2.5.8 3 1.7.5-.9 1.5-1.7 3-1.7 2.4 0 4.4 2 4.4 4.5 0 4.7-7.4 9.6-7.4 9.6Z"
+                  fill="currentColor"/>
+          </svg>
+        </span>
+        <span>
+          <span class="win__k" id="mWinK"></span>
+          <span class="win__t" id="mWinT"></span>
+        </span>
+      </div>
       <div class="meta" id="mMeta"></div>
     </div>
   </div>
@@ -1493,6 +1541,7 @@ const L = {
   stack: {ru:'стек',  en:'stack'},
   year:  {ru:'год',   en:'year'},
   slot:  {ru:'место под кадр', en:'frame goes here'},
+  win:   {ru:'отклик', en:'response'},
   prev:  {ru:'Предыдущий кадр', en:'Previous frame'},
   next:  {ru:'Следующий кадр',  en:'Next frame'},
   empty: {ru:'в этом разделе пока пусто', en:'nothing here yet'},
@@ -1665,6 +1714,7 @@ fetch('projects.json', { cache: 'no-store' })
         title: {ru: p.title,               en: (p.en && p.en.title) || p.title},
         meta:  {ru: p.sub || p.category || '', en: (p.en && p.en.sub) || p.sub || p.category || ''},
         desc:  {ru: p.desc || '',          en: (p.en && p.en.desc) || p.desc || ''},
+        win:   {ru: p.win || '',           en: (p.en && p.en.win) || p.win || ''},
       };
       ONE.forEach(k => { if (w[k]) w[k] = abs(w[k]); });
       MANY.forEach(k => { if (w[k]) w[k] = w[k].map(abs); });
@@ -1733,6 +1783,20 @@ function wireCarousel(root, list) {
 const modal = document.getElementById('modal'), mMedia = document.getElementById('mMedia');
 function openModal(w) {
   document.getElementById('mTitle').textContent = t(w.title);
+  /* клиент, описание и отклик: пустое поле не оставляет за собой пробел */
+  const put = (id, val) => {
+    const el = document.getElementById(id);
+    el.textContent = val || '';
+    el.hidden = !val;
+  };
+  put('mSub', t(w.meta));
+  put('mDesc', t(w.desc));
+  const win = t(w.win);
+  document.getElementById('mWin').hidden = !win;
+  if (win) {
+    document.getElementById('mWinK').textContent = L.win[LANG];
+    document.getElementById('mWinT').textContent = win;
+  }
   /* строки показываем всегда — это каркас карточки, а не необязательные поля */
   const rows = [[L.year, w.year]]
     .map(([k, v]) => `<div class="meta__row"><span class="meta__k">${k[LANG]}</span><span>${t(v) || '—'}</span></div>`);
