@@ -5,11 +5,11 @@
 Запуск:  python3 build_magenta.py
 
 Делает две вещи:
-  magenta/index.html        — версия для сайта, картинки берёт из ../assets/
+  magenta/index.html        — версия для сайта, картинки берет из ../assets/
   ai.mamba-magenta.html     — один файл со всем внутри, для скачивания
 
-Правило схемы из гайда: малиновый — только фон и заливки, текст на нём
-светлый; жёлтый остаётся акцентом в тексте и кнопках.
+Правило схемы из гайда: малиновый — только фон и заливки, текст на нем
+светлый; желтый остается акцентом в тексте и кнопках.
 Основной сайт не трогается: правишь index.html, потом прогоняешь этот скрипт.
 """
 
@@ -27,12 +27,12 @@ OUT_FILE = ROOT.parent / "ai.mamba-magenta.html"
 OVERRIDE = """
 /* ============================================================
    4B · STUDIO MAGENTA
-   Малиновый входит не плашкой, а светом: полоса идёт вдоль
+   Малиновый входит не плашкой, а светом: полоса идет вдоль
    траектории удара (тот же вектор, по которому летят буквы),
    плюс мягкое зарево за фигурой. Серые панели уведены в
-   приглушённый розовый, чтобы схема читалась целиком.
-   На самой малиновой плашке жёлтого нет — он с ней вибрирует;
-   там работают только малиновый, почти чёрный и сливочный.
+   приглушенный розовый, чтобы схема читалась целиком.
+   На самой малиновой плашке желтого нет — он с ней вибрирует;
+   там работают только малиновый, почти черный и сливочный.
    ============================================================ */
 :root{
   --magenta:#CE1B6F;
@@ -105,7 +105,7 @@ body{background:#0A0508}
 .car__nav:hover{background:rgba(206,27,111,.32);border-color:var(--magenta);color:var(--cream)}
 .car__dots i.on{background:var(--magenta)}
 
-/* --- контакты: малиновый, почти чёрный и сливочный, без жёлтого --- */
+/* --- контакты: малиновый, почти черный и сливочный, без желтого --- */
 .contact{background:var(--magenta);color:var(--cream)}
 .contact h2,.contact h2 .y{color:var(--cream)}
 .steps{border-top-color:rgba(242,237,239,.3)}
@@ -116,7 +116,7 @@ body{background:#0A0508}
   background:var(--ink);color:var(--cream);
   transition:color .3s;
 }
-/* жёлтый вспыхивает только на наведении — мгновение, а не фон */
+/* желтый вспыхивает только на наведении — мгновение, а не фон */
 .socials .writeme:hover{color:var(--yellow)}
 .soc{border-color:rgba(242,237,239,.42);color:rgba(242,237,239,.88)}
 .soc:hover{color:var(--cream);background:var(--ink);border-color:var(--ink)}
@@ -137,7 +137,7 @@ footer{color:rgba(242,237,239,.4)}
 BANNER = """<!-- ============================================================
      ai.mamba — альтернативная цветовая схема 4B Studio Magenta.
      Собрано из index.html скриптом build_magenta.py.
-     Основной сайт живёт отдельно и этим файлом не затрагивается.
+     Основной сайт живет отдельно и этим файлом не затрагивается.
      ============================================================ -->
 """
 
@@ -146,7 +146,7 @@ def tint(html: str, title_suffix: str) -> str:
     html = html.replace("</style>", OVERRIDE + "\n</style>", 1)
     html = re.sub(r"<title>(.*?)</title>", lambda m: f"<title>{m.group(1)} · {title_suffix}</title>",
                   html, count=1, flags=re.S)
-    # у альтернативной схемы своя жизнь: из поиска её прятать, чтобы она
+    # у альтернативной схемы своя жизнь: из поиска ее прятать, чтобы она
     # не конкурировала с основным сайтом
     html = html.replace('<meta name="viewport"',
                         '<meta name="robots" content="noindex">\n<meta name="viewport"', 1)
@@ -203,7 +203,7 @@ def main() -> int:
     OUT_FILE.write_text(standalone, encoding="utf-8")
 
     print(f"на сайте:      {OUT_SITE.relative_to(ROOT)}  ({OUT_SITE.stat().st_size // 1024} КБ)")
-    print(f"для скачивания:{OUT_FILE.name}  ({OUT_FILE.stat().st_size // 1024} КБ, всё внутри)")
+    print(f"для скачивания:{OUT_FILE.name}  ({OUT_FILE.stat().st_size // 1024} КБ, все внутри)")
     left = len(re.findall(r'"(?:\.\./)?assets/', standalone))
     print(f"невшитых ссылок на assets в отдельном файле: {left}")
     return 0

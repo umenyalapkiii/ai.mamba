@@ -12,7 +12,7 @@
 стек:
 клиент: Bonya Beauty
 длительность:
-описание: Короткий стильный формат в фирменных цветах, бэкстейдж фэшн-съёмки: студийный фон, продукт как единственный яркий акцент
+описание: Короткий стильный формат в фирменных цветах, бэкстейдж фэшн-съемки: студийный фон, продукт как единственный яркий акцент
 описание en: A short, stylish cut in the brand's own colours — a fashion shoot backstage: studio backdrop, the product the only bright accent
 подзаголовок: BONYA BEAUTY / бренд косметики Виктории Бони
 подзаголовок en: BONYA BEAUTY / cosmetics brand by Victoria Bonya

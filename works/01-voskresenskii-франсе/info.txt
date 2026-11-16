@@ -10,8 +10,8 @@
 стек:
 клиент:
 длительность: 0:12
-описание: Mixed media: коллаж, 3D-графика и реализм — парижские символы, склеенные на бит
-описание en: Mixed media: collage, 3D and live action — Paris landmarks cut to the beat
+описание: Mixed media: коллаж, 3D-графика и реализм
+описание en: Mixed media: collage, 3D and live action
 телефон: 2
 подзаголовок: Музыкальный сниппет
 подзаголовок en: Music snippet

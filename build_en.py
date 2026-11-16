@@ -32,7 +32,7 @@ def attrs_of(raw: str) -> dict:
 
 def close_index(html: str, start: int, name: str) -> int:
     """Индекс начала закрывающего тега, парного открытому в start.
-    Считает вложенность одноимённых тегов."""
+    Считает вложенность одноименных тегов."""
     depth, pos = 1, start
     closer = re.compile(rf'</{name}\s*>', re.I)
     while pos < len(html):

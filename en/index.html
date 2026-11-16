@@ -120,7 +120,7 @@
 
 /* ============================================================
    ai.mamba — лендинг
-   Жёлтый #EDAD22 снят пипеткой с костюма на исходнике.
+   Желтый #EDAD22 снят пипеткой с костюма на исходнике.
    Визуальный язык: аркадный файтинг — сетка, луч, HUD, искры.
    ============================================================ */
 
@@ -129,7 +129,7 @@
   --yellow-dim:#8A6414;
   /* accent 2 из гайдлайнов, схема 4B Studio Magenta */
   --pink:#CE1B6F;
-  /* осветлённая — только для тонких линий и мелкого текста, где #CE1B6F уходит в грязь */
+  /* осветленная — только для тонких линий и мелкого текста, где #CE1B6F уходит в грязь */
   --pink-lit:#F02E86;
   --cream:#F5F1E8;
   --portrait:url("../assets/portrait-gum-pink.webp");
@@ -307,7 +307,7 @@ main,footer{position:relative;z-index:1}
      зазора, чтобы глаз видел одну линию */
   padding-left:clamp(4px,.75vw,14px);
 }
-/* вторая половина строки приглушена, разделитель ещё тише —
+/* вторая половина строки приглушена, разделитель еще тише —
    иначе две подписи читаются как одна сплошная */
 .hero__eyebrow s{text-decoration:none;color:var(--muted);margin:0 .4em;font-size:1.45em;line-height:0;vertical-align:-.06em}
 .hero__eyebrow b{font-weight:400;color:var(--muted)}
@@ -355,7 +355,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 
 /* ---------- РАБОТЫ ---------- */
 /* Кладка на гриде, а не на columns: columns заполняет колонку сверху вниз,
-   и работы читались бы столбиками, а не слева направо. Высоту плитки задаёт
+   и работы читались бы столбиками, а не слева направо. Высоту плитки задает
    --span — его считает layoutGal() по пропорции, записанной в data-ar. */
 .gal{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(max(180px,calc((100% - 50px) / 6)),1fr));
@@ -368,23 +368,23 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 }
 /* горизонтальная обложка занимает две колонки — так ряд не становится таблицей */
 .card--wide,.card--hero{grid-column:span 2}
-/* главная плитка: закреплена справа сверху, над ней ничего не встаёт.
+/* главная плитка: закреплена справа сверху, над ней ничего не встает.
    Работает только там, где колонок хватает; на узком экране она просто
-   течёт вместе со всеми — так задумано */
-/* В разделе фильтра работ мало, и закреплённые места превращаются в
+   течет вместе со всеми — так задумано */
+/* В разделе фильтра работ мало, и закрепленные места превращаются в
    пустое поле: «главная» уезжает к правому краю, а между ней и соседкой
    дыра на пол-экрана. Внутри раздела плитки идут подряд слева и одной
-   ширины — разница остаётся только в высоте кадра */
+   ширины — разница остается только в высоте кадра */
 .gal--filtered .card{grid-column-start:auto}
 /* «главная» внутри раздела становится обычной плиткой: работ там мало,
-   и огромный кадр посреди трёх соседок смотрелся бы случайным */
+   и огромный кадр посреди трех соседок смотрелся бы случайным */
 .gal--filtered .card--hero{grid-column:span 1;grid-row:span var(--span,1)}
 /* а широкой две колонки нужны и в разделе: горизонтальный кадр в одной
    колонке превращается в полоску высотой с ладонь */
 .gal--filtered .card--wide{grid-column:span 2;grid-row:span var(--span,1)}
 
-/* «колонка» из info.txt доводит композицию на полном экране: без неё
-   укладка разбрасывает нижний ряд и в середине остаётся дыра.
+/* «колонка» из info.txt доводит композицию на полном экране: без нее
+   укладка разбрасывает нижний ряд и в середине остается дыра.
    Класс вешает layoutGal и только когда колонок ровно шесть: на пяти
    номера колонок уже не те, и плитка улетает под «главную» */
 /* Закрепление целиком на CSS, без участия скрипта: раньше класс вешал
@@ -398,7 +398,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   .gal:not(.gal--filtered){grid-template-columns:repeat(4,1fr) repeat(2,.78fr)}
   .gal:not(.gal--filtered) .card{grid-column-start:var(--col,auto)}
   /* широкой плитке мало задать начало: grid-column-start стирает размах
-     из сокращённой записи, и она схлопывается в одну колонку */
+     из сокращенной записи, и она схлопывается в одну колонку */
   .gal:not(.gal--filtered) .card--wide{grid-column:var(--col,auto) / span 2}
   .gal:not(.gal--filtered) .card--hero{grid-column:-3/-1;grid-row:1/span var(--span,1)}
 }
@@ -410,7 +410,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 }
 .card__media img,.card__media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 /* видео проявляется не раньше, чем реально пошло: пока оно грузится,
-   поверх обложки висел бы чёрный прямоугольник */
+   поверх обложки висел бы черный прямоугольник */
 .card__vid{opacity:0;transition:opacity .45s ease}
 .card__vid.on{opacity:1}
 .card__media::after{
@@ -420,7 +420,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 }
 .card:hover .card__media::after{transform:translateY(300%)}
 
-/* подложка под подписи: название и чип должны читаться и на чёрном кадре,
+/* подложка под подписи: название и чип должны читаться и на черном кадре,
    и на кислотно-розовом — поэтому затемнение, а не только тень у текста */
 .card__scrim{
   position:absolute;inset:0;z-index:2;pointer-events:none;
@@ -438,8 +438,8 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 }
 .card__tag{left:9px;max-width:62%;line-height:1.45;white-space:normal}
 .card__tag i{font-style:normal;margin:0 .22em;letter-spacing:0;color:var(--muted)}
-/* широкая плитка низкая, и чип в две строки съедает её заметнее, чем
-   высокую. Места по ширине там хватает — отдаём его чипу */
+/* широкая плитка низкая, и чип в две строки съедает ее заметнее, чем
+   высокую. Места по ширине там хватает — отдаем его чипу */
 .card--wide .card__tag{max-width:78%}
 .card__badge{right:9px;display:flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
 .card__badge svg{display:block;fill:currentColor}
@@ -457,10 +457,10 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .card:hover .card__name{color:var(--yellow)}
 @media(max-width:620px){
   .gal{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}
-  /* на телефоне своя очерёдность: лента одна и длинная, порядок
+  /* на телефоне своя очередность: лента одна и длинная, порядок
      композиции широкого экрана там читается иначе */
   .card{order:var(--mo,0)}
-  /* «главная» на телефоне становится обычной, а широкой отдаём обе
+  /* «главная» на телефоне становится обычной, а широкой отдаем обе
      колонки: горизонтальный кадр в половину экрана не читается, да и
      чип с тегами в него не помещался */
   .card--hero{grid-column:span 1}
@@ -472,7 +472,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 }
 
 /* ---------- УСЛУГИ ---------- */
-/* верхнюю линию не рисуем: её уже даёт нижняя граница заголовка секции */
+/* верхнюю линию не рисуем: ее уже дает нижняя граница заголовка секции */
 .srv{display:grid;gap:0}
 .srv__row{
   display:grid;grid-template-columns:34px minmax(0,.9fr) minmax(0,1.4fr);
@@ -544,7 +544,7 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .about__todo{color:var(--muted-dim);font-style:italic}
 
 /* ---------- ПРОЦЕСС ---------- */
-/* верхнюю линию даёт нижняя граница заголовка секции */
+/* верхнюю линию дает нижняя граница заголовка секции */
 .faq{}
 .q{border-bottom:1px solid var(--line-soft)}
 .q summary{
@@ -562,8 +562,8 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
 .q p{margin:0 0 clamp(16px,2vw,22px);color:#A9A8A3;font-size:clamp(14px,1.15vw,16px);line-height:1.7;max-width:74ch}
 
 /* ---------- КОНТАКТ ----------
-   Жёлтая плашка во всю ширину — по схеме 4A Grindhouse Yellow.
-   На жёлтом весь текст тёмный: акцентом здесь работает сам фон. */
+   Желтая плашка во всю ширину — по схеме 4A Grindhouse Yellow.
+   На желтом весь текст темный: акцентом здесь работает сам фон. */
 .contact{
   background:var(--yellow);color:#151208;
   padding:clamp(28px,3.6vw,52px) 0 clamp(24px,3vw,42px);
@@ -585,14 +585,14 @@ section{scroll-margin-top:calc(var(--nav-h) + 10px)}
   padding:clamp(9px,1.1vw,13px) 0 clamp(9px,1.1vw,13px) 54px;
   border-bottom:1px solid rgba(21,18,8,.2);color:#151208;font-size:clamp(14px,1.2vw,16.5px);
 }
-/* номер в техничном квадрате — иначе на жёлтом он просто пропадал */
+/* номер в техничном квадрате — иначе на желтом он просто пропадал */
 .steps li::before{
   content:"0" counter(s);position:absolute;left:0;top:50%;transform:translateY(-50%);
   font-family:var(--mono);font-size:11.5px;font-weight:700;color:#151208;
   border:1.5px solid rgba(21,18,8,.5);padding:5px 6px;line-height:1;
 }
 .socials{display:flex;align-items:center;gap:clamp(8px,1.4vw,16px);flex-wrap:wrap}
-/* «просто напишите» — тёмной плашкой на жёлтом */
+/* «просто напишите» — темной плашкой на желтом */
 .socials .writeme{
   font-family:var(--mono);font-size:11px;font-weight:500;
   letter-spacing:.16em;text-transform:uppercase;
@@ -645,8 +645,8 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
 }
 .modal__close:hover{color:var(--yellow);border-color:var(--yellow)}
 .modal__media{
-  /* ширину задаёт карточка, она же считается от --ar: пересчёт при
-     повороте телефона идёт сам, без JS */
+  /* ширину задает карточка, она же считается от --ar: пересчет при
+     повороте телефона идет сам, без JS */
   width:100%;
   position:relative;display:grid;place-items:center;min-height:180px;
   background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 3px),#111116;
@@ -693,10 +693,10 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
 
 /* ---- печать «отклик»: лайки и репосты от бренда или артиста ----
    Единственное место в карточке, где говорит не автор, поэтому оно и
-   выделено. Печать слегка повёрнута, как наклеенная, и выпрямляется
+   выделено. Печать слегка повернута, как наклеенная, и выпрямляется
    при наведении — графика собрана из SVG, картинок не грузим. */
 /* display:flex перебивает атрибут hidden — без этой строки пустая
-   печать остаётся на экране с чужим текстом внутри */
+   печать остается на экране с чужим текстом внутри */
 .win[hidden]{display:none}
 .win{display:flex;align-items:center;gap:14px;max-width:64ch;
   margin:0 0 18px;padding:12px 16px;border-radius:3px;
@@ -711,7 +711,7 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
 .win__t{display:block;font-size:13.5px;line-height:1.5;color:var(--cream)}
 @media (max-width:560px){
   /* на узком экране текст уходит в четыре строки, и печать по центру
-     отъезжает от своей подписи — там она встаёт в начало */
+     отъезжает от своей подписи — там она встает в начало */
   .win{gap:11px;padding:11px 13px;align-items:flex-start}
   .win__seal{margin-top:1px}
   .win__seal{width:36px;height:36px}
@@ -863,7 +863,7 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
   rotate:-13deg;filter:drop-shadow(0 20px 44px rgba(0,0,0,.62));
   --ink:#0B0B0C;
 }
-/* верхняя планка: полосы под углом, кремовый контур, петля с заклёпкой слева */
+/* верхняя планка: полосы под углом, кремовый контур, петля с заклепкой слева */
 .clap__stick{
   position:relative;height:clamp(30px,3.1vw,42px);
   background:repeating-linear-gradient(104deg,var(--ink) 0 13%,var(--yellow) 13% 26%);
@@ -882,7 +882,7 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
   border:3px solid var(--cream);border-radius:9px;padding:0 0 9px;
   pointer-events:auto;cursor:default;overflow:hidden;
 }
-/* жёлтая полоса под планкой + своя петля */
+/* желтая полоса под планкой + своя петля */
 .clap__strip{
   position:relative;height:clamp(20px,2.1vw,28px);
   background:repeating-linear-gradient(104deg,var(--ink) 0 13%,var(--yellow) 13% 26%);
@@ -980,8 +980,8 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
    v3: заглавный блок, стикер-фокус, полосатые контакты
    ============================================================ */
 
-/* ---------- зачёркнутое слово в заголовке ---------- */
-/* span внутри h1 по умолчанию блочный — для зачёркивания возвращаем строчный */
+/* ---------- зачеркнутое слово в заголовке ---------- */
+/* span внутри h1 по умолчанию блочный — для зачеркивания возвращаем строчный */
 .hero h1 span.strike{
   display:inline-block;position:relative;color:var(--muted-dim);margin-right:.02em;
 }
@@ -1009,7 +1009,7 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
 .cta:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(237,173,34,.26)}
 .cta:hover i{transform:translateX(5px)}
 .cta:active{transform:translateY(0) scale(.98)}
-/* рядом с укрупнённым заголовком кнопка не должна спорить с ним по весу */
+/* рядом с укрупненным заголовком кнопка не должна спорить с ним по весу */
 @media(max-width:620px){.cta{font-size:14px;padding:15px 22px;gap:11px}}
 
 /* ---------- стикер «наводим фокус» ---------- */
@@ -1040,7 +1040,7 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
 @keyframes huntBL{0%,100%{translate:0 0}50%{translate:4px -4px}}
 @keyframes huntBR{0%,100%{translate:0 0}50%{translate:-4px -4px}}
 @keyframes focusglow{0%,100%{opacity:.1}50%{opacity:.28}}
-/* наводишь — поиск прекращается, фокус встаёт жёстко */
+/* наводишь — поиск прекращается, фокус встает жестко */
 .focus:hover .focus__c,.focus:focus-visible .focus__c{animation:none}
 .focus:hover .focus__c--tl,.focus:focus-visible .focus__c--tl{translate:10px 10px}
 .focus:hover .focus__c--tr,.focus:focus-visible .focus__c--tr{translate:-10px 10px}
@@ -1076,7 +1076,7 @@ footer a:hover{color:var(--yellow);border-bottom-color:var(--yellow-dim)}
   .focus__a{opacity:.8}
 }
 
-/* ---------- контакты: полоска по жёлтому ---------- */
+/* ---------- контакты: полоска по желтому ---------- */
 .contact{position:relative;overflow:hidden}
 .contact::before{
   content:"";position:absolute;inset:0;pointer-events:none;opacity:.15;
@@ -1497,7 +1497,7 @@ const BASE = '../';
 const t = v => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[LANG] ?? v.ru ?? '') : (v ?? '');
 
 let WORKS = [];
-let LOADED = false;   // пока projects.json не пришёл, сетку не рисуем — чтобы не мигало пустотой
+let LOADED = false;   // пока projects.json не пришел, сетку не рисуем — чтобы не мигало пустотой
 
 /* Жанры для фильтра. У заглушек поля genre нет, поэтому они видны
    только в «все» — так и задумано, пока не разложим реальные работы */
@@ -1540,12 +1540,12 @@ const frames = n => {
 };
 
 const PLAY = '<svg width="9" height="11" viewBox="0 0 9 11" aria-hidden="true"><path d="M0 0v11l9-5.5z"/></svg>';
-/* пропорция как число: в info.txt её пишут и «4/5», и «4:5» */
+/* пропорция как число: в info.txt ее пишут и «4/5», и «4:5» */
 const arNum = r => { const [a, b] = String(r).split(/[:/]/).map(Number); return (a && b) ? a / b : 0.8; };
 /* У работы может быть несколько жанров: реклама нередко одновременно
    и фэшн, и в обоих разделах ей место */
 const inGenre = (w, k) => (w.genres && w.genres.length ? w.genres : [w.genre]).includes(k);
-/* точку между тегами рисуем своим элементом: так её отступы не зависят
+/* точку между тегами рисуем своим элементом: так ее отступы не зависят
    от межбуквенного интервала чипа и строка тегов не разъезжается */
 const sep = t => t.replace(/\s*·\s*/g, '<i>·</i>');
 /* чип слева вверху: своя подпись из info.txt, иначе название жанра */
@@ -1585,7 +1585,7 @@ function cardHTML(w, i) {
   </a>`;
 }
 
-/* Высота плитки = ширина колонки / пропорция. Переводим её в число строк
+/* Высота плитки = ширина колонки / пропорция. Переводим ее в число строк
    сетки: строка 6px, зазор 10px, значит n строк занимают 16n-10 пикселей. */
 const ROW = 6, GAP = 10;
 function layoutGal() {
@@ -1600,7 +1600,7 @@ function layoutGal() {
   });
 }
 
-/* кнопки жанров рисуем один раз, подпись берём по языку страницы */
+/* кнопки жанров рисуем один раз, подпись берем по языку страницы */
 function renderFilter() {
   const box = document.getElementById('filt');
   if (!box) return;
@@ -1632,7 +1632,7 @@ function renderWorks() {
   gal.querySelectorAll('.card').forEach(card => {
     const w = WORKS[+card.dataset.i];
     const v = card.querySelector('video');
-    /* ждём не загрузки, а настоящего старта: только тогда видео проявляем */
+    /* ждем не загрузки, а настоящего старта: только тогда видео проявляем */
     if (v) v.addEventListener('playing', () => v.classList.add('on'));
     let flip = null;
     card.addEventListener('pointerenter', e => {
@@ -1655,7 +1655,7 @@ function renderWorks() {
       clearInterval(flip); flip = null;
       card.querySelector('.card__next')?.classList.remove('on');
     });
-    /* ссылка настоящая: адрес вида work/<slug>/ уже закреплён за проектом.
+    /* ссылка настоящая: адрес вида work/<slug>/ уже закреплен за проектом.
        Пока страницы кейса нет — по обычному клику открываем модалку,
        а ctrl/cmd-клик и средняя кнопка работают как с любой ссылкой */
     card.addEventListener('click', e => {
@@ -1676,8 +1676,8 @@ fetch('../projects.json', { cache: 'no-store' })
   .then(list => {
     LOADED = true;
     if (!Array.isArray(list) || !list.length) return renderWorks();
-    /* Каждое поле с путём к файлу идёт через BASE: английская страница
-       лежит уровнем глубже, и без префикса файл там отдаёт 404. Поля
+    /* Каждое поле с путем к файлу идет через BASE: английская страница
+       лежит уровнем глубже, и без префикса файл там отдает 404. Поля
        перечислены списком, чтобы новое не забылось — так уже случилось
        с роликами ленты, и в английской версии они не открывались. */
     const abs = v => (v && !/^(https?:)?\//.test(v)) ? BASE + v : v;
@@ -1702,12 +1702,12 @@ fetch('../projects.json', { cache: 'no-store' })
 
 /* ---------- карусель кадров внутри окна проекта ---------- */
 /* Окно принимает форму самого кадра, а не плитки: горизонтальный ролик
-   разворачивается во всю ширину, вертикальный встаёт вертикально.
+   разворачивается во всю ширину, вертикальный встает вертикально.
    У ленты пропорция своя на каждом слайде, поэтому пересчитываем на лету. */
 function setBoxAr(ar) {
   const a = +ar || 1;
   mMedia.style.aspectRatio = String(a);
-  /* --ar живёт на карточке: от него считается и её ширина, и высота кадра */
+  /* --ar живет на карточке: от него считается и ее ширина, и высота кадра */
   modal.querySelector('.modal__box').style.setProperty('--ar', a.toFixed(4));
 }
 
@@ -1723,8 +1723,8 @@ function wireCarousel(root, list) {
     i = Math.max(0, Math.min(total - 1, n));
     track.style.transform = `translateX(${-i * 100}%)`;
     setBoxAr(list[i].ar);
-    /* долистали до ролика — он сам и пошёл. Со звуком, если браузер
-       разрешит, иначе молча: лишь бы не стоял чёрным кадром */
+    /* долистали до ролика — он сам и пошел. Со звуком, если браузер
+       разрешит, иначе молча: лишь бы не стоял черным кадром */
     [...track.children].forEach((el, k) => {
       if (el.tagName !== 'VIDEO' || k === i) return;
       el.pause(); el.currentTime = 0;
@@ -1735,8 +1735,8 @@ function wireCarousel(root, list) {
          иначе оставался немым навсегда */
       cur.muted = false;
       cur.play().catch(() => {
-        /* браузер не пустил со звуком — играем молча, но звук вернём,
-           как только человек хоть что-нибудь нажмёт */
+        /* браузер не пустил со звуком — играем молча, но звук вернем,
+           как только человек хоть что-нибудь нажмет */
         cur.muted = true;
         cur.play().catch(() => {});
         modal.addEventListener('pointerdown', () => { cur.muted = false; }, {once: true});
@@ -1840,7 +1840,7 @@ addEventListener('keydown', e => {
 const sound = (() => {
   let ctx = null, on = false;
   /* Safari и iOS: контекст оживает только внутри жеста пользователя,
-     и одного resume() мало — нужно ещё запустить хоть какой-то источник.
+     и одного resume() мало — нужно еще запустить хоть какой-то источник.
      Поэтому «разблокируем» тишиной в один сэмпл. */
   /* На iPhone WebAudio подчиняется боковому переключателю «без звука».
      Обойти это можно, если параллельно играет обычный <audio>: тогда iOS
@@ -1931,7 +1931,7 @@ const UI = {
   soundOff: {ru:'Включить звук',  en:'Unmute'},
 };
 /* На телефоне озвучена только мамба: на маленьком экране палец задевает
-   всё подряд, и щелчки на каждом разделе превращаются в трескотню.
+   все подряд, и щелчки на каждом разделе превращаются в трескотню.
    Поэтому интерфейсные звуки — только там, где есть настоящее наведение. */
 const hasHover = () => !matchMedia('(hover: none)').matches;
 const uiTick = () => { if (hasHover()) sound.tick(); };
@@ -1998,7 +1998,7 @@ document.querySelectorAll('[data-scene]').forEach(root => {
     cy += (ty - cy) * .07;
 
     const p = 1 - fire;                                  // 0 → 1 за время удара
-    const punch = Math.sin(clamp01(p * 1.7) * Math.PI);   // корпус отдаёт первым
+    const punch = Math.sin(clamp01(p * 1.7) * Math.PI);   // корпус отдает первым
     fig.style.transform =
       `translate3d(${cx * 9 - punch * 8}px, ${cy * 7 + punch * 3}px, 0) rotate(${-punch * .8}deg)`;
 
@@ -2018,13 +2018,13 @@ document.querySelectorAll('[data-scene]').forEach(root => {
 });
 
 /* На телефоне события наведения не происходит вовсе — поэтому там
-   звук идёт на касание. Мышь при этом не должна щёлкать дважды. */
+   звук идет на касание. Мышь при этом не должна щелкать дважды. */
 document.querySelectorAll('.srv__row, .soc, .lang a, .filt button, .fstep, .rail a, .focus, .clap__body').forEach(el => {
   el.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') sound.tick(); });
 });
 
 /* На телефоне наводить нечем: подсвечиваем ту услугу, что сейчас
-   в середине экрана, и ведём подсветку вместе с прокруткой.
+   в середине экрана, и ведем подсветку вместе с прокруткой.
    Способность к наведению проверяем на каждой прокрутке, а не один раз
    при загрузке: она меняется, если повернуть планшет или подключить мышь */
 (() => {
@@ -2107,7 +2107,7 @@ document.querySelectorAll('.srv__row, .soc, .lang a, .filt button, .fstep, .rail
 renderFilter();
 renderWorks();
 
-/* ---------- хлопушка щёлкает один раз, когда доезжает до экрана ---------- */
+/* ---------- хлопушка щелкает один раз, когда доезжает до экрана ---------- */
 (() => {
   const clap = document.querySelector('.clap');
   if (!clap || REDUCED) return;
@@ -2121,7 +2121,7 @@ renderWorks();
   /* хлопает каждый раз, когда доезжает до экрана, а не только в первый */
   new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) play(); }),
                            {threshold: .45}).observe(clap);
-  /* и когда на неё попадает курсор */
+  /* и когда на нее попадает курсор */
   clap.querySelector('.clap__body').addEventListener('pointerenter', play);
 })();
 

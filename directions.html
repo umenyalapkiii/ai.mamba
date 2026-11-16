@@ -7,16 +7,16 @@
 <style>
 /* ============================================================
    ДВА ТЕСТА ГЛАВНОЙ
-   A · АРКАДА    чёрно-жёлтый файтинг, имя рвётся в WebGL
+   A · АРКАДА    черно-желтый файтинг, имя рвется в WebGL
    B · БУРГУНДИ  густое вино, дидон-антиква, стекающая кровь
 
-   Жёлтый #EDAD22 снят пипеткой с костюма на исходнике.
+   Желтый #EDAD22 снят пипеткой с костюма на исходнике.
    ============================================================ */
 
 :root{
   --yellow:#EDAD22;
 
-  /* бургунди: от почти чёрного вина к артериальному */
+  /* бургунди: от почти черного вина к артериальному */
   --wine-900:#120508;
   --wine-800:#24080F;
   --wine-700:#4D1821;   /* Apple Burgundy */
@@ -39,7 +39,7 @@ body{
   margin:0;background:var(--shell);color:var(--shell-text);
   font-family:'Manrope',system-ui,sans-serif;
   /* clip, а не hidden: hidden делает body скролл-контейнером
-     и position:sticky у панели перестаёт липнуть к окну */
+     и position:sticky у панели перестает липнуть к окну */
   overflow-x:clip;
 }
 img{display:block;max-width:100%}
@@ -122,7 +122,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   pointer-events:none;z-index:4;background:var(--yellow);
 }
 
-/* теги-форматы: flex-grow не даёт последнему элементу осиротеть */
+/* теги-форматы: flex-grow не дает последнему элементу осиротеть */
 .fmt{display:flex;flex-wrap:wrap;gap:7px}
 .fmt span{
   flex:1 1 auto;text-align:center;
@@ -171,7 +171,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--yellow);margin-bottom:clamp(12px,1.8vw,18px);
 }
-/* имя: DOM-версия видна всегда, WebGL подменяет её только когда завёлся
+/* имя: DOM-версия видна всегда, WebGL подменяет ее только когда завелся
    И когда у заголовка есть реальный размер (см. paint() в скрипте) */
 #arcade .name{position:relative}
 #arcade .name h1{
@@ -243,7 +243,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
    B · БУРГУНДИ
    Густое вино, антиква с высоким контрастом, стекающая кровь.
    Кровь — canvas: капли копят массу, срываются, оставляют
-   подтёк и обтекают курсор. Слой лежит под текстом.
+   подтек и обтекают курсор. Слой лежит под текстом.
    ============================================================ */
 #wine{
   position:relative;overflow:hidden;color:var(--cream);
@@ -466,7 +466,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
 <script>
 /* ============================================================
-   ДАННЫЕ — заглушки. Позже их отдаёт projects.json из works/
+   ДАННЫЕ — заглушки. Позже их отдает projects.json из works/
    ============================================================ */
 const WORKS = [
   {name:'Рекламный фильм',       meta:'реклама · продукт',     ratio:'9:16', year:'2026'},
@@ -690,9 +690,9 @@ document.querySelectorAll('#wine .cardG').forEach(el => el.addEventListener('poi
 /* ============================================================
    КРОВЬ (бургунди).
    Капля копит массу у верхнего края, срывается, разгоняется,
-   тянет за собой сужающийся подтёк и иногда замирает — так ведёт
-   себя вязкая жидкость на вертикали. Курсор её отталкивает,
-   резкое движение срывает брызги, удар мамбы даёт залп.
+   тянет за собой сужающийся подтек и иногда замирает — так ведет
+   себя вязкая жидкость на вертикали. Курсор ее отталкивает,
+   резкое движение срывает брызги, удар мамбы дает залп.
    Слипание капель делает CSS-фильтр blur+contrast на канвасе.
    ============================================================ */
 (() => {
@@ -759,7 +759,7 @@ document.querySelectorAll('#wine .cardG').forEach(el => el.addEventListener('poi
     if (!W) { requestAnimationFrame(loop); return; }
     seed();
 
-    /* подтёки не стираем, а очень медленно растворяем */
+    /* подтеки не стираем, а очень медленно растворяем */
     ctx.globalCompositeOperation = 'destination-out';
     ctx.fillStyle = 'rgba(0,0,0,.0032)';
     ctx.fillRect(0, 0, W, H);
@@ -775,7 +775,7 @@ document.querySelectorAll('#wine .cardG').forEach(el => el.addEventListener('poi
         d.v += .035;               // разгон
         d.v *= .992;               // вязкость держит скорость конечной
         d.y += d.v;
-        d.r -= .0075 + d.v * .004; // масса остаётся в подтёке, струйка сужается
+        d.r -= .0075 + d.v * .004; // масса остается в подтеке, струйка сужается
         d.wob += .028;
         d.x += Math.sin(d.wob) * .16;
         if (Math.random() < .0015) d.hold = rnd(8, 34);   // зацепилась за неровность
@@ -789,10 +789,10 @@ document.querySelectorAll('#wine .cardG').forEach(el => el.addEventListener('poi
         d.y += (dy / (dist || 1)) * push * .35;
       }
 
-      /* след ведём явным штрихом от прошлой точки к текущей: на одном
-         только следе из перекрывающихся кругов подтёк получался рваным,
+      /* след ведем явным штрихом от прошлой точки к текущей: на одном
+         только следе из перекрывающихся кругов подтек получался рваным,
          а тонкий хвост срезал фильтр. Заливка сплошная — полупрозрачные
-         края contrast() увёл бы в ноль. */
+         края contrast() увел бы в ноль. */
       const r = Math.max(d.r, .6);
       ctx.fillStyle = ctx.strokeStyle = '#A31222';
       if (d.px !== null) {
@@ -818,14 +818,14 @@ document.querySelectorAll('#wine .cardG').forEach(el => el.addEventListener('poi
     requestAnimationFrame(loop);
   })();
 
-  /* канвас живёт в скрытой вкладке — пересчитываем, когда появится */
+  /* канвас живет в скрытой вкладке — пересчитываем, когда появится */
   new ResizeObserver(() => resize()).observe(host);
 })();
 
 /* ============================================================
    WebGL-ГЛИТЧ ИМЕНИ (аркада).
-   Имя рисуется в 2D-канвас, заливается текстурой и рвётся
-   шейдером. DOM-заголовок остаётся видимым, пока канвас не готов.
+   Имя рисуется в 2D-канвас, заливается текстурой и рвется
+   шейдером. DOM-заголовок остается видимым, пока канвас не готов.
    ============================================================ */
 (() => {
   const host = document.getElementById('nameHost');
@@ -895,7 +895,7 @@ void main(){
     const h1 = host.querySelector('h1');
     const w = Math.round(h1.offsetWidth), h = Math.round(h1.offsetHeight);
 
-    /* вкладка скрыта или шрифт ещё не пришёл — ширина нулевая.
+    /* вкладка скрыта или шрифт еще не пришел — ширина нулевая.
        В этом случае НЕ подменяем заголовок, иначе имя пропадает. */
     if (w < 40 || h < 20) { host.classList.remove('gl'); return; }
     if (w === painted && host.classList.contains('gl')) return;
