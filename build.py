@@ -78,7 +78,7 @@ def parse_info(path: Path) -> dict:
     for raw in path.read_text(encoding="utf-8").splitlines():
         line = raw.rstrip()
         # «ё» тут — часть класса символов, а не текст: если ключ в info.txt
-        # всe же напишется через «ё», строка должна прочитаться
+        # все же напишется через «ё», строка должна прочитаться
         m = re.match(r"^\s*([A-Za-zА-Яа-яЁё ]{2,20}?)\s*:\s*(.*)$", line)
         key = LOOKUP.get(m.group(1).strip().lower()) if m else None
         if key:
