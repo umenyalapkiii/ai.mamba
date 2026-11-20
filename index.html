@@ -1716,6 +1716,11 @@ fetch('projects.json', { cache: 'no-store' })
         desc:  {ru: p.desc || '',          en: (p.en && p.en.desc) || p.desc || ''},
         win:   {ru: p.win || '',           en: (p.en && p.en.win) || p.win || ''},
       };
+      /* у работы может быть своя английская обложка и свой ролик
+         с английскими субтитрами — на /en/ они встают вместо русских */
+      if (LANG === 'en' && p.en) {
+        ['poster', 'posterAr', 'video', 'videoAr'].forEach(k => { if (p.en[k]) w[k] = p.en[k]; });
+      }
       ONE.forEach(k => { if (w[k]) w[k] = abs(w[k]); });
       MANY.forEach(k => { if (w[k]) w[k] = w[k].map(abs); });
       return w;

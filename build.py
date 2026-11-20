@@ -201,8 +201,13 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
     info = parse_info(folder / "info.txt")
     cover = pick(folder, COVER_NAMES, PHOTO_EXT)
     manual_preview = pick(folder, PREVIEW_NAMES, VIDEO_EXT)
+    # английские версии: cover-en.webp и video-en.mp4. Их берет страница /en/,
+    # в серию кадров они не попадают — иначе второй ролик превратил бы
+    # карточку в карусель
+    cover_en = pick(folder, {n + "-en" for n in COVER_NAMES}, PHOTO_EXT)
+    video_en = pick(folder, {"video-en", "видео-en"}, VIDEO_EXT)
     # обложка и петля — служебные файлы, в серию кадров они не попадают
-    skip = {p.name for p in (cover, manual_preview) if p}
+    skip = {p.name for p in (cover, manual_preview, cover_en, video_en) if p}
     media = sorted(p for p in folder.iterdir()
                    if p.is_file() and not p.name.startswith((".", "_"))
                    and p.name not in skip
@@ -284,6 +289,13 @@ def collect(folder: Path, idx: int = 0) -> dict | None:
 
     if videos:
         project["dur"] = info.get("dur") or probe_duration(ROOT / project["video"])
+
+    if cover_en:
+        project["en"]["poster"] = rel(cover_en)
+        project["en"]["posterAr"] = probe_ar(cover_en)
+    if video_en:
+        project["en"]["video"] = rel(video_en)
+        project["en"]["videoAr"] = probe_ar(video_en)
 
     # Пропорцию задает СЕТКА, а не файл: плитки должны быть разной высоты,
     # иначе галерея выглядит как таблица. Обложку под плитку подрезает

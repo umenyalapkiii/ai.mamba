@@ -197,7 +197,11 @@
     "en": {
       "title": "There's Something About Nastya",
       "sub": "Mockumentary",
-      "desc": "My exes give their testimony 💅😭"
+      "desc": "My exes give their testimony 💅😭",
+      "poster": "works/05-все-без-ума-от-насти/cover-en.webp",
+      "posterAr": 0.6709,
+      "video": "works/05-все-без-ума-от-насти/video-en.mp4",
+      "videoAr": 1.7778
     },
     "photos": [],
     "photosAr": [],
@@ -206,7 +210,7 @@
     "videoAr": 1.7778,
     "preview": "works/05-все-без-ума-от-насти/preview.mp4",
     "poster": "works/05-все-без-ума-от-насти/cover.webp",
-    "posterAr": 0.6665,
+    "posterAr": 0.6709,
     "dur": "1:12",
     "ratio": "2/3"
   },
