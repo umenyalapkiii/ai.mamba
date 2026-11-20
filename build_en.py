@@ -97,10 +97,10 @@ def main() -> int:
 
     # заголовок и описание для выдачи и превью
     html = re.sub(r"<title>.*?</title>",
-                  "<title>Anastasia Arkhipenko — AI Artist &amp; Director | commercials, fashion, music videos</title>",
+                  "<title>Anastasia Arkhipenko — AI Artist &amp; Director | commercials, beauty/fashion, music videos</title>",
                   html, flags=re.S)
     html = re.sub(r'(<meta name="description" content=")[^"]*"',
-                  r"\1Anastasia Arkhipenko — AI Artist &amp; Director. Commercials, fashion, music videos, "
+                  r"\1Anastasia Arkhipenko — AI Artist &amp; Director. Commercials, beauty/fashion, music videos, "
                   r"cinematic shorts and experimental art. From visual language to final cut — "
                   r'fully AI, or mixed with real footage."', html)
     html = html.replace('content="Анастасия Архипенко — AI Artist &amp; Director"',
